@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <g id="accept" transform="translate(-208 -2018)">
+    <rect id="Rectangle_1" data-name="Rectangle 1" width="512" height="512" transform="translate(208 2018)" fill="#4878ec"/>
+    <g id="_003-tick" data-name="003-tick" transform="translate(348 2121.002)">
+      <g id="Group_1" data-name="Group 1" transform="translate(0 67.997)">
+        <path id="Path_5" data-name="Path 5" d="M228.1,71.388a11.574,11.574,0,0,0-16.369,0L73.06,210.057l-53.3-53.3A11.574,11.574,0,0,0,3.39,173.124l61.486,61.485a11.578,11.578,0,0,0,16.369,0L228.1,87.756A11.574,11.574,0,0,0,228.1,71.388Z" transform="translate(0 -67.998)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>
