@@ -535,7 +535,7 @@ class AuthController extends Controller
 	{
 		try {
 			DB::beginTransaction();
-			User::where('user_id', [Auth::id()])->delete();
+			User::where('id', [Auth::id()])->delete();
 			DB::commit();
 					$result = [
 						'status' => $this->success_name,
