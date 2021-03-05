@@ -520,7 +520,7 @@ class ProfileController extends BaseController
                 $user = Auth::user();
                 $data = [];
                 $user_account = UserBankAccount::updateOrCreate(['user_id' => $input['user_id']], $input);
-                $user->update(['is_bank_verified' => 1]);
+                $user->update(['is_bank_verified' => 1, 'account_id' => $user_account->id]);  // Added , 'account_id' => $user_account->id By Manish Bhuva
 
                 //get super admin id
                 $is_admin =  User::select('id', 'email')->whereHas('role', function ($q) {
@@ -626,8 +626,9 @@ class ProfileController extends BaseController
             $withdrawable_balance = UserWallet::whereHas('appointment', function ($q) {
                 $q->where('status', ['completed']);
             })->where('user_id', [Auth::id()])->where('status', null)->sum('price');
+            // Added Auth::user()->is_bank_verified == 2 By Manish Bhuva
+            if ($withdrawable_balance > 0 && Auth::user()->is_bank_verified == 2 && Auth::user()->account_id ) {
 
-            if ($withdrawable_balance > 0 && Auth::user()->account_id) {
                 $input = [
                     'account' => Auth::user()->account_id,
                     'amount' => $withdrawable_balance * 100,
@@ -669,7 +670,7 @@ class ProfileController extends BaseController
                     $result = ["status" => $this->error, "message" => $this->exception_message];
                 }
             } else {
-                if (!Auth::user()->account_id) {
+                if (Auth::user()->is_bank_verified != 2) {
                     $message = "Please verify your bank Account";
                 }else{
                     $message = "You have not sufficient balance in wallet";

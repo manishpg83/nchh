@@ -14,7 +14,11 @@
     </div>
 </section>
 @endsection
-@section('page_script')
+@section('page_script') 
 <script type="text/javascript">
+	 var url = "{{Route('myAppointment')}}";
+	  setTimeout(function(){
+            window.location.href = url;
+         }, 5000);
 </script>
 @endsection
