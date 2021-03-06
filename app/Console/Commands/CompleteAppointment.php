@@ -39,10 +39,8 @@ class CompleteAppointment extends Command
      */
     public function handle()
     {
-        Appointment::where(['status' => 'create', 'end_time' => Carbon::now()->setTimezone('Asia/Kolkata')->format('Y-m-d H:i')])->update(['status' => 'completed']);
-        Appointment::where(['status' => 'create'])->update(['status' => 'completed']);
+        Appointment::where('status', 'create')->where('end_time', '<', Carbon::now())->update(['status' => 'completed']);
         
         \Log::info('Appointment status change successfully');
-     
     }
 }
