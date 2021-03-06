@@ -187,11 +187,11 @@ class PatientController extends BaseController
                     }
                     return $btn;
                 })->addColumn('action', function ($data) {
-                    if($data->status == 'completed'){
+                    // if($data->status == 'completed'){
                         $btn = '<a href="' . route('account.patients.appointment.detail', [$data->patient->id, $data->patient->name_slug, $data->id]) . '" class="mr-3" id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="View Patient`s Appointment"><i class="fas fa-calendar-check"></i></a>';
-                    }else{
-                        $btn = '-';
-                    }
+                    // }else{
+                    //     $btn = '-';
+                    // }
                     return $btn;
                 })->rawColumns(['patient_name', 'appointment_date', 'patient_contact', 'appointment_with', 'status', 'action'])
                 ->make(true);
