@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'checkPermission' => \App\Http\Middleware\CheckPermission::class,
         'cors' => \App\Http\Middleware\CorsMiddleware::class,
         'routeRestriction' => \App\Http\Middleware\RouteRestriction::class,
+        'preventBackHistory' => \App\Http\Middleware\PreventBackHistory::class,
     ];
 }
