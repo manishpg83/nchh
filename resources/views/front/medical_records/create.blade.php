@@ -89,6 +89,7 @@
                                     <div id="files" class="dropzone">
                                         <div class="dz-message">Drop image here or click to Upload</div>
                                     </div>
+                                    <div class="showFileValidationError"></div>
                                 </div>
                             </div>
 
