@@ -329,6 +329,7 @@
     $(".chatbox-open").click(() => {
         $(".chatbox-open").fadeOut();
         $(".chatbox-panel").fadeIn();
+        $('.msg_history').animate({ scrollTop: $('.msg_history')[0].scrollHeight }, 1);
         $(".chatbox-panel").css({
             display: "flex"
         });

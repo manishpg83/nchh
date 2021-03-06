@@ -76,7 +76,7 @@
                                         @enderror
                                     </div> -->
                                     <div class="col-md-6 col-sm-12 mb-4">
-                                        <label for="name">Full Name*</label>
+                                        <label for="name">Patient Name*</label>
                                         <input type="text" name="patient_name" class="form-control" placeholder="Enter your name" value="{{$user->name}}">
                                         @error('name')
                                         <label id="patient_name-error" class="error" for="patient_name">{{ $message }}</label>
