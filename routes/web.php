@@ -63,7 +63,7 @@ Route::namespace('Front')->group(function () {
 		Route::get('thankyou', 'PageController@showThankyou')->name('user.thankyou');
 	});
 
-	Route::group(['middleware' => 'auth'], function () {
+	Route::group(['middleware' => ['auth', 'preventBackHistory']], function () {
 		/*if Auth user are manager and accountant can't show front (use middleware routeRestriction)*/
 		Route::group(['middleware' => 'routeRestriction'], function () {
 			/* Ajax Services */
@@ -124,7 +124,7 @@ Route::namespace('Front')->group(function () {
 /* Account Module */
 Route::prefix('account')->name('account.')->group(function () {
 
-	Route::group(['namespace' => 'Account', 'middleware' => 'auth'], function () {
+	Route::group(['namespace' => 'Account', 'middleware' => ['auth', 'preventBackHistory']], function () {
 
 		// Global Methods
 		Route::post('send-otp', 'GlobalController@sendOtp')->name('send-otp');
@@ -244,7 +244,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::post('logout', 'AdminLoginController@logout')->name('logout');
 	});
 
-	Route::group(['namespace' => 'Admin', 'middleware' => ['auth:admin']], function () {
+	Route::group(['namespace' => 'Admin', 'middleware' => ['auth:admin', 'preventBackHistory']], function () {
 
 		Route::resource('dashboard', 'DashboardController');
 		Route::get('/admin/dashboard', 'DashboardController@index')->name('dashboard');

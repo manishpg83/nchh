@@ -21,7 +21,7 @@
     emptyColor: 'lightgray',
     hoverColor: 'orange',
     activeColor: 'gold',
-    ratedColor: 'crimson',
+    ratedColor: 'orange',
     useGradient: true,
     readOnly: false,
     disableAfterRate: true,
@@ -184,15 +184,8 @@
         // only override colors in rated stars and when rated number is valid
         if (stateClass === 'rated' && endIndex > -1) {
           // limit to painting only to rated stars, and specific case for half star
-          /*if (index <= Math.ceil(endIndex) || (index < 1 && endIndex < 0)) {
+          if (index <= Math.ceil(endIndex) || (index < 1 && endIndex < 0)) {
             $polygonLeft.attr('style', 'fill:'+ratedColor);
-          }
-          if (index <= endIndex) {
-            $polygonRight.attr('style', 'fill:'+ratedColor);
-          }*/
-          // Added By Manish Bhuva
-          if (index <= Math.ceil(endIndex) || (index < 1 && endIndex < 0)) { 
-            $polygonLeft.attr('style', 'fill:'+ratedColor); 
           } else { 
             //lets you deselect stars 
             $polygonLeft.attr('style', 'stroke-opacity: 0;'); 

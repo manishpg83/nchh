@@ -43,7 +43,7 @@ class PaymentController extends BaseController
                 $datatable = DataTables::of($query->get());
 
                 $datatable = $datatable->addColumn('appointment_with', function ($q) {
-                    if($q->appointment->doctor_id){
+                    if(isset($q->appointment->doctor_id)){
                         return isset($q->appointment->doctor->name) ? $q->appointment->doctor->name : '';
                     }else{
                         return isset($q->appointment->diagnostics->name) ? $q->appointment->diagnostics->name : '';

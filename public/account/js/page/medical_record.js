@@ -39,6 +39,12 @@ function init_medicalRecord_form() {
         submitHandler: function(form) {
             var action = $(form).attr('action');
             var formData = new FormData($(form)[0]);
+
+            if(recordFileDropzone.files.length == 0) {
+                $('.showFileValidationError').html('');
+                $('.showFileValidationError').append('<label id="record_file-error" for="record_file" class="error">File is required.</label>');
+                return false;
+            }
             
             images = [];
             for (var i = 0; i < recordFileDropzone.files.length; i++) {
@@ -98,6 +104,7 @@ function init_medicalRecord_form() {
             addedfiles: function(file) {
                 $(".dz-details").remove();
                 $(".dz-progress").remove();
+                $('.showFileValidationError').html('');
             },
             init: function() {
                 
