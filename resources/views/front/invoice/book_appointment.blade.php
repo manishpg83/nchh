@@ -263,12 +263,12 @@
                     <br>Invoice Id : #{{$appointment->payment_id}}
                     <br>Date : {{date('d/m/Y', strtotime($appointment->payment->created_at))}}
                 </div>
-                @if(isset($appointment->doctor_id))
+                @if(isset($appointment->practice_id))
                 <div class="right">
-                    <span style="font-size: 14px;font-weight:bold;">Doctor's Detail,</span> <br>
-                    {{$appointment->doctor->name}},<br>
-                    {{$appointment->doctor->detail->degree}},<br>
-                    {{$appointment->doctor->detail->experience}} Years of experience overall
+                    <span style="font-size: 14px;font-weight:bold;">Practice's Detail,</span> <br>
+                    {{$appointment->practice->name}},<br>
+                    {{$appointment->practice->email}},<br>
+                    {{$appointment->practice->phone}},
                     <br>
                     {!!$appointment->practice->full_address!!},
                 </div>

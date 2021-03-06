@@ -94,7 +94,7 @@ Route::namespace('Front')->group(function () {
 			/* 1. Payment history for book appointment */
 			Route::get('payment/pay', 'PaymentController@pay')->name('payment.pay');
 			Route::get('payment/show/{id}', 'PaymentController@show')->name('payment.show');
-			Route::get('payment/invoice/download/{id}', 'PaymentController@invoiceDownload')->name('payment.invoice.download');
+			Route::get('payment/invoice/download/{id}', 'PaymentController@invoiceDownload')->name('payment.invoice.download')->withoutMiddleware('preventBackHistory');
 
 			Route::get('chat', 'ChatController@index')->name('chat.index');
 			// Route::get('chat/{id}', 'ChatController@openChat')->name('chat.open');
