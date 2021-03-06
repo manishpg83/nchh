@@ -132,7 +132,7 @@ class PatientController extends BaseController
         ];
 
         if ($request->ajax()) {
-            $appointment = Appointment::whereIn('status', ['attempt', 'completed']);
+            $appointment = Appointment::whereIn('status', ['attempt', 'create', 'pending', 'cancelled', 'completed']);
             if (checkPermission(['clinic', 'hospital'])) {
                 $practice_ids = Auth::user()->practiceAsStaff->pluck('id')->toArray();
                 $appointment = $appointment->whereIn('practice_id', $practice_ids);

@@ -118,7 +118,7 @@ function getAppointmentStatus($value)
 			return '<span class="badge badge-pill badge-warning">Pending</span>';
 			break;
 		case 'create':
-			return '<span class="badge badge-pill badge-primary">Create</span>';
+			return '<span class="badge badge-pill badge-primary">Created</span>';
 			break;
 		case 'attempt':
 			return '<span class="badge badge-pill badge-info" >Attempt</span>';
