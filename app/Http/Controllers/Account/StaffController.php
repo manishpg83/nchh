@@ -89,15 +89,15 @@ class StaffController extends BaseController
                     if (isset($data->user->role->keyword) && $data->user->role->keyword == "doctor") {
                         $as_doctor = 1;
                     }
-                    if ($data->practice['status'] == 2 && $as_doctor) {
+                    if ($data->practice && $data->practice->status == 2 && $as_doctor) {
                         $button .= '<a href="' . route('account.staff.edit', [$data->id]) . '" class="mr-3" id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Request accepted by ' . $data->practice->doctor['name'] . '"><i class="fas fa-highlighter"></i></a>';
                     }
 
-                    if ($data->practice['status'] == 1 || !$as_doctor) {
+                    if ($data->practice && $data->practice->status == 1 || !$as_doctor) {
                         $button .= '<a href="' . route('account.staff.edit', [$data->id]) . '" class="mr-3" id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Edit"><i class="far fa-edit"></i></a><a href="javascript:;" class="" id="' . $data->id . '" data-toggle="tooltip" data-placement="top" title="Delete" onclick="deleteStaff(' . $data->id . ');"><i class="far fa-trash-alt"></i></a>';
                     }
 
-                    if ($data->practice['status'] == 0 && $as_doctor) {
+                    if ($data->practice && $data->practice->status == 0 && $as_doctor) {
                         $button .= '<span class="badge badge-light">Request Pending</span>';
                     }
 
