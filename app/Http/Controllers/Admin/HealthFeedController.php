@@ -19,8 +19,10 @@ use App\User;
 use App\HealthFeed;
 use App\Notification;
 use App\HealthFeedCategory;
+use App\Jobs\HealthFeedVerificationJob;
 use App\Jobs\HealthFeedVerificationResponseJob;
 use App\UserApp;
+use Image;
 use Exception;
 use Auth;
 
@@ -56,7 +58,13 @@ class HealthFeedController extends BaseController
                     $btn = getStatus($data->status, $data->feedback_message);
                     return $btn;
                 })->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:;" class="mr-3" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="View healthfeed" onclick="viewHealthFeed(' . $row->id . ');"><i class="far fa-eye"></i></a>';
+                    $btn = '<a href="javascript:;" class="mr-3" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="View HealthFeed" onclick="viewHealthFeed(' . $row->id . ');"><i class="far fa-eye"></i></a>';
+
+                    if($row->user_id == Auth::id()) {
+                        $btn .= '<a href="javascript:;" class="mr-3" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit HealthFeed" onclick="editHealthFeed(' . $row->id . ');"><i class="far fa-edit"></i></a>';
+                        $btn .= '<a href="javascript:;" class="" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Delete HealthFeed" onclick="deleteHealthFeed(' . $row->id . ');"><i class="far fa-trash-alt"></i></a>';
+                    }
+                    
                     return $btn;
                 })
                 ->rawColumns(['title', 'image', 'status', 'action'])
@@ -72,7 +80,12 @@ class HealthFeedController extends BaseController
      */
     public function create()
     {
-        //
+        $data = ['title' => 'Add HealthFeed'];
+        $data['healthfeed_category'] = HealthFeedCategory::pluck('title', 'id')->toArray();
+        $html = view('admin.healthfeed.create', $data)->render();
+        $result = ['status' => $this->success, 'message' => 'load healthfeed data.', 'html' => $html];
+
+        return Response::json($result);
     }
 
     /**
@@ -83,7 +96,43 @@ class HealthFeedController extends BaseController
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'category_ids' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'cover_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $result = ["status" => $this->error, "message" => $validator];
+        } else {
+            try {
+                $input = $request->all();
+                if ($request->hasFile('cover_photo')) {
+                    $avatar = $request->file('cover_photo');
+                    if ($avatar->getClientOriginalExtension() == 'jfif') {
+                        $filename = time() . $this->random . '.jpg';
+                        Image::make($avatar)->encode('jpg', 75)->save(storage_path('app/healthfeed/' . $filename));
+                        $input['cover_photo'] = $filename;
+                    } else {
+                        $filename = time() . $this->random . '.' . $avatar->getClientOriginalExtension();
+                        Image::make($avatar)->save(storage_path('app/healthfeed/' . $filename));
+                        $input['cover_photo'] = $filename;
+                    }
+                }
+                $input['user_id'] = Auth::id();
+                $input['status'] = 1;
+                $healthfeed = HealthFeed::create($input);
+
+
+                $result = ['status' => $this->success, 'message' => 'Health Feed Insert Successful..'];
+            } catch (Exception $e) {
+                $result = ["status" => $this->error, "message" => "Something went wrong. Please try again."];
+            }
+        }
+        return Response::json($result);
     }
 
     /**
@@ -109,7 +158,12 @@ class HealthFeedController extends BaseController
      */
     public function edit($id)
     {
-        //
+        $data['title'] = 'Edit healthfeed';
+        $data['healthfeed'] = HealthFeed::find($id);
+        $data['healthfeed_category'] = HealthFeedCategory::pluck('title', 'id')->toArray();
+        $html = view('admin.healthfeed.update', $data)->render();
+        $result = ['status' => $this->success, 'message' => 'load healthfeed data.', 'html' => $html];
+        return Response::json($result);
     }
 
     /**
@@ -121,7 +175,50 @@ class HealthFeedController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'category_ids' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+            'cover_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        } else {
+            try {
+                $input = $request->all();
+                $healthfeed = HealthFeed::find($id);
+
+                if ($request->hasFile('cover_photo')) {
+                    $avatar = $request->file('cover_photo');
+                    if ($avatar->getClientOriginalExtension() == 'jfif') {
+                        $filename = time() . $this->random . '.jpg';
+                        Image::make($avatar)->encode('jpg', 75)->save(storage_path('app/healthfeed/' . $filename));
+                        $input['cover_photo'] = $filename;
+                    } else {
+                        $filename = time() . $this->random . '.' . $avatar->getClientOriginalExtension();
+                        Image::make($avatar)->save(storage_path('app/healthfeed/' . $filename));
+                        $input['cover_photo'] = $filename;
+                    }
+
+                    /*remove the existing profile picture*/
+                    $image_path = storage_path('app/healthfeed/' . $healthfeed->cover_photo_name);
+                    if ($healthfeed->cover_photo_name != "default.png") {
+                        @unlink($image_path);
+                    }
+                }
+
+                $input['status'] = 1;
+                $input['feedback_message'] = null;
+
+                $healthfeed->update($input);
+
+                $result = ['status' => $this->success, 'message' => 'Update Successful.'];
+            } catch (Exception $e) {
+                $result = ['status' => $this->error, 'message' => $this->exception_message];
+            }
+            return Response::json($result);
+        }
     }
 
     /**
@@ -132,7 +229,20 @@ class HealthFeedController extends BaseController
      */
     public function destroy($id)
     {
-        //
+        try {
+            $healthfeed = HealthFeed::find($id);
+            $image_path = storage_path('app/healthfeed/' . $healthfeed->cover_photo_name);
+            if ($healthfeed->cover_photo_name != "default.png") {
+                @unlink($image_path);
+            }
+
+            $healthfeed->delete();
+
+            $result = ['status' => $this->success, 'message' => 'Deleted successfully.'];
+        } catch (Exception $e) {
+            $result = ['status' => $this->error, 'message' => $this->exception_message];
+        }
+        return Response::json($result);
     }
 
     /* view healthfeed reauest  */

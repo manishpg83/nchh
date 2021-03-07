@@ -26,6 +26,15 @@ $document.ready(function () {
 	healthfeedModal.on('hidden.bs.modal', function () {
 		
 	});
+    healthfeedModal.on("shown.bs.modal", function() {
+        if ($("#cover_photo").length > 0) {
+            $("#cover_photo").change(function(e) {
+                //var fileName = e.target.files[0].name;
+                // alert('The file "' + fileName + '" has been selected.');
+                readURL(this, "preview");
+            });
+        }
+    });
 });
 
 //view blog
@@ -49,4 +58,160 @@ function viewHealthFeed(id){
 			}
 		})
 	}
+
+}
+
+// add blog
+function addHealthFeed() {
+    if (typeof addHealthFeedUrl !== "undefined") {
+        $.ajax({
+            url: addHealthFeedUrl,
+            type: "get",
+            dataType: "json",
+            success: function(response) {
+                if (response.status == "200") {
+                    healthfeedModal.html(response.html);
+                    healthfeedModal.modal("toggle");
+                    init_healthfeed_form();
+                } else {
+                    //
+                }
+            },
+            error: function() {
+                //
+            }
+        });
+    }
+}
+
+function init_healthfeed_form() {
+    healthfeedForm = $document.find("#healthfeedForm");
+
+    //Jquery validation of form field
+    healthfeedForm.validate({
+		ignore: ".ql-container *",
+        rules: {
+            category_ids: "required",
+            title: "required",
+            video_url: {
+                url: true
+            },
+			content: "required"
+        },
+        messages: {
+            category_ids: "Please select health feed category",
+            title: "Please enter health feed title"
+        },
+        submitHandler: function(form) {
+            var action = $(form).attr("action");
+            var formData = new FormData($(form)[0]);
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: formData,
+                processData: false,
+                dataType: "json",
+                contentType: false,
+                beforeSend: function() {
+                    healthfeedForm.find(".btn-submit").addClass("disabled btn-progress");
+                    healthfeedForm.find(".close-button").addClass("disabled");
+                },
+                success: function(data) {
+                    if (data.status == "200") {
+                        healthfeedModal.modal("toggle");
+                        healthfeedForm.trigger("reset");
+                        healthfeedTable.draw();
+                    } else {}
+                },
+                error: function() {
+                    //
+                },
+                complete: function() {
+                    healthfeedForm.find(".btn-submit").removeClass("disabled btn-progress");
+                    healthfeedForm.find(".close-button").removeClass("disabled");
+                }
+            });
+        },
+		errorPlacement: function(error, element) {
+			console.log(element)
+			if(element.hasClass('summernote')) {
+				error.insertAfter('.note-editor');
+			} else {
+				error.insertAfter(element);
+			}
+		}
+    });
+
+    $(".summernote").summernote({
+        dialogsInBody: true,
+        minHeight: 200,
+        maxHeight: 250
+    });
+}
+
+// delete blog
+function deleteHealthFeed(id) {
+
+    if (typeof deleteHealthFeedUrl !== "undefined") {
+        var url = deleteHealthFeedUrl.replace(":slug", id);
+        swal({
+                html: true,
+                title: "Delete",
+                text: "Are you sure you want to delete this health feed ?",
+                type: "warning",
+                showCancelButton: true,
+                customClass: "",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function() {
+                $.ajax({
+                    url: url,
+                    type: "DELETE",
+                    dataType: "JSON",
+                    data: {
+                        id: id
+                    },
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        if (response.status == "200") {
+                            swal.close();
+                            healthfeedTable.draw();
+                        }
+                    },
+                    error: function() {
+                        swal.close();
+                    }
+                });
+            }
+        );
+    }
+}
+
+//edit health feed
+function editHealthFeed(id) {
+    healthfeedForm = $document.find("#healthfeedForm");
+    if (typeof editHealthFeedUrl !== "undefined") {
+        var url = editHealthFeedUrl.replace(":slug", id);
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            success: function(response) {
+                if (response.status == "200") {
+                    healthfeedModal.html(response.html);
+                    healthfeedModal.modal("toggle");
+                    init_healthfeed_form();
+                } else {
+                    //
+                }
+            },
+            error: function() {
+                //
+            }
+        });
+    }
 }

@@ -14,6 +14,8 @@
             <div class="col-12 col-sm-12 col-lg-12">
                 <div class="card">
                     <div>
+                        <a href="#" class="btn btn-icon icon-left btn-primary float-right mt-3 mr-4" onclick="addHealthFeed()"><i class="far fa-edit"></i>
+                            Add</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -39,7 +41,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="healthfeedModal" role="dialog"></div>
+<div class="modal fade" id="healthfeedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center" data-backdrop="static" data-keyboard="false"></div>
 @endsection
 @section('page_script')
 <script src="{{ asset('admin/js/healthfeed.js')}}"></script>
@@ -50,5 +52,8 @@ var healthfeedModal = $('#healthfeedModal');
 
 var getHealthFeedList = "{{Route('admin.healthfeed.index')}}";
 var viewFullHealthFeed = "{{route('admin.healthfeed.show',[':slug'])}}";
+var editHealthFeedUrl = "{{route('admin.healthfeed.edit',[':slug'])}}";
+var deleteHealthFeedUrl = "{{route('admin.healthfeed.destroy',[':slug'])}}";
+var addHealthFeedUrl = "{{route('admin.healthfeed.create')}}";
 </script>
 @endsection
