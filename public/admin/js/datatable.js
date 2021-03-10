@@ -620,3 +620,59 @@ function verifyBankAccountDetail($id, $action) {
         );
     }
 }
+
+function rejectBankAccountDetail($id) {
+
+    $('#bank_account_id').val($id);
+    $('#rejectUserAccount').modal('toggle');
+    $('#rejectAccount').trigger('reset');
+    var btn_submit = rejectAccountForm.find('#btn_submit');
+    
+    rejectAccountForm.validate({
+		rules: {
+			rejection_reason: "required",
+		},
+		submitHandler: function (form) {
+            var action = $(form).attr('action');
+            var postData = new FormData($('#rejectAccount')[0]);
+            postData.append('id', $('#bank_account_id').val());
+
+			$.ajax({
+                url: action,
+                type: "POST",
+                data: postData,
+                processData: false,
+                contentType: false,
+                headers: header,
+                dataType: "json",
+                success: function(data) {
+                    if (data.status == 200) {
+                        $('#rejectAccount').trigger('reset');
+                        userBankAccountVerificationTable.draw();
+                        $('#rejectUserAccount').modal('toggle');
+                        toastrAlert(
+                            "success",
+                            "Bank Verify",
+                            data.message
+                        );
+                    } else {
+                        $('#rejectUserAccount').modal('toggle');
+                        toastrAlert(
+                            "error",
+                            "Bank Verify",
+                            data.message
+                        );
+                    }
+                },
+                error: function($data) {
+                    toastrAlert(
+                        "error",
+                        "Bank Verify",
+                        data.message,
+                        "bottomCenter"
+                    );
+                }
+            });
+		}
+	});
+}
