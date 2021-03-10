@@ -292,6 +292,7 @@ function showMyFace() {
             } else {
                 error_msg = 'Something went wrong'
             }
+            $('#btnCall').prop('disabled', true);
             toastrAlert('error', 'Warning', error_msg);
         })
 }

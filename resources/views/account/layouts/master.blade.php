@@ -126,7 +126,7 @@
     <!-- Page Specific JS File -->
 
     <!-- Google Map API -->
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6NuAPEcUcc9anPu6CMEYgDWkLlnDZXug"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_API_KEY') }}"></script>
     <!-- <script src="{{asset('account/js/page/index-0.js')}}"></script> -->
 
     <script type="text/javascript">

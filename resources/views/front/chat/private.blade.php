@@ -134,6 +134,14 @@
         color: #fff !important;
         padding: 4px 9px !important;
     }
+    .samebtm:disabled {
+        background: gray;
+        border: 0;
+        border-radius: 5px !important;
+        color: #fff !important;
+        padding: 4px 9px !important;
+        cursor: not-allowed;
+    }
     button.btn.btn-outline-danger.btn-sm.redbutton {
         background: #ed3a3a;
         color: #ffff;

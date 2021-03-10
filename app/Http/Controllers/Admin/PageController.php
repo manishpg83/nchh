@@ -692,7 +692,7 @@ class PageController extends BaseController
                     return isset($data->bankDetail->account_type) ? $data->bankDetail->account_type : '<span class="badge badge-pill badge-info">Not Mentioned</span>';
                 })->addColumn('action', function ($data) {
                     $btn = '<button type="button" onclick="verifyBankAccountDetail(' . $data->id . ', `approved`)" id="' . $data->id . '" class="btn btn-mat btn-success btn-sm">Approved</button>
-                    <button type="button" onclick="verifyBankAccountDetail(' . $data->id . ',`reject`)" id="' . $data->id . '" class="btn btn-mat btn-danger btn-sm ml-2">Reject</button>';
+                    <button type="button" onclick="rejectBankAccountDetail(' . $data->id . ')" id="' . $data->id . '" class="btn btn-mat btn-danger btn-sm ml-2">Reject</button>';
                     return $btn;
                 })->rawColumns(['name', 'bank_name', 'account_number', 'ifsc_code', 'account_type', 'action'])
                 ->make(true);
@@ -709,7 +709,6 @@ class PageController extends BaseController
         $rules = [
             'id' => 'required|exists:users,id',
         ];
-
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
@@ -766,7 +765,7 @@ class PageController extends BaseController
                      Thank you for apply,<br>
                      NC Health Hub';
                 } else {
-                    $user->update(['is_bank_verified' => '3']);
+                    $user->update(['is_bank_verified' => '3', 'rejection_reason' => $request->rejection_reason]);
                     $title = 'Your requested bank account details has been rejected';
                     $type = 'bank_account_verification_reject';
                     $content = 'Your requested bank account details with the name of ' . $user->bankDetail->bank_name . ' has been rejected.';

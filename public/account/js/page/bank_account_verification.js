@@ -111,3 +111,9 @@ function viewBankDetail() {
         });
     }
 }
+
+function openRejectionReason(reason) {
+    $('.rejection_reason').html('');
+    $('#showRejectionReson').modal('toggle');
+    $('.rejection_reason').html(reason);
+}

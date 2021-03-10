@@ -12,7 +12,10 @@
     <div class="section-body">
         @if(!empty($user->bankDetail->account_number))
         <h2 class="section-title">
-            {!! getUserProfileStatus($user->is_bank_verified) !!}
+            {!! getUserProfileStatus($user->is_bank_verified) !!} 
+            @if($user->is_bank_verified == 3)
+                <a href="javascipt:void()" onclick="openRejectionReason('{{ $user->rejection_reason }}')">Click here for reason</a>
+            @endif
         </h2>
         <p class="section-lead"></p>
         @else
@@ -59,6 +62,21 @@
 
 <!-- Modal -->
 <div class="modal fade" id="accountVerificationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center"></div>
+<div class="modal fade" tabindex="-1" role="dialog" id="showRejectionReson" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">           
+            <div class="modal-header">             
+                <h5 class="modal-title">Reason</h5>             
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">               
+                    <span aria-hidden="true">×</span>             
+                </button>           
+            </div>           
+            <div class="modal-body">           
+                <p class="rejection_reason"></p>
+            </div>                    
+        </div>       
+    </div>    
+</div>
 @endsection
 @section('scripts')
 <script src="{{ asset('account/js/page/bank_account_verification.js')}}"></script>
