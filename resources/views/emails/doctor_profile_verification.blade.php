@@ -26,7 +26,7 @@
 
 								<tr>
 									<td align="center" style="line-height: 0px;">
-										<img style="display:block; line-height:0px; font-size:0px; border:0px;" src="http://74.207.248.179/neucrad/public/images/logo/nc_one.png" width="109" height="103" alt="logo">
+										<img style="display:block; line-height:0px; font-size:0px; border:0px;" src="https://www.nchealthhub.com/public/images/logo/nc_one.png" width="109" height="103" alt="logo">
 									</td>
 								</tr>
 
@@ -82,7 +82,7 @@
 										<table class="col2" width="200" border="0" align="right" cellpadding="0" cellspacing="0">
 											<tbody><tr>
 												<td align="center" style="line-height:0px;">
-													<img style="display:block; line-height:0px; font-size:0px; border:0px;" class="images_style" src="http://74.207.248.179/neucrad/public/images/doctor.png" width="150" height="150">
+													<img style="display:block; line-height:0px; font-size:0px; border:0px;" class="images_style" src="https://www.nchealthhub.com/public/images/doctor.png" width="150" height="150">
 												</td>
 											</tr>
 										</tbody></table>
@@ -160,7 +160,7 @@
 
 											<tr>
 												<td align="center" style="font-family: 'Lato', sans-serif; font-size:14px; color:#fff; line-height: 20px; font-weight: 300;">
-													Click here <a href="http://74.207.248.179/neucrad"><span style="color: #f1c40f;">NCHealthHub.com</span></a><br>
+													Click here <a href="https://www.nchealthhub.com"><span style="color: #f1c40f;">NCHealthHub.com</span></a><br>
 												 </td>
 											</tr>
 
