@@ -85,7 +85,7 @@ class AdminLoginController extends Controller
                 Auth::guard('admin')->attempt(['email' => $request->input('email'), 'password' => $request->password], $request->get('remember'));
             }
             if (Auth::guard('admin')->check()) {
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->intended(route('admin.dashboard.index'));
             }
         } else {
             return redirect()->route('admin.login')->with('message', 'Permission Denied!');

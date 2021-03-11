@@ -247,7 +247,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 	Route::group(['namespace' => 'Admin', 'middleware' => ['auth:admin', 'preventBackHistory']], function () {
 
 		Route::resource('dashboard', 'DashboardController');
-		Route::get('/admin/dashboard', 'DashboardController@index')->name('dashboard');
+		// Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 		route::post('doctor/chart', 'DashboardController@doctorChart')->name('dashboard.doctor.data');
 
 		Route::get('remove-picture/{id}', 'BaseController@removePicture')->name('remove-picture');

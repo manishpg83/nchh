@@ -1,6 +1,11 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="{{ url('/') }}">{{config('app.name', 'Neucrad')}}</a>
+        @if(Auth::user()->role->name == 'Admin')
+            <a href="{{ route('admin.dashboard.index') }}">{{config('app.name', 'Neucrad')}}</a>
+        @else
+            <a href="{{ url('/') }}">{{config('app.name', 'Neucrad')}}</a>
+        @endif
+
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
         <a href="{{ url('/') }}">Nc</a>
