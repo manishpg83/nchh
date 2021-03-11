@@ -1,9 +1,13 @@
 <aside id="sidebar-wrapper">
     <div class="sidebar-brand">
-        <a href="{{ url('/') }}">{{isset($siteTitle) ? $siteTitle : 'NC Health Hub'}}</a>
+        @if(Auth::user()->role->name == 'Hospital' || Auth::user()->role->name == 'Clinic' || Auth::user()->role->name == 'Pharmacy'
+            || Auth::user()->role->name == 'Diagnostics')
+            <a href="{{ route('account.show-profile-form') }}">{{isset($siteTitle) ? $siteTitle : 'NC Health Hub'}}</a>
+        @else
+            <a href="{{ url('/') }}">{{config('app.name', 'Neucrad')}}</a>
+        @endif
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
-        <a href="{{ url('/') }}">NC</a>
     </div>
     <ul class="sidebar-menu">
 
