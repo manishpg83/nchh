@@ -43,7 +43,7 @@ class RatingController extends BaseController
             $ratings = Rating::where('user_id', [Auth::id()])->orderBy('id', 'DESC')->get();
             return Datatables::of($ratings)
                 ->addColumn('user', function ($data) {
-                    return '<img src=" ' . $data->rateableUser->profile_picture . '" class="rounded rounded-circle float-left mr-2" style="width: 40px;min-height: 40px;"/> <span><h6 class="mb-0">' . $data->rateableUser->name . '</h6><p class="mb-0 l-0 f-12">+' . $data->rateableUser->phone . '</p></span>';
+                    return '<img src=" ' . $data->rateableUser->profile_picture . '" class="rounded rounded-circle float-left mr-2" style="width: 40px;min-height: 40px;"/> <span><h6 class="mb-0">' . $data->rateableUser->name . '</h6><p class="mb-0 l-0 f-12">+'.  $data->rateableUser->dialcode  . ' ' . $data->rateableUser->phone . '</p></span>';
                 })->addColumn('rate', function ($data) {
                     return '<div class="rating_box" data-rating="' . $data->rating . '"></div>';
                 })->addColumn('review', function ($data) {
