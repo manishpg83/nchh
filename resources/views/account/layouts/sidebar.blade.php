@@ -35,7 +35,7 @@
         </li>
         @endif
 
-        @if(checkPermission(['doctor','agent','clinic','hospital','diagnostics']))
+        @if(checkPermission(['doctor','agent','clinic','hospital','diagnostics', 'pharmacy']))
         <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
             <a class="nav-link" href="{{route('account.user.bank.account')}}">
                 <i class="fas fa-university"></i> <span>Verify Bank Account</span>
@@ -43,7 +43,7 @@
         </li>
         @endif
 
-        @if(checkPermission(['doctor','agent','clinic','hospital','diagnostics']))
+        @if(checkPermission(['doctor','agent','clinic','hospital','diagnostics', 'pharmacy']))
         <li class="nav-item dropdown @if(Route::is('account.user.wallet') || Route::is('account.user.wallet.withdraw.history')){{'active'}} @endif">
             <a class="nav-link has-dropdown" href="javascript:;">
                 <i class="fas fa-wallet"></i> <span>Wallet</span>
@@ -114,7 +114,7 @@
         </li>
         @endif
 
-        @if(checkPermission(['doctor','clinic','hospital']))
+        @if(checkPermission(['doctor','clinic','hospital', 'pharmacy']))
         <li class="nav-item dropdown @if(Route::is('account.staff.index') || Route::is('account.staff.create') || Route::is('account.staff.edit')){{'active'}} @endif">
             <a class="nav-link has-dropdown" href="javascript:;">
                 <i class="fas fa-users"></i> <span>Staff Manager</span>
@@ -155,7 +155,7 @@
         </li>
         @endif
 
-        @if(checkPermission(['doctor','clinic','hospital']))
+        @if(checkPermission(['doctor','clinic','hospital','pharmacy']))
         <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}">
             <a class="nav-link" href="{{route('account.healthfeed.index')}}">
                 <i class="far fa-newspaper"></i> <span>Health Feed</span>
