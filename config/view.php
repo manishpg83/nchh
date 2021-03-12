@@ -116,7 +116,8 @@ return [
         "mg SR" => "mg SR",
         "GEL" => "GEL",
         "ml" => "ml",
-        "units" => "units"
+        "units" => "units",
+        "other" => "other"
     ),
 
     'Frequency' => array(
