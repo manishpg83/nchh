@@ -72,6 +72,7 @@ function editDrug(id) {
                     drugModal.html(response.html);
                     drugModal.modal("toggle");
                     init_drug_form();
+                    $('#unit').trigger('change');
                 } else {
                     //
                 }
@@ -131,13 +132,17 @@ function init_drug_form() {
             name: "required",
             type: "required",
             strength: "required",
-            unit: "required"
+            unit: "required",
+            other_unit: function() {
+                return $('#unit').val() == 'other';
+            }
         },
         messages: {
             name: "Please enter name",
             type: "Please select drug type",
             strength: "Please enter strength",
-            unit: "Please select drug unit"
+            unit: "Please select drug unit",
+            other_unit: "Please enter other unit"
         },
         submitHandler: function(form) {
             var action = $(form).attr("action");
@@ -168,6 +173,14 @@ function init_drug_form() {
                     drugForm.find(".close-button").removeClass("disabled");
                 }
             });
+        }
+    });
+
+    $('#unit').on('change', function() {
+        if ($(this).val() == 'other') {
+            $('.showOtherUnitInput').removeClass('d-none');
+        } else {
+            $('.showOtherUnitInput').addClass('d-none');
         }
     });
 }
