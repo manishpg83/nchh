@@ -43,7 +43,7 @@ class DrugController extends BaseController
             $drugs = Drug::where('added_by', [Auth::id()])->orderBy('id', 'DESC')->get();
             return Datatables::of($drugs)
                 ->addColumn('strength', function ($data) {
-                    return $data->strength . $data->unit;
+                    return ($data->unit == 'other') ? $data->strength . $data->other_unit : $data->strength . $data->unit;
                 })->addColumn('instructions', function ($data) {
                     return '<span class="ws-break-spaces">' . $data->instructions . '</span>';
                 })->addColumn('action', function ($row) {

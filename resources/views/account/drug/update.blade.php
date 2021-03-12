@@ -36,12 +36,16 @@
                     </div>
                     <div class="col-sm-2 mb-2">
                         <label>Unit*</label>
-                        <select class="form-control" name="unit" data-live-search="true" data-style="bg-white rounded-pill px-4 py-3 shadow-sm ">
+                        <select class="form-control" name="unit" id="unit" data-live-search="true" data-style="bg-white rounded-pill px-4 py-3 shadow-sm ">
                             <option value="">Select Unit</option>
                             @foreach ($unit as $key => $value)
                             <option value="{{$key}}" @if($key==$drug->unit){{'selected'}}@endif>{{$value}}</option>
                             @endforeach
                         </select>
+                    </div>
+                    <div class="col-sm-2 mb-2 showOtherUnitInput d-none">
+                        <label>Other Unit*</label>
+                        <input type="text" class="form-control" name="other_unit" value="{{$drug->other_unit}}" placeholder="Enter Other Unit" required>
                     </div>
                     <div class="col-sm-3 mb-2">
                         <label for="instructions">Instructions</label>
