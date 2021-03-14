@@ -19,6 +19,7 @@
         <img class="search-profile p-0" src="{{$hospital->profile_picture}}">
         <span>{{$hospital->name}}</span>
         <span class="text-muted role-tag">{{$hospital->role->name}}</span>
+        <span class="text-muted" style="display: table-footer-group; ">@if($hospital->detail->services_list_name){{ substr($hospital->detail->services_list_name, 0, 40) }}... @endif</span>
     </a>
 </li>
 @endforeach
@@ -30,6 +31,7 @@
 <li class="list-item">
     <a class="menu-list" href="{{$clinic->getProfileUrl('clinic')}}"><img class="search-profile p-0" src="{{$clinic->profile_picture}}"><span>{{$clinic->name}}</span>
         <span class="text-muted role-tag">{{$clinic->role->name}}</span>
+        <span class="text-muted" style="display: table-footer-group; ">@if($clinic->detail->services_list_name){{ substr($clinic->detail->services_list_name, 0, 40) }}... @endif</span>
     </a>
 </li>
 @endforeach
