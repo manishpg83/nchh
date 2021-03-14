@@ -36,7 +36,7 @@
 
                 <div class="col-12 col-md-5">
                     <div class="dropdown w-100">
-                        <input class="form-control dropdown-toggle" type="text" name="keyword" placeholder="Search doctors, clinics, hospitals, etc." id="search" onkeyup="autoSuggest(this)" data-toggle="dropdown" autocomplete="off">
+                        <input class="form-control dropdown-toggle" type="text" name="keyword" placeholder="Search doctors, clinics, hospitals, etc." id="search" onkeyup="autoSuggest(this, $('#location').val())" data-toggle="dropdown" autocomplete="off">
                         <ul class="dropdown-menu w-100 nav-list" role="menu" aria-labelledby="search" id="search-list">
                             @foreach($specialist as $s)
                             <li class="list-item">

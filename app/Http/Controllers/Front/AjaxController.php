@@ -59,29 +59,54 @@ class AjaxController extends Controller
     {
         $data['search'] = $request->get('search');
         $name = $request->get('search');
+        $location = $request->get('location');
         try {
 
             $data['doctors'] = User::with('detail')->whereHas('role', function ($q) {
-                $q->where('keyword', 'doctor');
-            })->where('id', '!=', Auth::id() ? Auth::id() : 0)->where('as_doctor_verified', 2)->Where('name', 'LIKE', '%' . $request->get('search') . '%')->inRandomOrder()->limit(10)->get();
+                                        $q->where('keyword', 'doctor');
+                                    })
+                                    ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->where('as_doctor_verified', 2)
+                                    ->Where('name', 'LIKE', '%' . $request->get('search') . '%')
+                                    ->Where('city', 'LIKE', '%' . $location . '%')
+                                    ->inRandomOrder()
+                                    ->limit(10)
+                                    ->get();
 
             $data['clinics'] = User::with('detail')->whereHas('role', function ($q) {
-                $q->where('keyword', 'clinic');
-            })->where('id', '!=', Auth::id() ? Auth::id() : 0)->where('name', 'LIKE', '%' . $request->get('search') . '%')
-                ->inRandomOrder()->limit(10)->get();
+                                        $q->where('keyword', 'clinic');
+                                    })
+                                    ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+                                    ->Where('city', 'LIKE', '%' . $location . '%')
+                                    ->inRandomOrder()
+                                    ->limit(10)
+                                    ->get();
 
             $data['hospitals'] = User::with('detail')->whereHas('role', function ($q) {
-                $q->where('keyword', 'hospital');
-            })->where('id', '!=', Auth::id() ? Auth::id() : 0)
-                ->where('name', 'LIKE', '%' . $request->get('search') . '%')
-                ->inRandomOrder()->limit(10)->get();
+                                        $q->where('keyword', 'hospital');
+                                    })
+                                    ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->where('name', 'LIKE', '%' . $request->get('search') . '%')
+                                    ->Where('city', 'LIKE', '%' . $location . '%')
+                                    ->inRandomOrder()
+                                    ->limit(10)
+                                    ->get();
 
             $data['diagnostics'] = User::with('detail')->whereHas('role', function ($q) {
-                $q->where('keyword', 'diagnostics');
-            })->where('id', '!=', Auth::id() ? Auth::id() : 0)->where('name', 'LIKE', '%' . $request->get('search') . '%')
-                ->orWhereHas('services', function ($q) use ($name) {
-                    $q->where('name', 'LIKE', '%' . $name . '%');
-                })->inRandomOrder()->limit(10)->get();
+                                        $q->where('keyword', 'diagnostics');
+                                    })
+                                    ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->Where('city', 'LIKE', '%' . $location . '%')
+                                    ->Where(function($query) use ($request, $location, $name){
+                                        $query->where('name', 'LIKE', '%' . $request->get('search') . '%');
+                                        $query->orWhereHas('services', function ($q) use ($name) {
+                                                $q->where('name', 'LIKE', '%' . $name . '%');
+                                        });
+                                    })
+                                    ->inRandomOrder()
+                                    ->limit(10)
+                                    ->get();
 
             $data['specialities'] = Specialty::where('title', 'LIKE', '%' . $request->get('search') . '%')->get();
 
