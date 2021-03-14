@@ -75,6 +75,18 @@
                 <i class="far fa-user"></i> Profile
             </a>
             <div class="dropdown-divider"></div>
+            @if(Session::get('panel') != 'doctor-user' && Auth::user()->as_doctor_verified == 2 && Session::get('panel') != 'agent-user')
+                <a href="{{ route('account.user.switch-panel', ['panel' => 'doctor-user']) }}" class="dropdown-item has-icon">
+                    <i class="fas fa-stethoscope"></i> Go To Doctor Profile
+                </a>
+                <div class="dropdown-divider"></div>
+            @endif
+            @if(Session::get('panel') != 'agent-user' && Auth::user()->as_agent_verified == 2 && Session::get('panel') != 'doctor-user')
+                <a href="{{ route('account.user.switch-panel', ['panel' => 'agent-user']) }}" class="dropdown-item has-icon">
+                    <i class="fas fa-user-tie"></i> Go To Agent Profile
+                </a>
+                <div class="dropdown-divider"></div>
+            @endif
             <a class="dropdown-item has-icon text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </a>

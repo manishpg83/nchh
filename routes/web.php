@@ -231,6 +231,10 @@ Route::prefix('account')->name('account.')->group(function () {
 		Route::get('user/wallet/details', 'ProfileController@userWallet')->name('user.wallet');
 		Route::get('user/wallet/balance/withdraw', 'ProfileController@userWalletBalanceWithdraw')->name('user.wallet.balance.withdraw');
 		Route::get('user/wallet/withdraw/history', 'ProfileController@userWalletWithdrawHistory')->name('user.wallet.withdraw.history');
+
+		/* switch panel (as doctor, agent, patient) */
+		Route::get('user/switch-panel/{panel}', 'PanelController@switchPanel')->name('user.switch-panel');
+		Route::get('user/logout-switch-panel', 'PanelController@logoutSwitchPanel')->name('user.logout-switch-panel');
 	});
 });
 
