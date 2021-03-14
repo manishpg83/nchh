@@ -12,7 +12,7 @@
     </div>
     <ul class="sidebar-menu">
         @if(checkPermission(['admin']))
-        <li class="{{Route::is('admin.dashboard') ? 'active' : ''}}">
+        <li class="{{Route::is('admin.dashboard.index') ? 'active' : ''}}">
             <a class="nav-link" href="{{route('admin.dashboard.index')}}">
                 <i class="fas fa-tachometer-alt"></i> <span>Dashboard</span>
             </a>
