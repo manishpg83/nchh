@@ -177,7 +177,18 @@
                                 </div>
                                 @endif
                             </div>
-                            <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab"></div>
+                            <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
+                                <div class="card border-top-0">
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-1">Services</h5>
+                                        <span>{{ $services }}</span>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title mb-1">Specialities</h5>
+                                        <span>{{ $specialities }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
