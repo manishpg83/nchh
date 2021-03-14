@@ -159,6 +159,42 @@ data-field="phone" onclick="viewTextbox(this)">Edit</a> -->
                                 <h4>Other Information</h4>
                             </div>
                             <div class="row other_information_card">
+                                @if(checkPermission(['doctor','patient','agent']))
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Height</label>
+                                        <input type="text" name="height" class="form-control" value="{{ $user->height }}">
+                                    </div>
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Weight</label>
+                                        <input type="text" name="weight" class="form-control" value="{{ $user->weight }}">
+                                    </div>
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Do you have any known allergy?</label>
+                                        <div class="selectgroup w-100">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="is_known_allergy" value="1" class="selectgroup-input" @if($user->is_known_allergy) checked @endif>
+                                                <span class="selectgroup-button selectgroup-button-icon">Yes</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="is_known_allergy" value="0" class="selectgroup-input" @if(!is_null($user->is_known_allergy) && !$user->is_known_allergy) checked @endif>
+                                                <span class="selectgroup-button selectgroup-button-icon">No</span>
+                                            </label>
+                                          </div>
+                                    </div>
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Do you smoke?</label>
+                                        <div class="selectgroup w-100">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="is_smoke" value="1" class="selectgroup-input" @if($user->is_smoke) checked @endif>
+                                                <span class="selectgroup-button selectgroup-button-icon">Yes</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="is_smoke" value="0" class="selectgroup-input" @if(!is_null($user->is_smoke) && !$user->is_smoke) checked @endif>
+                                                <span class="selectgroup-button selectgroup-button-icon">No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endif
                                 @if(checkPermission(['clinic','hospital']))
                                 <div class="form-group col-md-6 col-12">
                                     <label>Speciality<i class="asterisk">*</i></label>
