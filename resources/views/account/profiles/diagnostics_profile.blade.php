@@ -36,7 +36,7 @@
                                         <div class="media-description text-muted">Identity proof, Diagnostics Center Registration Document</div>
                                         <div class="media-links">
                                             @if($user->as_diagnostics_verified == 2)
-                                            <span class="text-warning"><i class="far fa-check-circle"></i> Verified</span>
+                                            <a href="javascript:;" class="text-warning" data-toggle="tooltip" data-original-title="View Details" onclick="viewdiagnosticsverifieddocument()"><i class="far fa-check-circle"></i> Verified</a>
                                             @else
                                             @if(!empty($user->detail->identity_proof) && $user->detail->identity_proof_name != 'no_image.png' && !empty($user->detail->diagnostics_proof) && $user->detail->diagnostics_proof_name != 'no_image.png')
                                             <a href="javascript:;" id="diagnosticsProfileDocument" class="btn btn-sm btn-warning text-white" onclick="loadDiagnosticsProfileVerificationModal()">Change</a>
