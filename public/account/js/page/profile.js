@@ -273,6 +273,26 @@ function loadProfileVerificationModal() {
     }
 }
 
+function viewdoctorverifieddocument() {
+
+    if (typeof showProfileDocumentVerification_url !== "undefined") {
+        $.ajax({
+            url: showProfileDocumentVerification_url,
+            type: 'GET',
+            data: {type: 'approved-document'},
+            beforeSend: function() {},
+            success: function(res) {
+                profileModal.html(res.html);
+                profileModal.modal({ show: true, backdrop: 'static', keyboard: false });
+            },
+            error: function(res) {
+                toastrAlert('error', 'Profile', res.message)
+            },
+            complete: function() {}
+        });
+    }
+}
+
 function init_documentForm() {
 
     var form = $document.find("#uploadDocumentForm").show();

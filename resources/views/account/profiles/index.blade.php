@@ -54,7 +54,7 @@
                                         <div class="media-links">
                                             @if($step != 1)
                                             @if($user->as_doctor_verified == 2)
-                                            <span class="text-warning"><i class="far fa-check-circle"></i> Verified</span>
+                                            <a href="javascript:;" class="text-warning" data-toggle="tooltip" data-original-title="View Details" onclick="viewdoctorverifieddocument()"><i class="far fa-check-circle"></i> Verified</a>
                                             @else
                                             <a href="javascript:;" id="profileDocument" class="btn btn-sm {{($step != 2) ? 'btn-success':'btn-warning'}} text-white" onclick="loadProfileVerificationModal()">{{ ($step != 2) ? 'Change' : 'Add' }}</a>
                                             @endif
