@@ -139,6 +139,28 @@ function loadProfileDetailsModal() {
     }
 }
 
+function viewdoctorProfile() {
+    if (typeof showProfileDetails_url !== "undefined") {
+        $.ajax({
+            url: showProfileDetails_url,
+            type: 'GET',
+            data: {'type': 'approved-doctor'},
+            beforeSend: function() {},
+            success: function(res) {
+                profileModal.html(res.html);
+                $document.find('#otpbox .message').html(res.message);
+                profileModal.modal({ show: true, backdrop: 'static', keyboard: false });
+                init_profileDetailStep();
+
+            },
+            error: function(res) {
+                toastrAlert('error', 'Profile', res.message)
+            },
+            complete: function() {}
+        });
+    }
+}
+
 function init_profileDetailStep() {
 
     var profileForm = $document.find("#profileForm").show();

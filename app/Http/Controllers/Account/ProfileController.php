@@ -67,7 +67,11 @@ class ProfileController extends BaseController
             'specialist' => Specialty::pluck('title', 'id')->toArray()
         ];
         try {
-            $html = view('account.profiles.profile-modal', $data)->render();
+            if($request->type && $request->type == 'approved-doctor') 
+                $html = view('account.profiles.approved-doctor-detail-modal', $data)->render();
+            else
+                $html = view('account.profiles.profile-modal', $data)->render();
+            
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
