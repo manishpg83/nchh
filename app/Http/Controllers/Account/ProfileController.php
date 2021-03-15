@@ -289,7 +289,11 @@ class ProfileController extends BaseController
     {
         try {
             $data = ['title' => 'Agent Profile', 'user' => Auth::user()];
-            $html = view('account.profiles.agent_document', $data)->render();
+            if($request->type && $request->type == 'approved-document')
+                $html = view('account.profiles.verified_agent_document_modal', $data)->render();
+            else
+                $html = view('account.profiles.agent_document', $data)->render();
+
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];

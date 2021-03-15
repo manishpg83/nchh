@@ -40,6 +40,29 @@ function loadAgentProfileVerificationModal() {
     }
 }
 
+function viewagentverifieddocument() {
+    if (typeof uploadDocumentFormURL !== "undefined") {
+        $.ajax({
+            url: uploadDocumentFormURL,
+            type: "GET",
+            data: {type: 'approved-document' },
+            beforeSend: function() {},
+            success: function(res) {
+                agentProfileModal.html(res.html);
+                agentProfileModal.modal({
+                    show: true,
+                    backdrop: "static",
+                    keyboard: false
+                });
+            },
+            error: function(res) {
+                toastrAlert("error", "Profile", res.message);
+            },
+            complete: function() {}
+        });
+    }
+}
+
 function init_documentForm() {
     agentProfileForm = $document.find("#agentProfileForm");
     //Jquery validation of form field
