@@ -43,6 +43,28 @@ function loadDiagnosticsProfileVerificationModal() {
         });
     }
 }
+function viewdiagnosticsverifieddocument() {
+    if (typeof uploadDocumentFormURL !== "undefined") {
+        $.ajax({
+            url: uploadDocumentFormURL,
+            type: "GET",
+            data: {type: 'approved-document' },
+            beforeSend: function() {},
+            success: function(res) {
+                diagnosticsProfileModal.html(res.html);
+                diagnosticsProfileModal.modal({
+                    show: true,
+                    backdrop: "static",
+                    keyboard: false
+                });
+            },
+            error: function(res) {
+                toastrAlert("error", "Profile", res.message);
+            },
+            complete: function() {}
+        });
+    }
+}
 
 function init_documentForm() {
     diagnosticsProfileForm = $document.find("#diagnosticsProfileForm");
