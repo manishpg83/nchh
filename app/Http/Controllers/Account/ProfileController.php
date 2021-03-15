@@ -67,7 +67,11 @@ class ProfileController extends BaseController
             'specialist' => Specialty::pluck('title', 'id')->toArray()
         ];
         try {
-            $html = view('account.profiles.profile-modal', $data)->render();
+            if($request->type && $request->type == 'approved-doctor') 
+                $html = view('account.profiles.approved-doctor-detail-modal', $data)->render();
+            else
+                $html = view('account.profiles.profile-modal', $data)->render();
+            
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
@@ -128,7 +132,11 @@ class ProfileController extends BaseController
     {
         try {
             $data = ['title' => 'Accounts', 'user' => Auth::user()];
-            $html = view('account.profiles.upload-document', $data)->render();
+            if($request->type && $request->type == 'approved-document')
+                $html = view('account.profiles.show-verified-document-modal', $data)->render();
+            else
+                $html = view('account.profiles.upload-document', $data)->render();
+
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
@@ -281,7 +289,11 @@ class ProfileController extends BaseController
     {
         try {
             $data = ['title' => 'Agent Profile', 'user' => Auth::user()];
-            $html = view('account.profiles.agent_document', $data)->render();
+            if($request->type && $request->type == 'approved-document')
+                $html = view('account.profiles.verified_agent_document_modal', $data)->render();
+            else
+                $html = view('account.profiles.agent_document', $data)->render();
+
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];

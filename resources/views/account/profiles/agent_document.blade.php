@@ -16,10 +16,17 @@
                         <span class="text-danger">
                             <strong id="identity_proof-error"></strong>
                         </span>
-                        <div id="imagePreview">
-                            <img src="{{asset('../storage/app/document/no_image.png')}}"
-                                class="imagePreview thumbnail w-50 pt-2" id="preview" />
-                        </div>
+                        @if($user->detail->identity_proof)
+                            <div id="imagePreview">
+                                <img src="{{ $user->detail->identity_proof }}"
+                                    class="imagePreview thumbnail w-50 pt-2" id="preview" />
+                            </div>
+                        @else
+                            <div id="imagePreview">
+                                <img src="{{asset('../storage/app/document/no_image.png')}}"
+                                    class="imagePreview thumbnail w-50 pt-2" id="preview" />
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
