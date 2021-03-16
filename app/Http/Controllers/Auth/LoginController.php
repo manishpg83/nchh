@@ -108,6 +108,7 @@ class LoginController extends Controller
             // Set Auth Details
             Auth::login($user);
             DB::commit();
+            Session::put('panel', $user->role->keyword);
             //return redirect()->route('home');
             $result = ['status' => $this->success, 'message' => "Login successfully.", 'redirect' => "home"];
         } catch (Exception $e) {

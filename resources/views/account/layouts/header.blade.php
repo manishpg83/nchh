@@ -75,15 +75,21 @@
                 <i class="far fa-user"></i> Profile
             </a>
             <div class="dropdown-divider"></div>
-            @if(Session::get('panel') != 'doctor-user' && Auth::user()->as_doctor_verified == 2 && Session::get('panel') != 'agent-user')
-                <a href="{{ route('account.user.switch-panel', ['panel' => 'doctor-user']) }}" class="dropdown-item has-icon">
+            @if(Session::get('panel') != 'doctor' && Auth::user()->as_doctor_verified == 2)
+                <a href="{{ route('account.user.switch-panel', ['panel' => 'doctor']) }}" class="dropdown-item has-icon">
                     <i class="fas fa-stethoscope"></i> Go To Doctor Profile
                 </a>
                 <div class="dropdown-divider"></div>
             @endif
-            @if(Session::get('panel') != 'agent-user' && Auth::user()->as_agent_verified == 2 && Session::get('panel') != 'doctor-user')
-                <a href="{{ route('account.user.switch-panel', ['panel' => 'agent-user']) }}" class="dropdown-item has-icon">
+            @if(Session::get('panel') != 'agent' && Auth::user()->as_agent_verified == 2)
+                <a href="{{ route('account.user.switch-panel', ['panel' => 'agent']) }}" class="dropdown-item has-icon">
                     <i class="fas fa-user-tie"></i> Go To Agent Profile
+                </a>
+                <div class="dropdown-divider"></div>
+            @endif
+            @if(Session::get('panel') != 'patient')
+                <a href="{{ route('account.user.switch-panel', ['panel' => 'patient']) }}" class="dropdown-item has-icon">
+                    <i class="fas fa-user-tie"></i> Go To Patient Profile
                 </a>
                 <div class="dropdown-divider"></div>
             @endif

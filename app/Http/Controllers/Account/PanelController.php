@@ -17,7 +17,7 @@ class PanelController extends Controller
 
     public function switchPanel($panel) {
 
-        Session::put('previous-panel', 'patient');
+        Session::put('previous-panel', Session::get('panel'));
         Session::put('panel', $panel);
 
         return redirect()->route('account.agent.invite.user');

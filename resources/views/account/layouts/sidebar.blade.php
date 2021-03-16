@@ -9,7 +9,7 @@
     </div>
     <div class="sidebar-brand sidebar-brand-sm">
     </div>
-    @if(Session::get('panel') == 'agent-user') 
+    @if(Session::get('panel') == 'agent') 
         <ul class="sidebar-menu">
 
             @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
@@ -40,13 +40,15 @@
             </li>
             @endif
 
-            <li>
-                <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
-                    <i class="fas fa-sign-out-alt"></i> <span>Back To Patient Profile</span>
-                </a>
-            </li>
+            @if(Session::get('previous-panel'))
+                <li>
+                    <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
+                        <i class="fas fa-sign-out-alt"></i> <span>Back To {{ ucfirst(Session::get('previous-panel')) }} Profile</span>
+                    </a>
+                </li>
+            @endif
         </ul>
-    @elseif(Session::get('panel') == 'doctor-user')
+    @elseif(Session::get('panel') == 'doctor')
         <ul class="sidebar-menu">
 
             <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
@@ -141,13 +143,15 @@
                 </ul>
             </li>
 
+            @if(Session::get('previous-panel'))
             <li>
                 <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
-                    <i class="fas fa-sign-out-alt"></i> <span>Back To Patient Profile</span>
+                    <i class="fas fa-sign-out-alt"></i> <span>Back To {{ ucfirst(Session::get('previous-panel')) }} Profile</span>
                 </a>
             </li>
+            @endif
         </ul>
-    @elseif(Auth::user()->role->name == 'Patient')
+    @elseif(Session::get('panel') == 'patient')
         <ul class="sidebar-menu">
 
             <li class="@if(Route::is('myAppointment')){{'active'}} @endif">
@@ -202,24 +206,32 @@
             </li>
             @endif
 
-            @if(checkPermission(['doctor','patient','agent']) && Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
+            @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
             <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.agent.refferal.users')}}">
                     <i class="fas fa-users"></i> <span>Referral Users</span>
                 </a>
             </li>
             @endif
-
+{{-- 
             <li class="{{Route::is('account.notification.index') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.notification.index')}}">
                     <i class="far fa-bell"></i> <span>Notification</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.setting.index')}}">
                     <i class="fas fa-cog"></i> <span>Setting</span>
                 </a>
             </li>
+
+            @if(Session::get('previous-panel'))
+            <li>
+                <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
+                    <i class="fas fa-sign-out-alt"></i> <span>Back To {{ ucfirst(Session::get('previous-panel')) }} Profile</span>
+                </a>
+            </li>
+            @endif
 
         </ul>
     @else
