@@ -591,3 +591,9 @@ function addMarker(latlng, title, map) {
     marker.addListener('dragend', handleEvent);
 }
 /* End: Map Pin Location */
+
+function openRejectionReason(reason) {
+    $('.rejection_reason').html('');
+    $('#showRejectionReson').modal('toggle');
+    $('.rejection_reason').html(reason);
+}
