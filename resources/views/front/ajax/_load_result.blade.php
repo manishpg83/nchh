@@ -162,7 +162,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="{{route('appointment.index',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Book Appointment</a>
+                        <a href="{{$user->getProfileUrl($user->role->keyword)}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Book Appointment</a>
                         <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
                     </div>
                 </div>
