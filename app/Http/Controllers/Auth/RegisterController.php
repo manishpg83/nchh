@@ -155,6 +155,7 @@ class RegisterController extends Controller
                     }
 
                     $this->guard()->login($user);
+                    Session::put('panel', $user->role->keyword);
                     DB::commit();
                     $result = ["status" => $this->error, "message" => "User register successfully.", "result" => $user];
                 } else {
