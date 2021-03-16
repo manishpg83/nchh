@@ -156,7 +156,7 @@ class PageController extends BaseController
                     Thank you for apply,<br>
                     NC Health Hub';
                 } else {
-                    $user->update(['as_doctor_verified' => '3']);
+                    $user->update(['as_doctor_verified' => '3', 'doctor_rejection_reason' => $request->get('message')]);
                     $title = 'Your profile has been rejected';
                     $type = 'doctor_profile_verification_reject';
                     $content = 'Your profile with the name of ' . $user->name . ' has been rejected.' . $request->get('message');
