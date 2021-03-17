@@ -282,6 +282,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 		Route::resource('drug', 'DrugController');
 
+		Route::resource('drug-types', 'DrugTypeController');
+
 		Route::get('healthfeed/reject/{id}', 'HealthFeedController@reject')->name('healthfeed.reject');
 		Route::get('healthfeed/healthfeed-verification', 'HealthFeedController@getHealthFeedVerification')->name('healthfeed.healthfeed-verification');
 		Route::post('healthfeed/change-status', 'HealthFeedController@changeStatus')->name('healthfeed.change.status');
