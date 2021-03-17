@@ -85,13 +85,13 @@
             </ul>
         </li>
 
-        <li class="nav-item dropdown @if(Route::is('admin.drug.index')) active @endif">
+        <li class="nav-item dropdown @if(Route::is('admin.drug.index') || Route::is('admin.drug-types.index') || Route::is('admin.drug-units.index')) active @endif">
             <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-capsules"></i>
                 <span>Drugs</span></a>
             <ul class="dropdown-menu">
                 <li class="{{Route::is('admin.drug.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug.index')}}">Drugs List</a></li>
-                <li class="{{Route::is('admin.drug-types.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug-types.index')}}">Type</a></li>
-                <li class="{{Route::is('admin.healthfeed.healthfeed-verification') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.healthfeed.healthfeed-verification')}}">Unit</a></li>
+                <li class="{{Route::is('admin.drug-types.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug-types.index')}}">Types</a></li>
+                <li class="{{Route::is('admin.drug-units.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug-units.index')}}">Units</a></li>
             </ul>
         </li>
         <li class="{{Route::is('admin.permission.index') ? 'active' : ''}}">
