@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 use DataTables;
 use App\User;
 use App\Drug;
+use App\DrugType;
+use App\DrugUnit;
 use Exception;
 use Image;
 use Auth;
@@ -42,8 +44,10 @@ class DrugController extends BaseController
         if ($request->ajax()) {
             $drugs = Drug::where('added_by', [Auth::id()])->orderBy('id', 'DESC')->get();
             return Datatables::of($drugs)
-                ->addColumn('strength', function ($data) {
-                    return ($data->unit == 'other') ? $data->strength . $data->other_unit : $data->strength . $data->unit;
+                ->addColumn('type', function ($data) {
+                    return $data->drugType->name;
+                })->addColumn('strength', function ($data) {
+                    return ($data->unit == 'other') ? $data->strength . $data->other_unit : $data->strength . $data->drugUnit->name;
                 })->addColumn('instructions', function ($data) {
                     return '<span class="ws-break-spaces">'.$data->instructions.'</span>';
                 })->addColumn('action', function ($row) {
@@ -65,8 +69,8 @@ class DrugController extends BaseController
     public function create()
     {
         $data = ['title' => 'Add Drug'];
-        $data['type'] = config('view.Drug_Type');
-        $data['unit'] = config('view.Dosage_Unit');
+        $data['type'] = DrugType::orderBy('name', 'asc')->pluck('name', 'id');
+        $data['unit'] = DrugUnit::orderBy('name', 'asc')->pluck('name', 'id');
         $html = view('account.drug.create', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load drug data.', 'html' => $html];
 
@@ -132,8 +136,8 @@ class DrugController extends BaseController
     {
         $data['title'] = 'Edit drug';
         $data['drug'] = Drug::find($id);
-        $data['type'] = config('view.Drug_Type');
-        $data['unit'] = config('view.Dosage_Unit');
+        $data['type'] = DrugType::orderBy('name', 'asc')->pluck('name', 'id');
+        $data['unit'] = DrugUnit::orderBy('name', 'asc')->pluck('name', 'id');
         $html = view('account.drug.update', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load drug data.', 'html' => $html];
         return Response::json($result);

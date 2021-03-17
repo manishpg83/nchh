@@ -26,4 +26,14 @@ class Drug extends Model
     {
         return $this->attributes['type'] . ' ' . $this->attributes['name'] . ' (' . $this->attributes['strength'] . $this->attributes['unit'] . ')';
     }
+
+    public function drugType()  {
+        
+        return $this->belongsTo(DrugType::class, 'type')->withTrashed();;
+    }
+
+    public function drugUnit()  {
+        
+        return $this->belongsTo(DrugUnit::class, 'unit')->withTrashed();;
+    }
 }

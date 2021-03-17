@@ -84,10 +84,15 @@
                         Request</a></li>
             </ul>
         </li>
-        <li class="{{Route::is('admin.drug.index') ? 'active' : ''}}">
-            <a class="nav-link" href="{{route('admin.drug.index')}}">
-                <i class="fas fa-capsules"></i> <span>Drugs</span>
-            </a>
+
+        <li class="nav-item dropdown @if(Route::is('admin.drug.index') || Route::is('admin.drug-types.index') || Route::is('admin.drug-units.index')) active @endif">
+            <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-capsules"></i>
+                <span>Drugs</span></a>
+            <ul class="dropdown-menu">
+                <li class="{{Route::is('admin.drug.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug.index')}}">Drugs List</a></li>
+                <li class="{{Route::is('admin.drug-types.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug-types.index')}}">Types</a></li>
+                <li class="{{Route::is('admin.drug-units.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug-units.index')}}">Units</a></li>
+            </ul>
         </li>
         <li class="{{Route::is('admin.permission.index') ? 'active' : ''}}">
             <a class="nav-link" href="{{route('admin.permission.index')}}">
