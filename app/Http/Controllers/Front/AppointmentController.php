@@ -590,7 +590,10 @@ class AppointmentController extends BaseController
                     })->orderBy('id', 'DESC');
 
                     if ($request->get('appointment_type') && $request->get('appointment_type') !== "all") {
-                        $query = $query->where('appointment_type', $request->get('appointment_type'));
+                        if($request->get('appointment_type') == 'create' || $request->get('appointment_type') == 'completed' || $request->get('appointment_type') == 'cancelled')
+                            $query = $query->where('status', $request->get('appointment_type'));
+                        else
+                            $query = $query->where('appointment_type', $request->get('appointment_type'));
                     }
 
                     $datatable = DataTables::of($query->get());

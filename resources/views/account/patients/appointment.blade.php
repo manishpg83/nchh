@@ -16,6 +16,25 @@
             <div class="col-12 col-sm-12 col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <form id="appointmentFilter">
+                            <div class="row table-filter mb-2">
+                                <div class="col-sm-12 col-xl-3 m-b-30">
+                                    <label for="title" class="font-weight-bold">Search by type</label>
+                                    <select id="type" name="appointment_type" class="form-control">
+                                        <option value="all">All</option>
+                                        <option value="create">Booked</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="inperson">InPerson</option>
+                                        <option value="online">Online</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-xl-3 m-b-30">
+                                    <label for="title">&nbsp;</label>
+                                    <input type="search" name="search" class="form-control" placeholder="Search by keyword">
+                                </div>
+                            </div>
+                        </form>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered nowrap" id="appointmentTable" width="100%">
                                 <thead>
@@ -46,6 +65,7 @@
 <script type="text/javascript">
 var appointmentTable;
 
+var appointmentFilter = $('#appointmentFilter');
 //url 
 var getPatientAppointmentUrl = "{{route('account.patients.appointment', [$id,$name_slug])}}";
 </script>
