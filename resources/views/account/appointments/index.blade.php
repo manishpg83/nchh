@@ -32,8 +32,11 @@
                                     <label for="title" class="font-weight-bold">Search by type</label>
                                     <select id="type" name="appointment_type" class="form-control">
                                         <option value="all">All</option>
-                                        <option value="online">Online</option>
+                                        <option value="create">Booked</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        <option value="completed">Completed</option>
                                         <option value="inperson">InPerson</option>
+                                        <option value="online">Online</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-12 col-xl-3 m-b-30">

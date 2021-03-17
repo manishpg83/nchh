@@ -153,6 +153,13 @@ class PatientController extends BaseController
                 }
             }
 
+            if ($request->get('appointment_type') && $request->get('appointment_type') !== "all") {
+                if($request->get('appointment_type') == 'create' || $request->get('appointment_type') == 'completed' || $request->get('appointment_type') == 'cancelled')
+                    $appointment = $appointment->where('status', $request->get('appointment_type'));
+                else
+                    $appointment = $appointment->where('appointment_type', $request->get('appointment_type'));
+            }
+
             $appointment = $appointment->where('patient_id', $id)->orderBy('id', 'DESC')->get();
             return Datatables::of($appointment)
                 ->addColumn('patient_name', function ($data) {

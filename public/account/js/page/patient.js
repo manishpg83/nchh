@@ -28,10 +28,16 @@ $document.ready(function() {
     //get patient's appointment list
     if (typeof getPatientAppointmentUrl !== 'undefined') {
         appointmentTable = $('#appointmentTable').DataTable({
+            dom: "<'row'<'col-xs-12 col-lg-12't>><'row'<'col-lg-6'i><'col-lg-6'p>>",
             processing: true,
             serverSide: true,
             responsive: true,
-            ajax: getPatientAppointmentUrl,
+            ajax: {
+                url: getPatientAppointmentUrl,
+                data: function(d) {
+                    d.appointment_type = $('select[name="appointment_type"]').val();
+                }
+            },
             columns: [
                 { data: 'id', sortable: false, searchable: false, visible: false },
                 { data: 'patient_name', name: 'patient_name' },
@@ -46,6 +52,14 @@ $document.ready(function() {
             }
         });
     }
+
+    appointmentFilter.find('input[type=search]').on('keyup', function(e) {
+        appointmentTable.search(this.value).draw();
+    });
+
+    $('select[name="appointment_type"]').change(function(e) {
+        appointmentTable.draw();
+    });
 
     //get patient's appointment list
     if (typeof getPatientDiagnosticsAppointmentUrl !== 'undefined') {
