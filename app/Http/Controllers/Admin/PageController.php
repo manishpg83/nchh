@@ -784,7 +784,7 @@ class PageController extends BaseController
                     'receiver_id' => $request->id,
                     'title' => $title,
                     'type' => $type,
-                    'message' => $request->get('message'),
+                    'message' => $request->rejection_reason,
                 ];
 
                 Notification::create($data);
