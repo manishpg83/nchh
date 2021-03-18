@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
 use App\PracticeManager;
+use App\Service;
 use App\User;
 use Carbon\Carbon;
 use Exception;
@@ -125,11 +126,15 @@ class GlobalController extends Controller
 
         $user = User::with('detail')->whereHas('role', function ($role) {
             $role->where('keyword', 'doctor');
+        })->leftjoin('user_details', 'user_details.user_id', '=', 'users.id')
+        ->leftJoin('services', function($join){
+            $join->whereRaw("find_in_set(services.id, user_details.services)");
         })->whereHas('setting', function ($q) {
             $q->where('do_service_at_other_establishment', 1);
         })->where(function ($query) use ($request) {
-            $query->where('name', 'LIKE',  '%' . $request->get("term") . '%');
+            $query->where('users.name', 'LIKE',  '%' . $request->get("term") . '%');
             $query->orwhere('phone', 'LIKE',  '%' . $request->get("term") . '%');
+            $query->orwhere('services.name', 'LIKE',  '%' . $request->get("term") . '%');
             $query->orWhereHas('detail', function ($detail) use ($request) {
                 $detail->where('registration_number', 'LIKE',  '%' . $request->get("term") . '%');
                 $detail->orWhere('liecence_number', 'LIKE',  '%' . $request->get("term") . '%');
@@ -144,11 +149,13 @@ class GlobalController extends Controller
                 });
             }
             if (!empty($request->has('selected_value'))) {
-                $user = $user->whereNotIn('id', $request->get('selected_value'));
+                $user = $user->whereNotIn('users.id', $request->get('selected_value'));
             }
         }
 
-        $user = $user->orderBy('name')->paginate($resultCount);
+
+        $user = $user->select('users.*')->groupBy('users.id');
+        $user = $user->orderBy('users.name')->paginate($resultCount);
 
         $count = $user->total();
         $endCount = $offset + $resultCount;
