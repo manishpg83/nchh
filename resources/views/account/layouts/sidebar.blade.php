@@ -381,7 +381,7 @@
             </li>
             @endif
 
-            @if(checkPermission(['doctor','clinic','hospital','pharmacy']))
+            @if(checkPermission(['doctor','clinic','hospital','pharmacy', 'diagnostics']))
             <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.healthfeed.index')}}">
                     <i class="far fa-newspaper"></i> <span>Health Feed</span>
