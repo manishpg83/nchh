@@ -245,7 +245,7 @@
     <div id="container">
         <header>
             <div class="top_div">
-                <img class="company-logo" src="http://74.207.248.179/neucrad/public/images/logo/nc_one.png">
+                <img class="company-logo" src="https://www.nchealthhub.com/public/images/logo/nc_one.png">
                 <div class="company-address">
                     <span class="title">NC Health Hub</span><br>
                     <span class="subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</span>

@@ -377,15 +377,16 @@ function setValue($id) {
     $("input[name=search]").val($id);
 }
 
-function autoSuggest(field) {
+function autoSuggest(field, location) {
     var keyword = $(field).val();
+    var location = (location !== undefined) ? location : '';
     //if(search.length >= 2){ //this function work after 2 or more word for search
     if (typeof autoSearch !== "undefined") {
         $.ajax({
             url: autoSearch,
             type: "post",
             dataType: "json",
-            data: { search: keyword },
+            data: { search: keyword, location: location },
             beforeSend: function() {},
             success: function(res) {
                 $document.find("#search-list").html(res.html);

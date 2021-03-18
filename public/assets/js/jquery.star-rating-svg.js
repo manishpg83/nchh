@@ -190,8 +190,8 @@
             //lets you deselect stars 
             $polygonLeft.attr('style', 'stroke-opacity: 0;'); 
           }
-          if (index <= endIndex) {
-            $polygonRight.attr('style', 'fill:'+ratedColor);
+          if (index <= endIndex) { 
+            $polygonRight.attr('style', 'fill:'+ratedColor); 
           } else { 
             //lets you deselect stars 
             $polygonRight.attr('style', 'stroke-opacity: 0;'); 

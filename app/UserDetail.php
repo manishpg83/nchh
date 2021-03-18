@@ -38,7 +38,7 @@ class UserDetail extends Model
     {
         if ($this->attributes['specialty_ids']) {
             $data = stringToArray($this->attributes['specialty_ids']);
-            $specialty = Specialty::whereIn('id', $data)->pluck('title', 'id')->toArray();
+            $specialty = Specialty::whereIn('id', $data)->orderBy('title', 'asc')->pluck('title', 'id')->toArray();
             return empty($specialty) ? [] : arrayToString($specialty);
         } else {
             return '';
@@ -85,7 +85,7 @@ class UserDetail extends Model
     { 
         if ($this->attributes['services']) {
             $data = stringToArray($this->attributes['services']);
-            $services = Service::whereIn('id', $data)->pluck('name', 'id')->toArray();
+            $services = Service::whereIn('id', $data)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
             return empty($services) ? [] : arrayToString($services);
         } else {
             return '';

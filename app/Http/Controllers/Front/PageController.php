@@ -83,6 +83,8 @@ class PageController extends BaseController
         $data['profile'] = $user;
         $data['practice'] = PracticeManager::with('doctor')->where('added_by', $id)->groupBy('doctor_id')->get();
         $data['user'] = Auth::user();
+        $data['specialities'] = $user->detail->specialty_name;
+        $data['services'] = $user->detail->services_list_name;
 
         if ($user->role->keyword == 'diagnostics') {
             return view("front.pages.diagnostics_profile")->with($data);

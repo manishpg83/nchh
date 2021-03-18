@@ -42,7 +42,7 @@
                                             @if($user->as_doctor_verified != 2)
                                             <a href="javascript:;" id="profileDetail" class="btn btn-sm {{$step != 1 ? 'btn-success' : 'btn-warning' }} text-white" onclick="loadProfileDetailsModal()">{{($step != 1) ? 'Change' : 'Add' }}</a>
                                             @else
-                                            <span class="text-warning"><i class="far fa-check-circle"></i> Verified</span>
+                                                <a href="javascript:;" class="text-warning" data-toggle="tooltip" data-original-title="View Details" onclick="viewdoctorProfile()"><i class="far fa-check-circle"></i> Verified</a>
                                             @endif
                                         </div>
                                     </div>
@@ -57,7 +57,7 @@
                                         <div class="media-links">
                                             @if($step != 1)
                                             @if($user->as_doctor_verified == 2)
-                                            <span class="text-warning"><i class="far fa-check-circle"></i> Verified</span>
+                                            <a href="javascript:;" class="text-warning" data-toggle="tooltip" data-original-title="View Details" onclick="viewdoctorverifieddocument()"><i class="far fa-check-circle"></i> Verified</a>
                                             @else
                                             <a href="javascript:;" id="profileDocument" class="btn btn-sm {{($step != 2) ? 'btn-success':'btn-warning'}} text-white" onclick="loadProfileVerificationModal()">{{ ($step != 2) ? 'Change' : 'Add' }}</a>
                                             @endif
@@ -67,40 +67,6 @@
                                     </div>
                                 </li>
                                 <hr>
-
-                                <!-- <li class="media mt-4 establishment_div">
-                                    <img alt="image" class="mr-3 rounded-circle" width="70" src="{{asset('account/img/avatar/avatar-2.png')}}">
-                                    <div class="media-body">
-
-                                        <div class="media-title mb-1">Establishment Details</div>
-                                        <div class="media-description text-muted">Location, Timings, Fees.</div>
-                                        <div class="media-links">
-                                            @if($step != 1 && $step != 2)
-                                            <a href="javascript:;" id="btn_loadEstablishmentDetail" class="btn btn-sm {{ ($step == 4) ? 'btn-success' : 'btn-warning' }} text-white" onclick="loadEstablishmentModal(this)">{{ ($step != 3) ? 'Change' : 'Add' }}</a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </li> -->
-                                <!-- <div id="map"></div> -->
-                                <!-- <hr>
-                                <li class="media mt-4">
-                                <img alt="image" class="mr-3 rounded-circle" width="70"
-                                src="{{asset('account/img/avatar/avatar-2.png')}}">
-                                <div class="media-body">
-                                <div class="media-right">
-                                <div class="text-primary">Approved</div>
-                                </div>  
-                                <div class="media-title mb-1">Start meeting patients</div>
-                                <div class="text-time">Doctor’s basic details, medical registration, education qualification, establishment details etc.
-                                </div>  
-                                <div class="media-description text-muted">Doctor identity proof, registration
-                                proof, establishment ownership proof etc.
-                                </div>
-                                <div class="media-links">
-                                <a href="javascript:;" class="btn btn-warning text-white">Continue</a> 
-                                </div>
-                                </div>
-                                </li> -->
                             </ul>
                         </div>
                     </div>

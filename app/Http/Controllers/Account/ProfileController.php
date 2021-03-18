@@ -67,7 +67,11 @@ class ProfileController extends BaseController
             'specialist' => Specialty::pluck('title', 'id')->toArray()
         ];
         try {
-            $html = view('account.profiles.profile-modal', $data)->render();
+            if($request->type && $request->type == 'approved-doctor') 
+                $html = view('account.profiles.approved-doctor-detail-modal', $data)->render();
+            else
+                $html = view('account.profiles.profile-modal', $data)->render();
+            
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
@@ -128,7 +132,11 @@ class ProfileController extends BaseController
     {
         try {
             $data = ['title' => 'Accounts', 'user' => Auth::user()];
-            $html = view('account.profiles.upload-document', $data)->render();
+            if($request->type && $request->type == 'approved-document')
+                $html = view('account.profiles.show-verified-document-modal', $data)->render();
+            else
+                $html = view('account.profiles.upload-document', $data)->render();
+
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
@@ -281,7 +289,11 @@ class ProfileController extends BaseController
     {
         try {
             $data = ['title' => 'Agent Profile', 'user' => Auth::user()];
-            $html = view('account.profiles.agent_document', $data)->render();
+            if($request->type && $request->type == 'approved-document')
+                $html = view('account.profiles.verified_agent_document_modal', $data)->render();
+            else
+                $html = view('account.profiles.agent_document', $data)->render();
+
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
@@ -378,7 +390,11 @@ class ProfileController extends BaseController
     {
         try {
             $data = ['title' => 'Diagnostics Profile', 'user' => Auth::user()];
-            $html = view('account.profiles.diagnostics_document', $data)->render();
+            if($request->type && $request->type == 'approved-document')
+                $html = view('account.profiles.verified_diagnostics_document_modal', $data)->render();
+            else
+                $html = view('account.profiles.diagnostics_document', $data)->render();
+
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
             $result = ['status' => $this->error, 'message' => $this->exception_message];
@@ -520,7 +536,7 @@ class ProfileController extends BaseController
                 $user = Auth::user();
                 $data = [];
                 $user_account = UserBankAccount::updateOrCreate(['user_id' => $input['user_id']], $input);
-                $user->update(['is_bank_verified' => 1]);
+                $user->update(['is_bank_verified' => 1, 'account_id' => $user_account->id]);  // Added , 'account_id' => $user_account->id By Manish Bhuva
 
                 //get super admin id
                 $is_admin =  User::select('id', 'email')->whereHas('role', function ($q) {
@@ -626,8 +642,9 @@ class ProfileController extends BaseController
             $withdrawable_balance = UserWallet::whereHas('appointment', function ($q) {
                 $q->where('status', ['completed']);
             })->where('user_id', [Auth::id()])->where('status', null)->sum('price');
+            // Added Auth::user()->is_bank_verified == 2 By Manish Bhuva
+            if ($withdrawable_balance > 0 && Auth::user()->is_bank_verified == 2 && Auth::user()->account_id ) {
 
-            if ($withdrawable_balance > 0 && Auth::user()->account_id) {
                 $input = [
                     'account' => Auth::user()->account_id,
                     'amount' => $withdrawable_balance * 100,
@@ -669,7 +686,7 @@ class ProfileController extends BaseController
                     $result = ["status" => $this->error, "message" => $this->exception_message];
                 }
             } else {
-                if (!Auth::user()->account_id) {
+                if (Auth::user()->is_bank_verified != 2) {
                     $message = "Please verify your bank Account";
                 }else{
                     $message = "You have not sufficient balance in wallet";
