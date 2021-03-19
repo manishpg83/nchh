@@ -57,11 +57,16 @@
                 </a>
             </li>
 
-            <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.healthfeed.index')}}">
-                    <i class="far fa-newspaper"></i> <span>Health Feed</span>
-                </a>
+            <li class="nav-item dropdown @if(Route::is('account.healthfeed.index') || Route::is('account.healthfeed_category.index')) active @endif">
+                <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-book-medical"></i>
+                    <span>Health Feed</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Route::is('account.healthfeed_category.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.healthfeed_category.index')}}">Health Feed Category</a></li>
+                    <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.healthfeed.index')}}">Health Feed List</a></li>
+                    
+                </ul>
             </li>
+
 
             <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
@@ -111,11 +116,16 @@
                 </a>
             </li>
             
-            <li class="{{Route::is('account.drug.index') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.drug.index')}}">
-                    <i class="fas fa-capsules"></i> <span>Drugs</span>
-                </a>
+            <li class="nav-item dropdown @if(Route::is('account.drug.index') || Route::is('account.drug-types.index') || Route::is('account.drug-units.index')) active @endif">
+                <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-capsules"></i>
+                    <span>Drugs</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Route::is('account.drug.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.drug.index')}}">Drugs List</a></li>
+                    <li class="{{Route::is('account.drug-types.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.drug-types.index')}}">Types</a></li>
+                    <li class="{{Route::is('account.drug-units.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.drug-units.index')}}">Units</a></li>
+                </ul>
             </li>
+
 
             <li class="@if(Route::is('account.patients.index') || Route::is('account.patients.appointment') || Route::is('account.patients.appointment.detail') || Route::is('account.patients.diagnostics.appointment')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.patients.index')}}">
@@ -190,7 +200,7 @@
                 </ul>
             </li>
 
-            @if(checkPermission(['doctor','patient']))
+           <!--  @if(checkPermission(['doctor','patient']))
             <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.profiles')}}">
                     <i class="far fa-user"></i> <span>Doctor Profiles</span>
@@ -204,7 +214,40 @@
                     <i class="far fa-user"></i> <span>Agent Profiles</span>
                 </a>
             </li>
+            @endif -->
+
+            @if(checkPermission(['doctor']))
+            <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.profiles')}}">
+                    <i class="far fa-user"></i> <span>Doctor Profiles</span>
+                </a>
+            </li>
             @endif
+
+            @if(checkPermission(['agent']))
+            <li class="{{Route::is('account.agent.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.agent.profile')}}">
+                    <i class="far fa-user"></i> <span>Agent Profiles</span>
+                </a>
+            </li>
+            @endif 
+
+            @if(checkPermission(['patient']) && Auth::user()->as_doctor_verified != 2)
+            <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.profiles')}}">
+                    <i class="far fa-user"></i> <span>Become a Doctor</span>
+                </a>
+            </li>
+            @endif
+
+            @if(checkPermission(['doctor','patient']) && Auth::user()->as_agent_verified != 2)
+            <li class="{{Route::is('account.agent.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.agent.profile')}}">
+                    <i class="far fa-user"></i> <span>Become an Agent</span>
+                </a>
+            </li>
+            @endif
+
 
             @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
             <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">

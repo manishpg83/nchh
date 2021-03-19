@@ -87,7 +87,7 @@
                 </a>
                 <div class="dropdown-divider"></div>
             @endif
-            @if(Session::get('panel') != 'patient')
+            @if((Session::get('panel') != 'patient') && (Session::get('panel') == 'doctor' || Session::get('panel') == 'agent')) 
                 <a href="{{ route('account.user.switch-panel', ['panel' => 'patient']) }}" class="dropdown-item has-icon">
                     <i class="fas fa-user-tie"></i> Go To Patient Profile
                 </a>
