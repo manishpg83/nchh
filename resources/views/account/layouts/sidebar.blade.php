@@ -57,11 +57,16 @@
                 </a>
             </li>
 
-            <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.healthfeed.index')}}">
-                    <i class="far fa-newspaper"></i> <span>Health Feed</span>
-                </a>
+            <li class="nav-item dropdown @if(Route::is('account.healthfeed.index') || Route::is('account.healthfeed_category.index')) active @endif">
+                <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-book-medical"></i>
+                    <span>Health Feed</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Route::is('account.healthfeed_category.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.healthfeed_category.index')}}">Health Feed Category</a></li>
+                    <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.healthfeed.index')}}">Health Feed List</a></li>
+                    
+                </ul>
             </li>
+
 
             <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
@@ -111,11 +116,16 @@
                 </a>
             </li>
             
-            <li class="{{Route::is('account.drug.index') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.drug.index')}}">
-                    <i class="fas fa-capsules"></i> <span>Drugs</span>
-                </a>
+            <li class="nav-item dropdown @if(Route::is('account.drug.index') || Route::is('account.drug-types.index') || Route::is('account.drug-units.index')) active @endif">
+                <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-capsules"></i>
+                    <span>Drugs</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{Route::is('account.drug.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.drug.index')}}">Drugs List</a></li>
+                    <li class="{{Route::is('account.drug-types.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.drug-types.index')}}">Types</a></li>
+                    <li class="{{Route::is('account.drug-units.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.drug-units.index')}}">Units</a></li>
+                </ul>
             </li>
+
 
             <li class="@if(Route::is('account.patients.index') || Route::is('account.patients.appointment') || Route::is('account.patients.appointment.detail') || Route::is('account.patients.diagnostics.appointment')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.patients.index')}}">

@@ -178,9 +178,12 @@ Route::prefix('account')->name('account.')->group(function () {
 
 		/* Health Feed Module */
 		Route::resource('healthfeed', 'HealthFeedController');
+		Route::resource('healthfeed_category', 'HealthFeedCategoryController');
 
 		/* Drug Module */
 		Route::resource('drug', 'DrugController');
+		Route::resource('drug-types', 'DrugTypeController');
+		Route::resource('drug-units', 'DrugUnitController');
 
 		/* Practice Module */
 		Route::resource('practice', 'PracticeController');
