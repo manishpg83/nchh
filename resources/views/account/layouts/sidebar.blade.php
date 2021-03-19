@@ -200,7 +200,7 @@
                 </ul>
             </li>
 
-            @if(checkPermission(['doctor','patient']))
+           <!--  @if(checkPermission(['doctor','patient']))
             <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.profiles')}}">
                     <i class="far fa-user"></i> <span>Doctor Profiles</span>
@@ -214,7 +214,40 @@
                     <i class="far fa-user"></i> <span>Agent Profiles</span>
                 </a>
             </li>
+            @endif -->
+
+            @if(checkPermission(['doctor']))
+            <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.profiles')}}">
+                    <i class="far fa-user"></i> <span>Doctor Profiles</span>
+                </a>
+            </li>
             @endif
+
+            @if(checkPermission(['agent']))
+            <li class="{{Route::is('account.agent.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.agent.profile')}}">
+                    <i class="far fa-user"></i> <span>Agent Profiles</span>
+                </a>
+            </li>
+            @endif 
+
+            @if(checkPermission(['patient']) && Auth::user()->as_doctor_verified != 2)
+            <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.profiles')}}">
+                    <i class="far fa-user"></i> <span>Become a Doctor</span>
+                </a>
+            </li>
+            @endif
+
+            @if(checkPermission(['doctor','patient']) && Auth::user()->as_agent_verified != 2)
+            <li class="{{Route::is('account.agent.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.agent.profile')}}">
+                    <i class="far fa-user"></i> <span>Become an Agent</span>
+                </a>
+            </li>
+            @endif
+
 
             @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
             <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">
