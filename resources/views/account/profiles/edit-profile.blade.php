@@ -161,25 +161,31 @@ data-field="phone" onclick="viewTextbox(this)">Edit</a> -->
                             <div class="row other_information_card">
                                 @if(checkPermission(['doctor','patient','agent']))
                                     <div class="form-group col-md-4 col-12">
-                                        <label>Height</label>
-                                        <input type="text" name="height" class="form-control" value="{{ $user->height }}">
+                                        <label>Feet (Height)</label>
+                                        <select class="form-control select2" name="height_feet" id="height_feet">
+                                            <option value="" hidden>Select</option>
+                                            @for($i = 1; $i <= 9; $i++)
+                                                <option value="{{ $i }}" @if($user->height_feet == $i) selected @endif>{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Inches (Height)</label>
+                                    <select class="form-control select2" name="height_inches" id="height_inches">
+                                            <option value="" hidden>Select</option>
+                                            @for($i = 0; $i <= 11; $i++)
+                                                <option value="{{ $i }}" @if($user->height_inches == $i) selected @endif>{{ $i }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-4 col-12">
                                         <label>Weight</label>
-                                        <input type="text" name="weight" class="form-control" value="{{ $user->weight }}">
-                                    </div>
-                                    <div class="form-group col-md-4 col-12">
-                                        <label>Do you have any known allergy?</label>
-                                        <div class="selectgroup w-100">
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="is_known_allergy" value="1" class="selectgroup-input" @if($user->is_known_allergy) checked @endif>
-                                                <span class="selectgroup-button selectgroup-button-icon">Yes</span>
-                                            </label>
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="is_known_allergy" value="0" class="selectgroup-input" @if(!is_null($user->is_known_allergy) && !$user->is_known_allergy) checked @endif>
-                                                <span class="selectgroup-button selectgroup-button-icon">No</span>
-                                            </label>
-                                          </div>
+                                        <div class="input-group mb-2">
+                                            <input type="text" name="weight" class="form-control" value="{{ $user->weight }}">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">KG</div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="form-group col-md-4 col-12">
                                         <label>Do you smoke?</label>
@@ -193,6 +199,23 @@ data-field="phone" onclick="viewTextbox(this)">Edit</a> -->
                                                 <span class="selectgroup-button selectgroup-button-icon">No</span>
                                             </label>
                                         </div>
+                                    </div>
+                                    <div class="form-group col-md-4 col-12">
+                                        <label>Do you have any known allergy?</label>
+                                        <div class="selectgroup w-100">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="is_known_allergy" onclick="$('.allergyDiv').removeClass('d-none')" value="1" class="selectgroup-input" @if($user->is_known_allergy) checked @endif>
+                                                <span class="selectgroup-button selectgroup-button-icon">Yes</span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="is_known_allergy" onclick="$('.allergyDiv').addClass('d-none')" value="0" class="selectgroup-input" @if(!is_null($user->is_known_allergy) && !$user->is_known_allergy) checked @endif>
+                                                <span class="selectgroup-button selectgroup-button-icon">No</span>
+                                            </label>
+                                          </div>
+                                    </div>
+                                    <div class="form-group col-md-4 col-12 allergyDiv @if(!$user->is_known_allergy) d-none @endif">
+                                        <label>What type of allergy you have?</label>
+                                        <input type="text" name="allergy" class="form-control" id="allergy" value="{{ $user->allergy }}">
                                     </div>
                                 @endif
                                 @if(checkPermission(['clinic','hospital']))

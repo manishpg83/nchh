@@ -122,7 +122,7 @@
                         </a>
 
                         @if(isset($user->detail->specialty_name))
-                        <div class="font-15px text-secondary w-100">{{$user->detail->specialty_name}}</div>
+                        <div class="font-15px text-secondary w-100" style="display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">{{$user->detail->specialty_name}}</div>
                         @endif
 
                         @if(isset($user->detail->experience))
