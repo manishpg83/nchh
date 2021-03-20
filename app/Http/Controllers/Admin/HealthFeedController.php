@@ -51,7 +51,7 @@ class HealthFeedController extends BaseController
             $healthfeeds = HealthFeed::orderBy('id', 'DESC')->get();
             return Datatables::of($healthfeeds)
                 ->addColumn('title', function ($data) {
-                    return '' . $data->title . '<br><span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Health Feed category">' . $data->category->title . '</span>';
+                    return '' . $data->title . '<br><span class="badge badge-pill badge-info" data-toggle="tooltip" data-placement="top" title="Health Feed category">' . (($data->category->title == 'Other') ? $data->other_category : $data->category->title) . '</span>';
                 })->addColumn('image', function ($data) {
                     return '<img src=" ' . $data->cover_photo . '" class="rounded" style="width:100px"/>';
                 })->addColumn('status', function ($data) {
