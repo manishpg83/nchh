@@ -177,7 +177,8 @@ class RegisterController extends Controller
             'phone' => $request->get('phone'),
             'password' => $request->get('password'),
             'role_id' => $request->get('role_id'),
-            'dialcode' => $request->get('dialcode')
+            'dialcode' => $request->get('dialcode'),
+            'agree' => $request->get('agree')
         ];
 
         $rules = [
@@ -186,6 +187,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:8',
             'role_id' => 'required',
             'dialcode' => 'required',
+            'agree' => 'required'
         ];
 
         $validator = Validator::make($input, $rules);

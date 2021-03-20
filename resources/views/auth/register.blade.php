@@ -32,7 +32,7 @@
 
                     <div class="form-group register_as">
                         <span for="name">Are you a</span>
-                        <select class="col-6 @error('role_id') is-invalid @enderror" id="role_id" name="role_id">
+                        <select class="col-6 @error('role_id') is-invalid @enderror" id="role_id" name="role_id" onclick="changeRole()">
                             @foreach ($roles as $key => $value)
                             <option value="{{$key}}">{{$value}}</option>
                             @endforeach
@@ -71,6 +71,19 @@
                         <label for="password">Password</label>
                         <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" id="password" autocomplete="new-password">
                         @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" name="agree" id="agree" style="margin-top: 0.5rem;">
+                            <label class="form-check-label" for="agree" style="transform: none; text-transform: none;font-size: 13px;">
+                                I have read and agree to the <a href="{{ route('terms', ['type' => 'patient']) }}" class="terms" target="_blank">Terms and Conditions</a>.
+                            </label>
+                        </div>
+                        @error('agree')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
