@@ -47,6 +47,8 @@ Route::namespace('Front')->group(function () {
 		return redirect()->home();
 	})->name('autologin')->middleware('signed');
 
+	
+
 	/*if Auth user are manager and accountant can't show front (use middleware routeRestriction)*/
 	Route::group(['middleware' => 'routeRestriction'], function () {
 		/* Home Page */
@@ -61,6 +63,8 @@ Route::namespace('Front')->group(function () {
 		// Route::get('clinic/{id}/{name?}', 'PageController@clinicProfile')->name('clinic.profile');
 		Route::post('user/inquiry', 'PageController@userInquiry')->name('user.inquiry');
 		Route::get('thankyou', 'PageController@showThankyou')->name('user.thankyou');
+
+		Route::get('terms/{type}', 'PageController@terms')->name('terms');
 	});
 
 	Route::group(['middleware' => ['auth', 'preventBackHistory']], function () {
