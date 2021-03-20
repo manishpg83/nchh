@@ -11,7 +11,7 @@ class HealthFeed extends Model
 {
     protected $table = "health_feeds";
 
-    protected $fillable = ['user_id', 'title', 'cover_photo', 'content', 'category_ids', 'likes', 'views', 'status', 'feedback_message', 'video_url'];
+    protected $fillable = ['user_id', 'title', 'cover_photo', 'content', 'category_ids', 'likes', 'views', 'status', 'feedback_message', 'video_url', 'other_category'];
 
     public function category()
     {

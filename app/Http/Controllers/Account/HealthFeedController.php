@@ -49,7 +49,7 @@ class HealthFeedController extends BaseController
                 ->addColumn('title', function ($data) {
                     return $data->short_title;
                 })->addColumn('category', function ($data) {
-                    return $data->category->title;
+                    return ($data->category->title == 'Other') ? $data->other_category : $data->category->title;
                 })->addColumn('image', function ($data) {
                     return '<img src=" ' . $data->cover_photo . '" class="rounded" style="width:100px"/>';
                 })->addColumn('status', function ($data) {
@@ -97,6 +97,7 @@ class HealthFeedController extends BaseController
             'cover_photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             $result = ["status" => $this->error, "message" => $validator];
@@ -128,7 +129,7 @@ class HealthFeedController extends BaseController
                     'receiver_id' => isset($is_admin->id) ? $is_admin->id : '',
                     'title' => 'Request For Health Feed Approval',
                     'type' => 'health_feed',
-                    'message' => Auth::user()->name . ' has posted a health feed '.$healthfeed->title.' relevant to '.$healthfeed->category->title.'. please review and approve it.'
+                    'message' => Auth::user()->name . ' has posted a health feed '.$healthfeed->title.' relevant to '.($healthfeed->category->title == 'Other') ? $healthfeed->other_category : $healthfeed->category->title.'. please review and approve it.'
                 ];
 
                 Notification::create($data);
@@ -139,7 +140,7 @@ class HealthFeedController extends BaseController
                         'recipient_name' => 'NC Health HUB',
                         'title' => 'Request For Health Feed Approval',
                         'subject' => 'Request For The Approval Of The Health Feed',
-                        'content' => 'I’m writing to request approval for my new health feed.I have post health feed '.$healthfeed->title.' relevant to '.$healthfeed->category->title.'.'
+                        'content' => 'I’m writing to request approval for my new health feed.I have post health feed '.$healthfeed->title.' relevant to '.($healthfeed->category->title == 'Other') ? $healthfeed->other_category : $healthfeed->category->title.'.'
                     ]);
                     dispatch(new HealthFeedVerificationJob($mailInfo)); //add mail to queue
                 }
@@ -251,7 +252,7 @@ class HealthFeedController extends BaseController
                         'recipient_name' => 'NC Health HUB',
                         'title' => 'Request For Health Feed Approval',
                         'subject' => 'Request For The Approval Of The Health Feed',
-                        'content' => 'I’m writing to request approval for my updated health feed.I have post health feed '.$healthfeed->title.' relevant to '.$healthfeed->category->title.'.'
+                        'content' => 'I’m writing to request approval for my updated health feed.I have post health feed '.$healthfeed->title.' relevant to '.($healthfeed->category->title == 'Other') ? $healthfeed->other_category : $healthfeed->category->title.'.'
                     ]);
                     dispatch(new HealthFeedVerificationJob($mailInfo)); //add mail to queue
                 }

@@ -43,8 +43,17 @@ $document.ready(function() {
                 readURL(this, "preview");
             });
         }
+        showOtherCategory();
     });
 });
+
+function showOtherCategory() {
+    if($('select[name="category_ids"] option:selected').text() == 'Other') {
+        $('.showOtherCategoryDiv').removeClass('d-none');
+    } else {
+        $('.showOtherCategoryDiv').addClass('d-none');
+    }
+}
 
 function addHealthFeed() {
     if (typeof addHealthFeedUrl !== "undefined") {
