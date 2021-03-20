@@ -176,11 +176,21 @@ function init_healthfeed_form() {
             title: "required",
             video_url: {
                 url: true
-            }
+            },
+            content: 'required'
         },
+        ignore: ".note-editor *",
         messages: {
             category_ids: "Please select health feed category",
-            title: "Please enter health feed title"
+            title: "Please enter health feed title",
+            content: 'Please enter health feed content'
+        },
+        errorPlacement: function(error, element) {
+            if(element.hasClass("summernote")) {
+              error.insertAfter('.note-editor');
+            } else {
+              error.insertAfter(element);
+            }
         },
         submitHandler: function(form) {
             var action = $(form).attr("action");
@@ -217,6 +227,13 @@ function init_healthfeed_form() {
     $(".summernote").summernote({
         dialogsInBody: true,
         minHeight: 200,
-        maxHeight: 250
+        maxHeight: 250,
+        callbacks: {
+            onChange: function(contents, $editable) {
+                $(".summernote").val($(".summernote").summernote('isEmpty') ? $(".note-editable").html('') : contents);
+
+                $("#healthfeedForm").valid();
+            }
+        }
     });
 }

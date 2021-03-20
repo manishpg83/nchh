@@ -164,4 +164,9 @@ class LoginController extends Controller
              ]);
         }
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        Session::put('panel', $user->role->keyword);
+    }
 }

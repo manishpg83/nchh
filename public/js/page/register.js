@@ -24,6 +24,12 @@ $document.ready(function() {
 
 });
 
+function changeRole() {
+    $role = $('#role_id option:selected').text().toLowerCase();
+    console.log($role);
+    $('.terms').attr('href', '/terms/' + $role);
+}
+
 function requestOTP() {
     userForm = $document.find('#userForm');
     if (typeof formUser !== "undefined" && typeof is_phone_exist_url !== "undefined") {
@@ -56,12 +62,22 @@ function requestOTP() {
                         return $.trim(value);
                     },
                     valid_password: true
+                },
+                agree: {
+                    required: true
                 }
 
             },
             messages: {
                 role_id: "Please select any one..",
                 phone: { remote: "Phone number already exists.", }
+            },
+            errorPlacement: function (error, element) {
+                if (element.attr("type") == "checkbox") {
+                    element.parents('.form-check').append(error);
+                } else {
+                    error.insertAfter(element);
+                }
             },
             submitHandler: function(form) {
                 // console.log(iti.getSelectedCountryData().dialCode);
