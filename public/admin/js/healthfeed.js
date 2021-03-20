@@ -33,9 +33,18 @@ $document.ready(function () {
                 // alert('The file "' + fileName + '" has been selected.');
                 readURL(this, "preview");
             });
+            showOtherCategory();
         }
     });
 });
+
+function showOtherCategory() {
+    if($('select[name="category_ids"] option:selected').text() == 'Other') {
+        $('.showOtherCategoryDiv').removeClass('d-none');
+    } else {
+        $('.showOtherCategoryDiv').addClass('d-none');
+    }
+}
 
 //view blog
 function viewHealthFeed(id){

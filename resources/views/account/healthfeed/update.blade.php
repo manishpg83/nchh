@@ -17,7 +17,7 @@
                     <div class="col-sm-6 mb-2">
                         <label>Health Feed Category</label>
                         <select class="form-control" name="category_ids" data-live-search="true"
-                            data-style="bg-white rounded-pill px-4 py-3 shadow-sm ">
+                            data-style="bg-white rounded-pill px-4 py-3 shadow-sm " onchange="showOtherCategory()">
                             <option value="">Select Category</option>
                             @foreach ($healthfeed_category as $key => $value)
                             <option value="{{$key}}" @if($key==$healthfeed->
@@ -26,7 +26,13 @@
                         </select>
                     </div>
                     <div class="col-sm-6 mb-2">
-                        <label for="title">Title</label>
+                        <div class="d-none showOtherCategoryDiv">
+                            <label>Other Category</label>
+                            <input type="text" class="form-control" name="other_category" value="{{ $healthfeed->other_category }}">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label for="title">Health Feed Title</label>
                         <input type="text" name="title" value="{{$healthfeed->title}}" class="form-control" id="title"
                             placeholder="Enter healthfeed title">
                         <span class="text-danger">
@@ -34,7 +40,15 @@
                         </span>
                     </div>
                     <div class="col-sm-6 mb-2">
-                        <label for="cover_photo">Image </label>
+                        <label for="video_url">Video URL</label>
+                        <input type="text" name="video_url" class="form-control" id="video_url"
+                            placeholder="Enter video url" value="{{$healthfeed->video_url}}">
+                        <span class="text-danger">
+                            <strong id="video_url-error"></strong>
+                        </span>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                        <label for="cover_photo">Cover Photo </label>
                         <input type="file" name="cover_photo" class="form-control" id="cover_photo"
                             placeholder="upload profile picture">
                         <span class="text-danger">
@@ -44,14 +58,6 @@
                             <img src="{{$healthfeed->cover_photo}}" class="imagePreview thumbnail w-100 pt-2"
                                 id="preview" />
                         </div>
-                    </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="video_url">Video URL</label>
-                        <input type="text" name="video_url" class="form-control" id="video_url"
-                            placeholder="Enter video url" value="{{$healthfeed->video_url}}">
-                        <span class="text-danger">
-                            <strong id="video_url-error"></strong>
-                        </span>
                     </div>
                     <div class="col-sm-12 mb-2">
                         <label for="content">Content</label>
