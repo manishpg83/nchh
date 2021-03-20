@@ -133,4 +133,10 @@ class PageController extends BaseController
     {
         return view('front.pages.thankyou');
     }
+
+    public function terms($type)
+    {
+        $data['type'] = $type;
+        return view('front.pages.terms')->with($data);
+    }
 }
