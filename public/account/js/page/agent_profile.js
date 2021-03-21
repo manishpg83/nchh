@@ -76,8 +76,16 @@ function init_documentForm() {
                 required: true,
                 extension: "png|jpeg|jpg",
             },
+            agree : 'required'
         },
         ignore: [],
+        errorPlacement: function (error, element) {
+            if (element.attr("type") == "checkbox") {
+                element.parents('.custom-control').append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        },
         submitHandler: function(form) {
             var action = $(form).attr("action");
             var formData = new FormData($(form)[0]);

@@ -317,7 +317,8 @@ class ProfileController extends BaseController
         $rules = [
             'document_name' => 'required',
             'document_name.*' => 'required',
-            'document_proof.*' => 'image|mimes:jpeg,png,jpg,gif,svg'
+            'document_proof.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'agree' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);

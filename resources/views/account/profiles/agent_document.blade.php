@@ -63,6 +63,10 @@
                         </div>
                     </div>
                 @endif
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" value="1" name="agree" id="agree">
+                    <label class="custom-control-label" for="agree">I have read and agree to the <a href="{{ route('terms', ['type' => 'agent']) }}" class="terms" target="_blank">Terms and Conditions</a>.</label>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-success btn-submit"><i id="loader" class=""></i>Submit</button>
