@@ -47,14 +47,16 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <strong>Identity Proof</strong>
-                        <img src="{{$user->detail->identity_proof}}" class="imagePreview thumbnail pt-2 w-100"
-                            id="preview" alt="Identity Proof" />
-                    </div>
+                    @foreach ($documents as $document)
+                        <div class="col-sm-4 mt-3">
+                            <a href="{{$document->agent_document_src}}" target="_blank"><strong>{{ $document->title }}</strong></a>
+                            <img src="{{$document->agent_document_src}}" class="imagePreview thumbnail pt-2 w-100"
+                                id="preview" alt="Identity Proof" />
+                        </div>
+                    @endforeach
                     <div class="col-sm-2">
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6 mt-3">
                         <strong>Message</strong>
 
                         <p class="small">Note* : If the profile is to be disapproved, please enter a reason for
