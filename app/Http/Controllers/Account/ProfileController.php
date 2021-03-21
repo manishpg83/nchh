@@ -10,7 +10,9 @@ use App\Jobs\BankAccountVerificationJob;
 use App\Jobs\DiagnosticsProfileVerificationJob;
 use App\Specialty;
 use App\Notification;
+use App\Repositories\UploadRepository;
 use App\TimingManager;
+use App\Upload;
 use App\UserBankAccount;
 use App\UserDetail;
 use App\UserWallet;
@@ -30,17 +32,19 @@ use Yajra\DataTables\Facades\DataTables;
 class ProfileController extends BaseController
 {
     protected $random;
+    protected $uploadRepository;
     public $status = 200;
     public $success = 200;
     public $error = 400;
     public $exception_message = "Something went wrong, please try again.";
 
-    public function __construct()
+    public function __construct(UploadRepository $uploadRepository)
     {
         // $this->middleware('auth');
         // $this->random = Str::random(12);
         $this->middleware('checkPermission', ['only' => ['index']]);
         $this->api = new Api(config('razorpay.razor_key'), config('razorpay.razor_secret'));
+        $this->uploadRepository = $uploadRepository;
     }
 
     /* Function for Profiles Page */
@@ -288,7 +292,12 @@ class ProfileController extends BaseController
     public function showAgentProfileDetailsForm(Request $request)
     {
         try {
-            $data = ['title' => 'Agent Profile', 'user' => Auth::user()];
+            $user = Auth::user();
+            $documents = [];
+            if($user->agentDocuments)
+                $documents = $user->agentDocuments;
+                
+            $data = ['title' => 'Agent Profile', 'user' => $user , 'documents' => $documents];
             if($request->type && $request->type == 'approved-document')
                 $html = view('account.profiles.verified_agent_document_modal', $data)->render();
             else
@@ -296,6 +305,7 @@ class ProfileController extends BaseController
 
             $result = ["status" => $this->success, "message" => "Form loded", 'html' => $html];
         } catch (Exception $e) {
+            dd($e);
             $result = ['status' => $this->error, 'message' => $this->exception_message];
         }
         return Response::json($result);
@@ -305,7 +315,9 @@ class ProfileController extends BaseController
     {
 
         $rules = [
-            'identity_proof' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'document_name' => 'required',
+            'document_name.*' => 'required',
+            'document_proof.*' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -315,23 +327,27 @@ class ProfileController extends BaseController
             try {
                 $user = Auth::user();
                 $data = [];
-                if ($request->has('identity_proof') && !empty($request->file('identity_proof'))) {
+                
+                foreach($request->document_name as $key => $docName) {
+                    $params = [];
+                    $params['title'] = $docName;
+                    $params['type'] = 'agent';
+                    if(isset($request->document_proof[$key]))
+                        $params['document'] = $request->document_proof[$key];
 
-                    $identity_document = $request->file('identity_proof');
-                    $filename = time() . uniqId() . '.' . $identity_document->getClientOriginalExtension();
-                    Image::make($identity_document)->fit(500, 500, function ($constraint) {
-                        $constraint->upsize();
-                    })->save(storage_path('app/document/' . $filename));
-                    $data['identity_proof'] = $filename;
-
-                    /*remove the existing profile picture*/
-                    $identity_path = storage_path('app/document/' . $user->detail->identity_proof_name);
-                    if ($user->detail->identity_proof_name != "no_image.png") {
-                        @unlink($identity_path);
+                    $documentId = null;    
+                    if(isset($request->document_id[$key])){
+                        $documentId = $request->document_id[$key];
                     }
+
+                    $params['upload_path'] = config('custom.uploads.agent_doc');
+
+                    $upload = $this->uploadRepository->uploadDocument($params, $user, $documentId);
                 }
 
-                $user->detail()->update($data);
+                $deleteDocId = array_diff_key($request->document_id, $request->document_name);
+                $deleteDoc = Upload::whereIn('id', $deleteDocId)->delete();
+
                 $user->update(['as_agent_verified' => '1']);
 
                 //get super admin id
@@ -368,6 +384,7 @@ class ProfileController extends BaseController
 
                 $result = ["status" => $this->success, "message" => "Your Documents uploaded successfully."];
             } catch (Exception $e) {
+                dd($e);
                 $result = ['status' => $this->error, 'message' => $this->exception_message];
             }
         }

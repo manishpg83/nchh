@@ -277,4 +277,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Commission', 'user_id');
     }
+
+    public function agentDocuments()    {
+        
+        return $this->hasMany(Upload::class);
+    }
 }
