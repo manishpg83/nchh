@@ -7,6 +7,7 @@ use Illuminate\Auth\AuthenticationException;
 use Exception;
 use Throwable;
 use Auth;
+use Illuminate\Support\Arr;
 
 class Handler extends ExceptionHandler
 {
@@ -67,8 +68,7 @@ class Handler extends ExceptionHandler
             return response()->json(['status' => 'fail', 'code' => 401, 'message' => 'Unauthenticated.'], 401);
         }
 
-        $input = $exception->guards();
-        $guard = $input[0];
+        $guard = Arr::get($exception->guards(), 0);
         switch ($guard) {
             case 'admin':
                 $login = 'admin.login';
