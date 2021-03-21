@@ -167,6 +167,7 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        Auth::logoutOtherDevices(request('password'));
         Session::put('panel', $user->role->keyword);
     }
 }
