@@ -181,7 +181,7 @@
                                         <div class="col-lg-10 col-md-6">
                                             <div class="custom-control custom-checkbox terms_and_condition-error">
                                                 <input type="checkbox" name="terms_and_condition" class="custom-control-input required" id="terms_and_condition">
-                                                <label class="custom-control-label" for="terms_and_condition">I agree with the terms and conditions</label>
+                                                <label class="custom-control-label" for="terms_and_condition">I agree with the <a href="{{ route('terms', ['type' => 'doctor']) }}" class="terms" target="_blank">Terms and Conditions</a></label>
                                             </div>
                                         </div>
                                     </div>
