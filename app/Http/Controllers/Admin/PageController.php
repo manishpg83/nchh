@@ -410,6 +410,7 @@ class PageController extends BaseController
     public function checkAgentDetail($id)
     {
         $data['user'] = User::find($id);
+        $data['documents'] = $data['user']->agentDocuments;
         $html = view('admin.user.agent_details', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load user data.', 'html' => $html];
         return Response::json($result);
