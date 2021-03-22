@@ -191,7 +191,6 @@ function init_practice_form() {
 /* Start: Map Pin Location */
 function initMap() {
     var myLatlng = { lat: lati, lng: long };
-    console.log(myLatlng);
     var map = new google.maps.Map(document.getElementById('map_canvas'), { zoom: 12, center: myLatlng });
 
     addMarker(myLatlng, 'Default Marker', map);
@@ -218,6 +217,11 @@ function initMap() {
 function handleEvent(event) {
     document.getElementById('latitude').value = event.latLng.lat();
     document.getElementById('longitude').value = event.latLng.lng();
+
+    $latitude = event.latLng.lat();
+    $longitude = event.latLng.lng();
+    
+    getAddress($latitude,$longitude);
 }
 
 function addMarker(latlng, title, map) {
@@ -230,5 +234,16 @@ function addMarker(latlng, title, map) {
 
     marker.addListener('drag', handleEvent);
     marker.addListener('dragend', handleEvent);
+}
+
+function getAddress(latitude,longitude) {
+
+    LocationUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ latitude +","+ longitude +"&key="+ googleMapApi +"";
+               
+    axios.get(LocationUrl)
+    .then(function (response) {
+        userAddress = response.data.results[0];
+        $('#address').val(JSON.stringify(userAddress));
+    });
 }
 /* End: Map Pin Location */
