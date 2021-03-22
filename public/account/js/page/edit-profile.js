@@ -1,6 +1,12 @@
 $document = $(document);
 var rules, validation_msg, galleriesFileDropzone;
 $document.ready(function() {
+
+    $('input[name="weight"]').numeric({
+        allowMinus: false,
+        allowThouSep: false
+    });
+
     $.ajaxSetup({
         headers: header
     });
