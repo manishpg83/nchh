@@ -20,7 +20,7 @@ class PanelController extends Controller
         Session::put('previous-panel', Session::get('panel'));
         Session::put('panel', $panel);
 
-        return redirect()->route('account.agent.invite.user');
+        return redirect()->route('account.show-profile-form');
     }
 
     public function logoutSwitchPanel() {
@@ -29,6 +29,6 @@ class PanelController extends Controller
         Session::put('panel', $previousPanel);
         Session::forget('previous-panel');
 
-        return redirect()->route('account.agent.invite.user');
+        return redirect()->route('account.show-profile-form');
     }
 }

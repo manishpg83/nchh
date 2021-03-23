@@ -172,11 +172,12 @@ function init_staff_form() {
             $document.find('#basic_detail_box').empty();
             $document.find('#address_detail_box').remove();
             init_doctor_dropdown($('.search_doctor_dropdown'));
-
+            $(".buttontext").text('Send Request');
             /* apply validation method */
             staffManagerForm.find("#user_id").rules("add", { required: true, messages: { required: "Please select the doctor." } });
             /* staffManagerForm.find("input[name='fees']").rules("add", { required: true, number: true }); */
         } else {
+            $(".buttontext").text('Add');
             $document.find('#basic_detail_box').load(' #basic_detail_box', function() {
                 intlPhoneField('phone', FormStaff);
                 init_select2();

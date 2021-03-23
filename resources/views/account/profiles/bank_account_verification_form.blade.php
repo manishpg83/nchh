@@ -19,7 +19,7 @@
                     </div>
                     <div class="col-sm-6 mb-3">
                         <label for="account_number">Account Number*</label>
-                        <input type="text" name="account_number" class="form-control" id="account_number" placeholder="Enter Account Number" value="{{isset($user->bankDetail)? $user->bankDetail->account_number : ''}}">
+                        <input type="text" autocomplete="off" name="account_number" class="form-control" id="account_number" placeholder="Enter Account Number" value="{{isset($user->bankDetail)? $user->bankDetail->account_number : ''}}">
                         <span class="text-danger">
                             <strong id="account_number-error"></strong>
                         </span>
@@ -27,7 +27,7 @@
 
                     <div class="col-sm-6 mb-3">
                         <label for="confirm_account_number">Confirm Account Number*</label>
-                        <input type="password" name="confirm_account_number" class="form-control" id="confirm_account_number" placeholder="Re-Enter Account Number">
+                        <input type="password" autocomplete="off" name="confirm_account_number" class="form-control" id="confirm_account_number" placeholder="Re-Enter Account Number">
                         <span class="text-danger">
                             <strong id="confirm_account_number-error"></strong>
                         </span>

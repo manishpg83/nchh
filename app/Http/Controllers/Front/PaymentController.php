@@ -30,7 +30,7 @@ class PaymentController extends BaseController
 
     public function pay(Request $request)
     {
-        $this->_setPageTitle('Payments');
+        $this->_setPageTitle('Payment History');
         $data = [
             'content' => 'List of payments for book appointment.'
         ];
