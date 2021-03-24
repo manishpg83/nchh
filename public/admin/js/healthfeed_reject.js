@@ -126,3 +126,27 @@ function requestHealthFeed(data){
 		});
 	}
 }
+
+//view blog
+function viewHealthFeed(id){
+	if(typeof viewFullHealthFeed !== 'undefined'){
+		var url = viewFullHealthFeed.replace(':slug',id);
+		$.ajax({
+			url: url,
+			type: 'get',
+			dataType:'json',
+			success:function(response)  
+			{	
+				if(response.status == 200){
+					healthfeedModal.html(response.html);
+					healthfeedModal.modal('toggle');
+				}else{
+					//
+				}
+			},error:function(){
+				//
+			}
+		})
+	}
+
+}

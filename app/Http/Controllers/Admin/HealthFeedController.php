@@ -257,9 +257,10 @@ class HealthFeedController extends BaseController
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn = '<div class="btn-group " role="group">
+                <a href="javascript:;" class="mr-3" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="View HealthFeed" onclick="viewHealthFeed(' . $row->id . ');"><i class="far fa-eye"></i></a>&nbsp;&nbsp;&nbsp;
                 <button type="button" onclick="requestHealthFeed(this);" id="' . $row->id . '" value="1" class="btn btn-mat btn-success mr-2">Accept</button>
-                <button type="button" onclick="rejectHealthFeed(' . $row->id . ');" id="' . $row->id . '" value="2" class="btn btn-mat btn-danger">Reject</button>
-                </div>';
+                <button type="button" onclick="rejectHealthFeed(' . $row->id . ');" id="' . $row->id . '" value="2" class="btn btn-mat btn-danger">Reject</button></div>
+                ';
                     return $btn;
                 })
                 ->addColumn('image', function ($data) {

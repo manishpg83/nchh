@@ -39,6 +39,9 @@
 </section>
 
 <div class="modal fade healthfeedModal" id="large-Modal" tabindex="-1" role="dialog"></div>
+
+<div class="modal fade" id="healthfeedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center" data-backdrop="static" data-keyboard="false"></div>
+
 @endsection
 @section('page_script')
 <script src="{{ asset('admin/js/healthfeed_reject.js')}}" type="text/javascript"></script>
@@ -46,7 +49,8 @@
 var $document = $(document);
 var healthfeedRequestTable;
 var healthfeedForm;
-var healthfeedModal = $('.healthfeedModal');
+var healthfeedModal = $('#healthfeedModal');
+var viewFullHealthFeed = "{{route('admin.healthfeed.show',[':slug'])}}";
 
 var getHealthFeedRequestUrl = "{{ Route('admin.healthfeed.healthfeed-verification') }}";
 var rejectHealthFeedUrl = "{{route('admin.healthfeed.reject',[':slug'])}}";
