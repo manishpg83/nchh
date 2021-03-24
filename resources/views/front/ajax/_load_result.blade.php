@@ -58,47 +58,14 @@
 
                 <div class="card-footer">
                     <a href="{{route('appointment.index',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Book Appointment</a>
-                    <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
+                    @if($user->role->keyword == 'doctor')
+                        <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- <div class="col-md-4 col-sm-12 mb-4">
-    <div class="card">
-        <img class="card-img-top" src="{{$user->profile_picture}}" alt="{{$user->name}}">
-        <div class="card-body p-2">
-            <h5 class="card-title mb-1">{{$user->name}}</h5>
-            @if(isset($user->detail->specialty_name))
-            <div class="font-15px text-secondary w-100">{{$user->detail->specialty_name}}</div>
-            @endif
-
-            @if(isset($user->detail->experience))
-            <div class="font-13px text-dark w-100">{{$user->detail->experience}} {{$user->detail->experience > 1 ? 'Years of experience' : 'Year of experience' }}</div>
-            @endif
-
-            @if(isset($user->practice[0]))
-            <div class="clinic_details font-14px mt-2">
-                <strong>{{$user->practice[0]->locality.', '.$user->practice[0]->city}}</strong>
-                <span class="bullet"></span> {{$user->practice[0]->name}}
-                @php
-                if($user->practice[0]->doctor_id == $user->practice[0]->added_by){
-                $at = "clinic";
-                }else{
-                $at = isset($user->practice[0]->addedBy->role->name) ? strtolower($user->practice[0]->addedBy->role->name) : '';
-                }
-                @endphp
-                <div class="text-mute">₹{{$user->practice[0]->fees}} Consultation fee at {{$at}}</div>
-            </div>
-            @endif
-
-        </div>
-        <div class="card-footer">
-            <a href="{{route('appointment.index',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Book Appointment</a>
-            <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
-        </div>
-    </div>
-</div> -->
 @empty
 <div class="col-sm-12 mt-3">
     <!-- <h3 style="text-align: center"><i class="far fa-clock mr-3"></i>No data fount. Please try again...</h3> -->
@@ -163,51 +130,16 @@
 
                     <div class="card-footer">
                         <a href="{{$user->getProfileUrl($user->role->keyword)}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Book Appointment</a>
-                        <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
+                        @if($user->role->keyword == 'doctor')
+                            <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- <div class="col-md-4 col-sm-12 mb-4">
-        <div class="card">
-            <img class="card-img-top" src="{{$user->profile_picture}}" alt="{{$user->name}}">
-            <div class="card-body p-2">
-                <h5 class="card-title mb-1">{{$user->name}}</h5>
-                @if(isset($user->detail->specialty_name))
-                <div class="font-15px text-secondary w-100">{{$user->detail->specialty_name}}</div>
-                @endif
-
-                @if(isset($user->detail->experience))
-                <div class="font-13px text-dark w-100">{{$user->detail->experience}} {{$user->detail->experience > 1 ? 'Years of experience' : 'Year of experience' }}</div>
-                @endif
-
-                @if(isset($user->practice[0]))
-                <div class="clinic_details font-14px mt-2">
-                    <strong>{{$user->practice[0]->locality.', '.$user->practice[0]->city}}</strong>
-                    <span class="bullet"></span> {{$user->practice[0]->name}}
-                    @php
-                    if($user->practice[0]->doctor_id == $user->practice[0]->added_by){
-                    $at = "clinic";
-                    }else{
-                    $at = isset($user->practice[0]->addedBy->role->name) ? strtolower($user->practice[0]->addedBy->role->name) : '';
-                    }
-                    @endphp
-                    <div class="text-mute">₹{{$user->practice[0]->fees}} Consultation fee at {{$at}}</div>
-                </div>
-                @endif
-
-            </div>
-            <div class="card-footer">
-                <a href="{{route('appointment.index',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Book Appointment</a>
-                <a href="{{route('appointment.online_consult',[$user->id,$user->name_slug])}}" class="btn btn-outline-primary btn-sm mb-1"><i class="far fa-comments"></i> Video Consultation</a>
-            </div>
-        </div>
-    </div> -->
     @empty
     <div class="col-sm-12 mt-3">
-        <!-- <h3 style="text-align: center"><i class="far fa-clock mr-3"></i>No data fount. Please try again...</h3> -->
         <h5 class="text-warning m-5 text-center">No Record Found. Please try again...</h5>
     </div>
     @endforelse

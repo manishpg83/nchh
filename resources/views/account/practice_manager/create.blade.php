@@ -140,11 +140,12 @@
 <!-- <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center"></div> -->
 @endsection
 @section('scripts')
-<script src="{{ asset('account/js/page/practice_manager.js')}}"></script>
 <script type="text/javascript">
     var PracticeForm = $('#PracticeForm');
     var parseValue = JSON.parse($('#field_timing').val());
-    var lati = parseFloat("0.0");
-    var long = parseFloat("0.0");
+    var lati = parseFloat("23.033863");
+    var long = parseFloat("72.585022");
+    var googleMapApi = "{{ config('custom.google_map_api_key') }}";
 </script>
+<script src="{{ asset('account/js/page/practice_manager.js')}}"></script>
 @endsection
