@@ -563,6 +563,7 @@ class PageController extends BaseController
     public function checkDiagnosticsDetail($id)
     {
         $data['user'] = User::find($id);
+        $data['documents'] = $data['user']->diagnosticsDocuments;
         $html = view('admin.user.diagnostics_details', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load user data.', 'html' => $html];
         return Response::json($result);

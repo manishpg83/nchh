@@ -47,15 +47,14 @@
                 </div>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <strong>Identity Proof</strong>
-                        <img src="{{$user->detail->identity_proof}}" class="imagePreview thumbnail pt-2 w-100"
-                            id="preview" alt="Identity Proof" />
-                    </div>
-                    <div class="col-sm-4">
-                    <strong>Diagnostics Center Proof</strong>
-                        <img src="{{$user->detail->diagnostics_proof}}" class="imagePreview thumbnail pt-2 w-100"
-                            id="preview" alt="Diagnostics Proof" />
+                    @foreach ($documents as $document)
+                        <div class="col-sm-4 mt-3">
+                            <a href="{{$document->agent_document_src}}" target="_blank"><strong>{{ $document->title }}</strong></a>
+                            <img src="{{$document->agent_document_src}}" class="imagePreview thumbnail pt-2 w-100"
+                                id="preview" alt="Identity Proof" />
+                        </div>
+                    @endforeach
+                    <div class="col-sm-2">
                     </div>
                     <div class="col-sm-4">
                         <strong>Message</strong>
