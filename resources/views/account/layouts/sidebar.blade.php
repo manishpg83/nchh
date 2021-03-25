@@ -289,6 +289,14 @@
             </li>
             @endif
 
+            @if(checkPermission(['pharmacy']))
+            <li class="{{Route::is('account.pharmacy.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.pharmacy.profile')}}">
+                    <i class="far fa-user"></i> <span>Being a Pharmacy</span>
+                </a>
+            </li>
+            @endif
+
             @if(checkPermission(['diagnostics']))
             <li class="{{Route::is('account.diagnostics.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.diagnostics.profile')}}">

@@ -385,7 +385,6 @@ class ProfileController extends BaseController
 
                 $result = ["status" => $this->success, "message" => "Your Documents uploaded successfully."];
             } catch (Exception $e) {
-                dd($e);
                 $result = ['status' => $this->error, 'message' => $this->exception_message];
             }
         }

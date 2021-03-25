@@ -227,6 +227,11 @@ Route::prefix('account')->name('account.')->group(function () {
 		Route::post('diagnostics/profile/document-verification/store', 'ProfileController@storeDiagnosticsDocument')->name('diagnostics.profile.document.verification.store');
 		Route::resource('diagnostics_services', 'DiagnosticsServicesController');
 
+		// Pharmacy Services
+		Route::get('pharmacy/profile', 'PharmacyController@apply')->name('pharmacy.profile');
+		Route::get('pharmacy/profile/show', 'PharmacyController@showProfile')->name('pharmacy.profile.show');
+		Route::post('pharmacy/profile/store', 'PharmacyController@storeProfile')->name('pharmacy.profile.store');
+
 		/* User Account*/
 		Route::get('user/bank/account', 'ProfileController@userBankAccount')->name('user.bank.account');
 		Route::get('user/bank/account/details/show', 'ProfileController@showBankAccountDetailsForm')->name('user.bank.account.details.show');
