@@ -1,4 +1,4 @@
-<div class="modal-dialog modal-md" role="document">
+<div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="modellabel">{{$title}}</h5>
@@ -9,37 +9,63 @@
         <form id="diagnosticsProfileForm" action="{{route('account.diagnostics.profile.document.verification.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal-body pb-0">
-                <div class="form-group mb-0 row">
-                    <div class="col-sm-6 mb-2">
-                        <label for="name">Identity Proof*</label>
-                        <input type="file" name="identity_proof" class="form-control" id="identity_proof" placeholder="Select Identity proof">
-                        <span class="text-danger">
-                            <strong id="identity_proof-error"></strong>
-                        </span>
-                        <div id="imagePreview">
-                            @if(!empty($user->detail->identity_proof) && $user->detail->identity_proof_name != 'no_image.png')
-                            <img src="{{$user->detail->identity_proof}}" class="imagePreview thumbnail w-50 pt-2" id="preview" />
-                            @else
-                            <img src="{{asset('../storage/app/document/no_image.png')}}" class="imagePreview thumbnail w-50 pt-2" id="preview" />
-                            @endif
-                            
+                @if(count($documents) > 0)
+                    @foreach($documents as $key => $document)
+                        <input type="hidden" name="document_id[]" value="{{ $document->id }}">
+                    @endforeach
+                    <div class="documentDiv">
+                        @foreach($documents as $key => $document)
+                            <div class="doc_div doc_div_{{ $key }}" data-id="{{ $key }}">
+                                <div class="form-group mb-0 row">
+                                    <div class="col-sm-12 mb-2">
+                                        <label>Document Name*</label>
+                                        <input type="text" name="document_name[{{ $key }}]" id="document_name[{{ $key }}]" class="form-control document_name" placeholder="Document Name"
+                                            value="{{ $document->title }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-11 mt-3">
+                                        <label>Document* (jpeg, png, jpg)</label>
+                                        <input class="form-control document_proof" type="file" name="document_proof[{{ $key }}]" id="document_proof[{{ $key }}]" placeholder="Document Proof">
+                                        <label class="document_file_name">{{ $document->doc_orig_name }}</label>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        @if($loop->first)
+                                            <a href="javascript:void(0)" class="btn btn-primary btn-submit mt-5" onclick="addDocDiv()"><i class="fa fa-plus"></i></a>
+                                        @else
+                                            <a href="javascript:void(0)" class="btn btn-danger btn-submit mt-5" onclick="removeDocDiv({{ $key }})"><i class="fa fa-times"></i></a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <hr/>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="documentDiv">
+                        <div class="doc_div doc_div_0" data-id="0">
+                            <div class="form-group mb-0 row">
+                                <div class="col-sm-12 mb-2">
+                                    <label>Document Name*</label>
+                                    <input type="text" name="document_name[0]" id="document_name[0]" class="form-control document_name" placeholder="Document Name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-11 mt-3">
+                                    <label>Document* (jpeg, png, jpg)</label>
+                                    <input class="form-control document_proof" type="file" name="document_proof[0]" id="document_proof[0]" placeholder="Document Proof">
+                                </div>
+                                <div class="col-sm-1">
+                                    <a href="javascript:void(0)" class="btn btn-primary btn-submit mt-5" onclick="addDocDiv()"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                            <hr/>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-2">
-                        <label for="name">Diagnostics Center Proof*</label>
-                        <input type="file" name="diagnostics_proof" class="form-control" id="diagnostics_proof" placeholder="Select Diagnostics proof">
-                        <span class="text-danger">
-                            <strong id="diagnostics_proof-error"></strong>
-                        </span>
-                        <div id="imagePreview">
-                            @if(!empty($user->detail->diagnostics_proof) && $user->detail->diagnostics_proof_name != 'no_image.png')
-                            <img src="{{$user->detail->diagnostics_proof}}" class="imagePreview thumbnail w-50 pt-2" id="diagnostics-preview" />
-                            @else
-                            <img src="{{asset('../storage/app/document/no_image.png')}}" class="imagePreview thumbnail w-50 pt-2" id="diagnostics-preview" />
-                            @endif
-                            
-                        </div>
-                    </div>
+                @endif
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" value="1" name="agree" id="agree">
+                    <label class="custom-control-label" for="agree">I have read and agree to the <a href="{{ route('terms', ['type' => 'agent']) }}" class="terms" target="_blank">Terms and Conditions</a>.</label>
                 </div>
             </div>
             <div class="modal-footer">

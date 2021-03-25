@@ -407,7 +407,12 @@ class ProfileController extends BaseController
     public function showDiagnosticsProfileDetailsForm(Request $request)
     {
         try {
-            $data = ['title' => 'Diagnostics Profile', 'user' => Auth::user()];
+            $user = Auth::user();
+            $documents = [];
+            if($user->diagnosticsDocuments)
+                $documents = $user->diagnosticsDocuments;
+
+            $data = ['title' => 'Diagnostics Profile', 'user' => Auth::user(), 'documents' => $documents];
             if($request->type && $request->type == 'approved-document')
                 $html = view('account.profiles.verified_diagnostics_document_modal', $data)->render();
             else
@@ -424,8 +429,10 @@ class ProfileController extends BaseController
     {
 
         $rules = [
-            'identity_proof' => 'image|mimes:jpeg,png,jpg,gif,svg',
-            'diagnostics_proof' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'document_name' => 'required',
+            'document_name.*' => 'required',
+            'document_proof.*' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'agree' => 'required'
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -435,38 +442,26 @@ class ProfileController extends BaseController
             try {
                 $user = Auth::user();
                 $data = [];
-                if ($request->has('identity_proof') && !empty($request->file('identity_proof'))) {
+                foreach($request->document_name as $key => $docName) {
+                    $params = [];
+                    $params['title'] = $docName;
+                    $params['type'] = 'diagnostics';
+                    if(isset($request->document_proof[$key]))
+                        $params['document'] = $request->document_proof[$key];
 
-                    $identity_document = $request->file('identity_proof');
-                    $filename = time() . uniqId() . '.' . $identity_document->getClientOriginalExtension();
-                    Image::make($identity_document)->fit(500, 500, function ($constraint) {
-                        $constraint->upsize();
-                    })->save(storage_path('app/document/' . $filename));
-                    $data['identity_proof'] = $filename;
-
-                    /*remove the existing profile picture*/
-                    $identity_path = storage_path('app/document/' . $user->detail->identity_proof_name);
-                    if ($user->detail->identity_proof_name != "no_image.png") {
-                        @unlink($identity_path);
+                    $documentId = null;    
+                    if(isset($request->document_id[$key])){
+                        $documentId = $request->document_id[$key];
                     }
-                }
-                if ($request->has('diagnostics_proof') && !empty($request->file('diagnostics_proof'))) {
 
-                    $identity_document = $request->file('diagnostics_proof');
-                    $filename = time() . uniqId() . '.' . $identity_document->getClientOriginalExtension();
-                    Image::make($identity_document)->fit(500, 500, function ($constraint) {
-                        $constraint->upsize();
-                    })->save(storage_path('app/document/' . $filename));
-                    $data['diagnostics_proof'] = $filename;
+                    $params['upload_path'] = config('custom.uploads.agent_doc');
 
-                    /*remove the existing profile picture*/
-                    $identity_path = storage_path('app/document/' . $user->detail->diagnostics_proof_name);
-                    if ($user->detail->diagnostics_proof_name != "no_image.png") {
-                        @unlink($identity_path);
-                    }
+                    $upload = $this->uploadRepository->uploadDocument($params, $user, $documentId);
                 }
 
-                $user->detail()->update($data);
+                $deleteDocId = array_diff_key($request->document_id, $request->document_name);
+                $deleteDoc = Upload::whereIn('id', $deleteDocId)->delete();
+
                 $user->update(['as_diagnostics_verified' => '1']);
 
                 //get super admin id

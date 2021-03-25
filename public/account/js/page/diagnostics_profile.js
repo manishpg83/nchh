@@ -18,6 +18,7 @@ $document.ready(function() {
                 readURL(this, "diagnostics-preview");
             });
         }
+        validateDocName();
     });
 });
 
@@ -70,6 +71,24 @@ function init_documentForm() {
     diagnosticsProfileForm = $document.find("#diagnosticsProfileForm");
     //Jquery validation of form field
     diagnosticsProfileForm.validate({
+        rules: {
+            'document_name[*]' : {
+                required: true
+            },
+            'document_proof[*]' : {
+                required: true,
+                extension: "png|jpeg|jpg",
+            },
+            agree : 'required'
+        },
+        ignore: [],
+        errorPlacement: function (error, element) {
+            if (element.attr("type") == "checkbox") {
+                element.parents('.custom-control').append(error);
+            } else {
+                error.insertAfter(element);
+            }
+        },
         submitHandler: function(form) {
             var action = $(form).attr("action");
             var formData = new FormData($(form)[0]);
@@ -132,4 +151,61 @@ function sendForDiagnosticsVerification() {
             }
         });
     }
+}
+
+function addDocDiv() {
+
+    $dataId = $('.documentDiv .doc_div:last').data('id') + 1;
+
+    var html = `<div class="doc_div doc_div_`+ $dataId +`" data-id="`+ $dataId +`">
+                <div class="form-group mb-0 row">
+                    <div class="col-sm-12 mb-2">
+                        <label for="name">Document Name*</label>
+                        <input type="text" name="document_name[`+ $dataId +`]" id="document_name[`+ $dataId +`]" class="form-control document_name" placeholder="Document Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-11 mt-3">
+                        <label for="name">Document* (jpeg, png, jpg)</label>
+                        <input class="form-control document_proof" type="file" name="document_proof[`+ $dataId +`]" id="document_proof[`+ $dataId +`]  placeholder="Document Proof">
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="javascript:void(0)" data-id="`+ $dataId +`" class="btn btn-danger btn-submit mt-5" onclick="removeDocDiv(`+ $dataId +`)"><i class="fa fa-times"></i></a>
+                    </div>
+                </div>
+                <hr/>
+            <div>`;
+
+    $('.documentDiv').append(html);
+
+    validateDocName();
+}
+
+function validateDocName() {
+
+    $('.document_name').each(function() {
+        $(this).rules("add", 
+            {
+                required: true
+            })
+    });            
+    $('.document_proof').each(function() {
+        if($(this).next('label').attr('class') != 'document_file_name'){
+
+            $(this).rules("add", {
+                required: true,
+                extension: "png|jpeg|jpg",
+            })
+        } else {
+
+            $(this).rules("add", {
+                extension: "png|jpeg|jpg",
+            })
+        }
+    });            
+}
+
+function removeDocDiv($dataId) {
+
+    $('.doc_div_' + $dataId).remove();
 }
