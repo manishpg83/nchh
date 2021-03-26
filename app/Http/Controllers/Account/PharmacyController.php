@@ -45,7 +45,7 @@ class PharmacyController extends BaseController
             $documents = $user->pharmacyDocuments;
             $data = ['title' => 'Pharmacy Profile', 'user' => $user, 'documents' => $documents];
             if($request->type && $request->type == 'approved-document')
-                $html = view('account.profiles.verified_pharmacy_document_modal', $data)->render();
+                $html = view('account.profiles.pharmacy.verified_pharmacy_document_modal', $data)->render();
             else
                 $html = view('account.profiles.pharmacy.document_upload', $data)->render();
 

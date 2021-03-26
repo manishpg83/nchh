@@ -295,6 +295,43 @@ $document.ready(function() {
         });
     }
 
+    //get pharmacies verification list
+    if (typeof getPharmaciesVerificationList !== "undefined") {
+        pharmaciesVerificationTable = $(
+            "#pharmaciesVerificationTable"
+        ).DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: getPharmaciesVerificationList,
+            columns: [{
+                    data: "id",
+                    sortable: false,
+                    searchable: false,
+                    visible: false
+                },
+                { data: "name", name: "name" },
+                { data: "profile", name: "profile" },
+                {
+                    data: "phone",
+                    name: "phone",
+                    orderable: false,
+                    searchable: false
+                },
+                { data: "location", name: "	location" },
+                {
+                    data: "action",
+                    name: "action",
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            drawCallback: function() {
+                //init_switch_reload();
+            }
+        });
+    }
+
     //get user bank account list
     if (typeof getUserBankAccountList !== "undefined") {
         userBankAccountTable = $("#userBankAccountTable").DataTable({
@@ -561,6 +598,76 @@ function verifyDiagnosticsDetail($id, $action) {
                     success: function(data) {
                         dataTableModal.modal("toggle");
                         diagnosticsVerificationTable.draw();
+                    }
+                });
+            }
+        );
+    }
+}
+
+//view user
+function checkPharmacyDetail(id) {
+    if (typeof getPharmaciesDetailUrl !== "undefined") {
+        var url = getPharmaciesDetailUrl.replace(":slug", id);
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            success: function(response) {
+                if (response.status == 200) {
+                    dataTableModal.html(response.html);
+                    dataTableModal.modal("toggle");
+                } else {
+                    //
+                }
+            },
+            error: function() {
+                //
+            }
+        });
+    }
+}
+
+//verified user
+function verifyPharmaciesDetail($id, $action) {
+    var id = $id;
+    var action = $action;
+    var rejectMessage = document.getElementById("reject-message");
+    var message = rejectMessage.value;
+    if (action == "reject") {
+        var valid = rejectMessage.checkValidity();
+        if (valid) {
+            $document.find("#error-message").html("");
+        } else {
+            rejectMessage.focus();
+            $document
+                .find("#error-message")
+                .html("please enter a reason for disapproval");
+            return false;
+        }
+    }
+    if (typeof verifyPharmaciesDetailUrl !== "undefined") {
+        swal({
+                html: true,
+                title: "Request",
+                text: "Are you sure ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes!",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true
+            },
+            function() {
+                $.ajax({
+                    headers: header,
+                    type: "POST",
+                    dataType: "json",
+                    url: verifyPharmaciesDetailUrl,
+                    data: { id: id, action: action, message: message },
+                    success: function(data) {
+                        dataTableModal.modal("toggle");
+                        pharmaciesVerificationTable.draw();
                     }
                 });
             }

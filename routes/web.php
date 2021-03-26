@@ -285,7 +285,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 		Route::get('clinics', 'PageController@getClinic')->name('getClinic');
 		Route::get('hospitals', 'PageController@getHospital')->name('getHospital');
+
 		Route::get('pharmacies', 'PageController@getPharmacy')->name('getPharmacy');
+		Route::get('pharmacies/profile/verification/requests', 'PageController@pharmaciesProfileVerification')->name('pharmacies.profile.verification');
+		Route::get('pharmacies/profile/check/detail/{id}', 'PageController@checkPharmaciesDetail')->name('check.pharmacies.detail');
+		Route::post('pharmacies/profile/verify', 'PageController@pharmaciesProfileVerify')->name('pharmacies.profile.verify');
+
 
 		Route::resource('user', 'UserController');
 
