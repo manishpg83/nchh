@@ -69,11 +69,15 @@
                 <i class="fas fa-hospital"></i> <span>Hospital</span>
             </a>
         </li>
-        <!--  <li class="{{Route::is('admin.getPharmacy') ? 'active' : ''}}">
-        <a class="nav-link" href="{{route('admin.getPharmacy')}}">
-        <i class="fas fa-briefcase-medical"></i> <span>Pharmacy</span>
-        </a>
-        </li> -->
+        <li class="nav-item dropdown @if(Route::is('admin.getPharmacy') || Route::is('admin.pharmacies.profile.verification')) active @endif">
+            <a href="javascript:void(0);" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-diagnoses"></i>
+                <span>Pharmacy</span></a>
+            <ul class="dropdown-menu">
+                <li class="{{Route::is('admin.getPharmacy') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.getPharmacy')}}">Pharmacy</a></li>
+                <li class="{{Route::is('admin.pharmacies.profile.verification') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.pharmacies.profile.verification')}}">Verification Request</a>
+                </li>
+            </ul>
+        </li>
         <li class="nav-item dropdown @if(Route::is('admin.healthfeed.index') || Route::is('admin.healthfeed.healthfeed-verification') || Route::is('admin.healthfeed_category.index')) active @endif">
             <a href="javascript:;" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-book-medical"></i>
                 <span>Health Feed</span></a>

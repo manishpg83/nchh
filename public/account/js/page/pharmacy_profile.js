@@ -6,31 +6,20 @@ $document.ready(function() {
         headers: header
     });
 
-    diagnosticsProfileModal.on("shown.bs.modal", function() {
-        if ($("#identity_proof").length > 0) {
-            $("#identity_proof").change(function(e) {
-                readURL(this, "preview");
-            });
-        }
-
-        if ($("#diagnostics_proof").length > 0) {
-            $("#diagnostics_proof").change(function(e) {
-                readURL(this, "diagnostics-preview");
-            });
-        }
+    pharmacyProfileModal.on("shown.bs.modal", function() {
         validateDocName();
     });
 });
 
-function loadDiagnosticsProfileVerificationModal() {
+function loadPharmacyProfileVerificationModal() {
     if (typeof uploadDocumentFormURL !== "undefined") {
         $.ajax({
             url: uploadDocumentFormURL,
             type: "GET",
             beforeSend: function() {},
             success: function(res) {
-                diagnosticsProfileModal.html(res.html);
-                diagnosticsProfileModal.modal({
+                pharmacyProfileModal.html(res.html);
+                pharmacyProfileModal.modal({
                     show: true,
                     backdrop: "static",
                     keyboard: false
@@ -44,7 +33,7 @@ function loadDiagnosticsProfileVerificationModal() {
         });
     }
 }
-function viewdiagnosticsverifieddocument() {
+function viewpharmacyverifieddocument() {
     if (typeof uploadDocumentFormURL !== "undefined") {
         $.ajax({
             url: uploadDocumentFormURL,
@@ -52,8 +41,8 @@ function viewdiagnosticsverifieddocument() {
             data: {type: 'approved-document' },
             beforeSend: function() {},
             success: function(res) {
-                diagnosticsProfileModal.html(res.html);
-                diagnosticsProfileModal.modal({
+                pharmacyProfileModal.html(res.html);
+                pharmacyProfileModal.modal({
                     show: true,
                     backdrop: "static",
                     keyboard: false
@@ -68,9 +57,9 @@ function viewdiagnosticsverifieddocument() {
 }
 
 function init_documentForm() {
-    diagnosticsProfileForm = $document.find("#diagnosticsProfileForm");
+    pharmacyProfileForm = $document.find("#pharmacyProfileForm");
     //Jquery validation of form field
-    diagnosticsProfileForm.validate({
+    pharmacyProfileForm.validate({
         rules: {
             'document_name[*]' : {
                 required: true
@@ -100,15 +89,15 @@ function init_documentForm() {
                 dataType: "json",
                 contentType: false,
                 beforeSend: function() {
-                    diagnosticsProfileForm
+                    pharmacyProfileForm
                         .find(".btn-submit")
                         .addClass("disabled btn-progress");
-                    diagnosticsProfileForm.find(".close-button").addClass("disabled");
+                    pharmacyProfileForm.find(".close-button").addClass("disabled");
                 },
                 success: function(data) {
                     if (data.status == 200) {
-                        diagnosticsProfileModal.modal("toggle");
-                        diagnosticsProfileForm.trigger("reset");
+                        pharmacyProfileModal.modal("toggle");
+                        pharmacyProfileForm.trigger("reset");
                         window.location.reload();
                     } else {
                         toastrAlert("error", "Document", data.message);
@@ -116,41 +105,16 @@ function init_documentForm() {
                 },
                 error: function(data) {},
                 complete: function(data) {
-                    diagnosticsProfileForm
+                    pharmacyProfileForm
                         .find(".btn-submit")
                         .removeClass("disabled btn-progress");
-                    diagnosticsProfileForm
+                    pharmacyProfileForm
                         .find(".close-button")
                         .removeClass("disabled");
                 }
             });
         }
     });
-}
-
-function sendForDiagnosticsVerification() {
-    if (typeof sendDiagnosticsVerificationUrl != undefined) {
-        $.ajax({
-            type: "POST",
-            url: sendDiagnosticsVerificationUrl,
-            data: { as_doctor: true },
-            dataType: "json",
-            beforeSend: function() {
-                $("#diagnosticsProfileDocument").addClass("disabled btn-progress");
-            },
-            success: function(data) {
-                if (data.status == 200) {
-                    window.location.reload();
-                } else {
-                    toastrAlert("error", "Document", data.message);
-                }
-            },
-            error: function(data) {},
-            complete: function(data) {
-                $("#diagnosticsProfileDocument").removeClass("disabled btn-progress");
-            }
-        });
-    }
 }
 
 function addDocDiv() {
@@ -208,4 +172,10 @@ function validateDocName() {
 function removeDocDiv($dataId) {
 
     $('.doc_div_' + $dataId).remove();
+}
+
+function openRejectionReason(reason) {
+    $('.rejection_reason').html('');
+    $('#showRejectionReson').modal('toggle');
+    $('.rejection_reason').html(reason);
 }

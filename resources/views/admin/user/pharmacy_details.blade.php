@@ -69,9 +69,9 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" onclick="verifyDiagnosticsDetail(`{{$user->id}}`,'approved');"
+            <button type="button" onclick="verifyPharmaciesDetail(`{{$user->id}}`,'approved');"
                 class="btn btn-mat btn-success btn-sm">Approved</button>
-            <button type="button" onclick="verifyDiagnosticsDetail(`{{$user->id}}`,'reject');"
+            <button type="button" onclick="verifyPharmaciesDetail(`{{$user->id}}`,'reject');"
                 class="btn btn-mat btn-danger btn-sm">Reject</button>
         </div>
     </div>

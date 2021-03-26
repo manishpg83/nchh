@@ -322,6 +322,7 @@ class PageController extends BaseController
             $users = User::whereHas('role', function ($c) {
                 $c->where('keyword', 'pharmacy');
             })
+            ->where('as_pharmacy_verified', 2)
                 ->orderBy('id', 'DESC')->get();
             return Datatables::of($users)
                 ->addColumn('name', function ($data) {
@@ -343,6 +344,129 @@ class PageController extends BaseController
         }
 
         return view('admin.user.get_pharmacy')->with($data);
+    }
+
+    //get pharamcy profile verification pending list
+    public function pharmaciesProfileVerification(Request $request)
+    {
+        $this->_setPageTitle('Pharmacies');
+        $data = ['title' => 'Pharmacies', 'user' => Auth::user()];
+        if ($request->ajax()) {
+            $users = User::where('as_pharmacy_verified', '1')
+                ->orderBy('id', 'DESC')->get();
+            return Datatables::of($users)
+                ->addColumn('name', function ($data) {
+                    return $data->name;
+                })->addColumn('profile', function ($data) {
+                    return '<img src="' . $data->profile_picture . '" class="rounded" style="width:40px"/>';
+                })->addColumn('phone', function ($data) {
+                    return isset($data->phone) ? $data->phone : '<span class="badge badge-pill badge-info">Not Mentioned</span>';
+                })->addColumn('location', function ($data) {
+                    return isset($data->city) ? $data->city : '<span class="badge badge-pill badge-info">Not Mentioned</span>';
+                })->addColumn('action', function ($data) {
+                    $btn = '<button type="button" onclick="checkPharmacyDetail(' . $data->id . ');" id="' . $data->id . '" class="btn btn-mat btn-success btn-sm">Preview</button>';
+                    return $btn;
+                })->rawColumns(['name', 'profile', 'phone', 'location', 'action'])
+                ->make(true);
+        }
+
+        Notification::where('receiver_id', Auth::id())->where('type', 'pharmacy_profile_verification')->update(['is_read' => '1']);
+
+        return view('admin.user.pharmacy_verification')->with($data);
+    }
+
+    //view diagnostics profile
+    public function checkPharmaciesDetail($id)
+    {
+        $data['user'] = User::find($id);
+        $data['documents'] = $data['user']->pharmacyDocuments;
+        $html = view('admin.user.pharmacy_details', $data)->render();
+        $result = ['status' => $this->success, 'message' => 'load user data.', 'html' => $html];
+        return Response::json($result);
+    }
+
+    //verify pharmacy profile
+    public function pharmaciesProfileVerify(Request $request, Notification $notification)
+    {
+        $rules = [
+            'id' => 'required|exists:users,id',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator);
+        } else {
+            try {
+                $user = User::find($request->id);
+                if ($request->get('action') == 'approved') {
+                    $pharmacyRoleId = UserRole::where('keyword', 'pharmacy')->pluck('id')->first(); //get role id of pharmacy role
+                    $user->update(['role_id' => $pharmacyRoleId, 'as_pharmacy_verified' => 2]);
+                    Setting::updateOrCreate(['user_id' => $request->id], ['user_id' => $request->id]);
+                    $title = 'Your profile has been verified';
+                    $type = 'pharmacy_profile_verification_verify';
+                    $content = 'Your profile with the name of ' . $user->name . ' has been approved.';
+                    $sms_push_text =  $content;
+                    $mail_title = 'Your profile has been approved.';
+                    $mail_subject = 'Profile Approved on ' . $user->updated_at->format('d M, Y h:i a') . ' EST';
+                    $mail_content = 'Hey ' . $user->name . ',<br>
+                    Your profile with the name of ' . $user->name . ' has been approved.<br>
+                    <br>
+                    Thank you for apply,<br>
+                    NC Health Hub';
+                } else {
+                    $user->update(['as_pharmacy_verified' => '3', 'pharmacy_rejection_reason' => $request->get('message')]);
+                    $title = 'Your profile has been rejected';
+                    $type = 'pharmacy_profile_verification_reject';
+                    $content = 'Your profile with the name of ' . $user->name . ' has been rejected.' . $request->get('message');
+                    $sms_push_text = $content;
+                    $mail_title = 'Your profile has been rejected.';
+                    $mail_subject = 'Profile Rejected on ' . date('d M, Y h:i a', strtotime($user->updated_at)) . ' EST';
+                    $mail_content = 'Hey ' . $user->name . ',<br>
+                    Your profile with the name of ' . $user->name . ' has been rejected.<br>
+                    <br>
+                    Thank you for apply,<br>
+                    NC Health Hub';
+                }
+
+                $data = [
+                    'sender_id' => Auth::id(),
+                    'receiver_id' => $request->id,
+                    'title' => $title,
+                    'type' => $type,
+                    'message' => $request->get('message'),
+                ];
+
+                Notification::create($data);
+
+                if ($user->email) {
+                    $mailInfo = ([
+                        'receiver_email' => $user->email,
+                        'receiver_name' => $user->name,
+                        'title' => $mail_title,
+                        'subject' => $mail_subject,
+                        'content' => $mail_content,
+                    ]);
+                    dispatch(new DoctorProfileVerificationJob($mailInfo)); //add mail to queue
+                }
+
+                /* start notification*/
+                //send notification to app 
+                $androidToken = UserApp::where('user_id', $user->id)->where('device_type', 'Android')->orderBy('updated_at', 'DESC')->pluck('token')->first();
+
+                if (!empty($androidToken)) {
+                    $subject = $title;
+                    $extra = ['id' => $user->id, 'type' => $type];
+
+                    $notification->sendPushNotification("android", $androidToken, $subject, $sms_push_text, $extra);
+                }
+                /* end notification */
+
+                $result = ['status' => $this->success, 'message' => 'Status change successfully.'];
+            } catch (Exception $e) {
+                $result = ['status' => $this->error, 'message' => $this->exception_message];
+            }
+        }
+        return Response::json($result);
     }
 
     //get all agent list
@@ -563,6 +687,7 @@ class PageController extends BaseController
     public function checkDiagnosticsDetail($id)
     {
         $data['user'] = User::find($id);
+        $data['documents'] = $data['user']->diagnosticsDocuments;
         $html = view('admin.user.diagnostics_details', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load user data.', 'html' => $html];
         return Response::json($result);

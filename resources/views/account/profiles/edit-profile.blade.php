@@ -315,6 +315,7 @@ data-field="phone" onclick="viewTextbox(this)">Edit</a> -->
 <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center"></div>
 @endsection
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.alphanum/1.0.24/jquery.alphanum.min.js"></script>
 <script src="{{ asset('account/js/page/edit-profile.js')}}"></script>
 <script type="text/javascript">
     var userProfile;
