@@ -6,7 +6,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form id="diagnosticsProfileForm" action="{{route('account.diagnostics.profile.document.verification.store')}}" method="post" enctype="multipart/form-data">
+        <form id="pharmacyProfileForm" action="{{route('account.pharmacy.profile.store')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="modal-body pb-0">
                 @if(count($documents) > 0)
@@ -42,6 +42,7 @@
                         @endforeach
                     </div>
                 @else
+                    <input type="hidden" name="document_id[]" value="">
                     <div class="documentDiv">
                         <div class="doc_div doc_div_0" data-id="0">
                             <div class="form-group mb-0 row">

@@ -7,36 +7,23 @@
             </button>
         </div>
         <div class="modal-body pb-0">
+            @foreach($documents as $document)
             <div class="accordion">
                 <div class="accordion-header" aria-expanded="true">
-                    <h4>Identity Proof</h4>
+                    <h4>{{ $document->title }}</h4>
                 </div>
                 <div class="accordion-body collapse show" id="panel-body-1" data-parent="#accordion" style="">
                     <div class="row">
                         <div class="col-10">
-                            <img alt="Identity Proof" style="max-width: 150px;" src="{{ $user->detail->identity_proof }}">
+                            <img alt="Identity Proof" style="max-width: 150px;" src="{{ $document->agent_document_src }}">
                         </div>
                         <div class="col-md-2">
-                            <a href="{{ $user->detail->identity_proof }}" target="_blank" class="text-right"><i class="fa fa-download"></i></a>
+                            <a href="{{ $document->agent_document_src }}" target="_blank" class="text-right"><i class="fa fa-download"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="accordion">
-                <div class="accordion-header" aria-expanded="true">
-                    <h4>Diagnostics Center Proof</h4>
-                </div>
-                <div class="accordion-body collapse show" id="panel-body-2" data-parent="#accordion" style="">
-                    <div class="row">
-                        <div class="col-10">
-                            <img alt="Diagnostics Center Proof" style="max-width: 150px;" src="{{ $user->detail->diagnostics_proof }}">
-                        </div>
-                        <div class="col-md-2">
-                            <a href="{{ $user->detail->diagnostics_proof }}" target="_blank" class="text-right"><i class="fa fa-download"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>

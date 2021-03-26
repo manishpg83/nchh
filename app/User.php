@@ -280,6 +280,16 @@ class User extends Authenticatable
 
     public function agentDocuments()    {
         
-        return $this->hasMany(Upload::class);
+        return $this->hasMany(Upload::class)->where('type', 'agent');
+    }
+
+    public function diagnosticsDocuments()    {
+        
+        return $this->hasMany(Upload::class)->where('type', 'diagnostics');
+    }
+
+    public function pharmacyDocuments()    {
+        
+        return $this->hasMany(Upload::class)->where('type', 'pharmacy');
     }
 }
