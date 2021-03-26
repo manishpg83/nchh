@@ -92,7 +92,7 @@ class DashboardController extends BaseController
             'title' => 'Total Diagnostics',
             'count' => User::whereHas('role',function($d){
                 $d->where('keyword','diagnostics');
-            })->count(),
+            })->where('as_diagnostics_verified', '2')->count(),
             'navigation' => route('admin.getDiagnostics'),
         ];
         
