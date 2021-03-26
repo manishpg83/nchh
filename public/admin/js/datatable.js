@@ -89,7 +89,7 @@ $document.ready(function() {
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
                 $(function() {
-                    $("#portfolio").magnificPopup({
+                    $(".portfolio").magnificPopup({
                         delegate: "a",
                         type: "image",
                         image: {
@@ -132,7 +132,7 @@ $document.ready(function() {
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
                 $(function() {
-                    $("#portfolio").magnificPopup({
+                    $(".portfolio").magnificPopup({
                         delegate: "a",
                         type: "image",
                         image: {
