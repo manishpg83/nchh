@@ -85,7 +85,10 @@
                                     <label for="city">City<span class="text-danger">*</span></label>
                                     <input type="text" name="city" class="form-control" value="{{Auth::user()->city}}">
                                 </div>
-
+                                <div class="col-md-4 col-sm-12 mb-4">
+                                    <label for="state">State<span class="text-danger">*</span></label>
+                                    <input type="text" name="state" class="form-control" value="{{Auth::user()->state}}">
+                                </div>
                                 <div class="col-md-4 col-sm-12 mb-4">
                                     <label for="country">Country<span class="text-danger">*</span></label>
                                     <select id="country" name="country" class="form-control select2_field">

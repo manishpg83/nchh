@@ -42,9 +42,9 @@ class SettingController extends BaseController
      */
     public function index()
     {
-        $this->_setPageTitle('Setting');
+        $this->_setPageTitle('Settings');
         $data = [
-            'title' => 'Setting',
+            'title' => 'Settings',
             'user' => Auth::user(),
         ];
 
@@ -58,9 +58,9 @@ class SettingController extends BaseController
      */
     public function general()
     {
-        $this->_setPageTitle('General Setting');
+        $this->_setPageTitle('General Settings');
         $data = [
-            'title' => 'General Setting',
+            'title' => 'General Settings',
             'user' => Auth::user(),
         ];
 
@@ -130,9 +130,9 @@ class SettingController extends BaseController
      */
     public function consultant()
     {
-        $this->_setPageTitle('Consultant Setting');
+        $this->_setPageTitle('Consultant Settings');
         $data = [
-            'title' => 'Consultant Setting',
+            'title' => 'Consultant Settings',
             'user' => Auth::user(),
         ];
 
@@ -170,6 +170,6 @@ class SettingController extends BaseController
         // p($input);
         Setting::updateOrCreate(['user_id' => Auth::id()], $input);
 
-        return back()->with('success', 'Setting Changed.');
+        return back()->with('success', 'Settings Changed.');
     }
 }

@@ -23,28 +23,28 @@
                         <i class="fas fa-cog"></i>
                     </div>
                     <div class="card-body">
-                        <h4>General Setting</h4>
+                        <h4>General Settings</h4>
                         <p>General settings such as Change Password, Set Password so on.</p>
-                        <a href="{{Route('account.setting.general')}}" class="card-cta">Setting <i class="fas fa-chevron-right"></i></a>
+                        <a href="{{Route('account.setting.general')}}" class="card-cta">Settings <i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>
-            
-            @if(isAuthorize('account.setting.consultant') && checkPermission(['doctor','diagnostics'])) 
-            <div class="col-lg-6">
-                <div class="card card-large-icons">
-                    <div class="card-icon bg-primary text-white">
-                        <i class="fas fa-cog"></i>
-                    </div>
-                    <div class="card-body">
-                        <h4>Consultant Setting</h4>
-                        <p>Consultant settings such as consultant, duration, visibility.</p>
-                        <a href="{{Route('account.setting.consultant')}}" class="card-cta">Setting <i class="fas fa-chevron-right"></i></a>
+            @if(Session::get('panel') == 'doctor')
+                @if(isAuthorize('account.setting.consultant') && checkPermission(['doctor','diagnostics'])) 
+                <div class="col-lg-6">
+                    <div class="card card-large-icons">
+                        <div class="card-icon bg-primary text-white">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="card-body">
+                            <h4>Consultant Settings</h4>
+                            <p>Consultant settings such as consultant, duration, visibility.</p>
+                            <a href="{{Route('account.setting.consultant')}}" class="card-cta">Settings <i class="fas fa-chevron-right"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
+                @endif
             @endif
-
         </div>
     </div>
 </section>

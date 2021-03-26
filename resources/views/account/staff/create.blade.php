@@ -202,7 +202,7 @@
                             <div class="form-group row mb-4">
                                 <div class="col-sm-12">
                                     <!-- <button class="btn btn-info btn-reset float-right" type="reset">Reset</button> -->
-                                    <button class="btn btn-primary btn-submit float-right mr-2">Create</button>
+                                    <button class="btn btn-primary btn-submit float-right mr-2 buttontext">Add</button>
                                 </div>
                             </div>
                         </form>

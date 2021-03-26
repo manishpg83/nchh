@@ -19,34 +19,33 @@
                 </a>
             </li>
             @endif
-
-            <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.user.bank.account')}}">
-                    <i class="fas fa-university"></i> <span>Bank Account</span>
-                </a>
-            </li>
-
-            <li class="@if(Route::is('payment.received')){{'active'}} @endif">
-                <a class="nav-link" href="{{route('payment.received')}}">
-                    <i class="fas fa-money-bill-alt"></i> <span>Commission History</span>
-                </a>
-            </li>
-
             @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
             <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.agent.refferal.users')}}">
                     <i class="fas fa-users"></i> <span>My Referral</span>
                 </a>
             </li>
-            @endif
+            @endif            
 
-            @if(Session::get('previous-panel'))
+            <li class="@if(Route::is('payment.received')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('payment.received')}}">
+                    <i class="fas fa-money-bill-alt"></i> <span>Commission History</span>
+                </a>
+            </li>
+            <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.user.bank.account')}}">
+                    <i class="fas fa-university"></i> <span>Bank Account</span>
+                </a>
+            </li>
+           
+
+            <!-- @if(Session::get('previous-panel'))
                 <li>
                     <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
                         <i class="fas fa-sign-out-alt"></i> <span>Back To {{ ucfirst(Session::get('previous-panel')) }} Profile</span>
                     </a>
                 </li>
-            @endif
+            @endif -->
         </ul>
     @elseif(Session::get('panel') == 'doctor')
         <ul class="sidebar-menu">
@@ -82,7 +81,13 @@
                     @endif
                 </ul>
             </li>
-
+            @if(checkPermission(['doctor']))
+            <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.profiles')}}">
+                    <i class="far fa-user"></i> <span>Doctor Profiles</span>
+                </a>
+            </li>
+            @endif
             <li class="nav-item dropdown @if(Route::is('account.staff.index') || Route::is('account.staff.create') || Route::is('account.staff.edit')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
                     <i class="fas fa-users"></i> <span>Staff Manager</span>
@@ -106,10 +111,10 @@
                     <li class="{{Route::is('account.practice.create') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.practice.create')}}">Practice Create</a></li>
                 </ul>
             </li>
-
+            
             <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.setting.index')}}">
-                    <i class="fas fa-cog"></i> <span>Setting</span>
+                    <i class="fas fa-cog"></i> <span>Settings</span>
                 </a>
             </li>
             
@@ -146,13 +151,13 @@
                 </ul>
             </li>
 
-            @if(Session::get('previous-panel'))
+           <!--  @if(Session::get('previous-panel'))
             <li>
                 <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
                     <i class="fas fa-sign-out-alt"></i> <span>Back To {{ ucfirst(Session::get('previous-panel')) }} Profile</span>
                 </a>
             </li>
-            @endif
+            @endif -->
         </ul>
     @elseif(Session::get('panel') == 'patient')
         <ul class="sidebar-menu">
@@ -165,17 +170,23 @@
 
             <li class="{{Route::is('account.myDoctors') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.myDoctors')}}">
-                    <i class="fas fa-user-md"></i> <span>My Doctor</span>
+                    <i class="fas fa-user-md"></i> <span>My Doctors</span>
                 </a>
             </li>
 
             <li class="@if(Route::is('medical_record.index') || Route::is('medical_record.create') || Route::is('medical_record.edit')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('medical_record.index')}}">
-                    <i class="fas fa-notes-medical"></i> <span>Medical Record</span>
+                    <i class="fas fa-notes-medical"></i> <span>Medical Records</span>
                 </a>
             </li>
-
-            <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
+            @if(checkPermission(['doctor','patient','agent']))
+            <li class="nav-item dropdown @if(Route::is('payment.pay')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('payment.pay')}}">
+                    <i class="fas fa-money-bill-alt"></i> <span>Payment History</span>
+                </a>
+            </li>
+            @endif
+            <!-- <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
                     <i class="fas fa-money-bill-alt"></i> <span>Payments</span>
                 </a>
@@ -191,7 +202,7 @@
                     </li>
                     @endif
                 </ul>
-            </li>
+            </li> -->
 
            <!--  @if(checkPermission(['doctor','patient']))
             <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
@@ -209,13 +220,7 @@
             </li>
             @endif -->
 
-            @if(checkPermission(['doctor']))
-            <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.profiles')}}">
-                    <i class="far fa-user"></i> <span>Doctor Profiles</span>
-                </a>
-            </li>
-            @endif
+            
 
             @if(checkPermission(['agent']))
             <li class="{{Route::is('account.agent.profile') ? 'active' : ''}}">
@@ -242,13 +247,13 @@
             @endif
 
 
-            @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
+           <!--  @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
             <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.agent.refferal.users')}}">
                     <i class="fas fa-users"></i> <span>Referral Users</span>
                 </a>
             </li>
-            @endif
+            @endif -->
 {{-- 
             <li class="{{Route::is('account.notification.index') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.notification.index')}}">
@@ -257,17 +262,17 @@
             </li> --}}
             <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.setting.index')}}">
-                    <i class="fas fa-cog"></i> <span>Setting</span>
+                    <i class="fas fa-cog"></i> <span>Settings</span>
                 </a>
             </li>
 
-            @if(Session::get('previous-panel'))
+           <!--  @if(Session::get('previous-panel'))
             <li>
                 <a class="nav-link" href="{{route('account.user.logout-switch-panel')}}">
                     <i class="fas fa-sign-out-alt"></i> <span>Back To {{ ucfirst(Session::get('previous-panel')) }} Profile</span>
                 </a>
             </li>
-            @endif
+            @endif -->
 
         </ul>
     @else
@@ -332,7 +337,7 @@
             @if(checkPermission(['doctor','patient','agent']))
             <li class="@if(Route::is('medical_record.index') || Route::is('medical_record.create') || Route::is('medical_record.edit')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('medical_record.index')}}">
-                    <i class="fas fa-notes-medical"></i> <span>Medical Record</span>
+                    <i class="fas fa-notes-medical"></i> <span>Medical Records</span>
                 </a>
             </li>
 
@@ -344,7 +349,7 @@
 
             <li class="{{Route::is('account.myDoctors') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.myDoctors')}}">
-                    <i class="fas fa-user-md"></i> <span>My Doctor</span>
+                    <i class="fas fa-user-md"></i> <span>My Doctors</span>
                 </a>
             </li>
             @endif
@@ -472,7 +477,7 @@
             </li>
             <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.setting.index')}}">
-                    <i class="fas fa-cog"></i> <span>Setting</span>
+                    <i class="fas fa-cog"></i> <span>Settings</span>
                 </a>
             </li>
 

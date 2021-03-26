@@ -152,6 +152,7 @@ class PracticeController extends BaseController
             'phone' => 'required|regex:/^[0-9]{10}+$/',
             'address' => "required",
             'locality' => "required",
+            'state' => "required",
             'city' => "required",
             'country' => "required",
             'pincode' => "required",
