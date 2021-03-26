@@ -132,6 +132,12 @@ $document.ready(function() {
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
                 $(function() {
+                    /*$(".portfolio").on('click', function(event){
+        
+                        alert($(this).attr("#data-id"));
+                    });*/
+
+                     //alert($(this).attr("#data-id"));
                     $(".portfolio").magnificPopup({
                         delegate: "a",
                         type: "image",
@@ -675,4 +681,35 @@ function rejectBankAccountDetail($id) {
             });
 		}
 	});
+}
+
+
+/*$(function() {
+    $("[data-toggle='tooltip']").tooltip();
+    $(".portfolio").on('click', function(event){
+
+          alert($(this).attr("#data-id"));
+
+        $(".portfolio").magnificPopup({
+            delegate: "a",
+            type: "image",
+            image: {
+                cursor: null,
+                titleSrc: "title"
+            },
+            gallery: {
+                enabled: true,
+                preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
+                navigateByImgClick: true
+            }
+        });
+
+        //(... rest of your JS code)
+    });
+});*/
+function loadGallery(id)
+{
+    alert(id);
+    
+
 }
