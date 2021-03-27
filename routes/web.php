@@ -227,6 +227,11 @@ Route::prefix('account')->name('account.')->group(function () {
 		Route::post('diagnostics/profile/document-verification/store', 'ProfileController@storeDiagnosticsDocument')->name('diagnostics.profile.document.verification.store');
 		Route::resource('diagnostics_services', 'DiagnosticsServicesController');
 
+		/* Clinic services */
+		Route::get('clinic/profile', 'ClinicController@apply')->name('clinic.profile');
+		Route::get('clinic/profile/details/show', 'ClinicController@showProfile')->name('clinic.profile.show');
+		Route::post('clinic/profile/document-verification/store', 'ClinicController@storeProfile')->name('clinic.profile.store');
+
 		// Pharmacy Services
 		Route::get('pharmacy/profile', 'PharmacyController@apply')->name('pharmacy.profile');
 		Route::get('pharmacy/profile/show', 'PharmacyController@showProfile')->name('pharmacy.profile.show');
@@ -283,13 +288,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::post('user/bank/account/verify', 'PageController@userBankAccountVerify')->name('bank.account.verify');
 		Route::get('user/bank/account/verification/requests', 'PageController@userBankAccountVerification')->name('bank.account.verification');
 
-		Route::get('clinics', 'PageController@getClinic')->name('getClinic');
 		Route::get('hospitals', 'PageController@getHospital')->name('getHospital');
 
 		Route::get('pharmacies', 'PageController@getPharmacy')->name('getPharmacy');
 		Route::get('pharmacies/profile/verification/requests', 'PageController@pharmaciesProfileVerification')->name('pharmacies.profile.verification');
 		Route::get('pharmacies/profile/check/detail/{id}', 'PageController@checkPharmaciesDetail')->name('check.pharmacies.detail');
 		Route::post('pharmacies/profile/verify', 'PageController@pharmaciesProfileVerify')->name('pharmacies.profile.verify');
+
+		Route::get('clinics', 'PageController@getClinic')->name('getClinic');
+		Route::get('clinics/profile/verification/requests', 'PageController@clinicsProfileVerification')->name('clinics.profile.verification');
+		Route::get('clinics/profile/check/detail/{id}', 'PageController@checkClinicsDetail')->name('check.clinics.detail');
+		Route::post('clinics/profile/verify', 'PageController@clinicsProfileVerify')->name('clinics.profile.verify');
 
 
 		Route::resource('user', 'UserController');

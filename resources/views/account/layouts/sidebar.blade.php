@@ -305,7 +305,15 @@
             @if(checkPermission(['diagnostics']))
             <li class="{{Route::is('account.diagnostics.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.diagnostics.profile')}}">
-                    <i class="far fa-user"></i> <span>Being an Diagnostics</span>
+                    <i class="far fa-user"></i> <span>Being a Diagnostics</span>
+                </a>
+            </li>
+            @endif
+
+            @if(checkPermission(['clinic']))
+            <li class="{{Route::is('account.clinic.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.clinic.profile')}}">
+                    <i class="far fa-user"></i> <span>Being a Clinic</span>
                 </a>
             </li>
             @endif
