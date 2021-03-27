@@ -294,6 +294,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 		Route::get('user/bank/account/verification/requests', 'PageController@userBankAccountVerification')->name('bank.account.verification');
 
 		Route::get('hospitals', 'PageController@getHospital')->name('getHospital');
+		Route::get('hospitals/profile/verification/requests', 'PageController@hospitalsProfileVerification')->name('hospitals.profile.verification');
+		Route::get('hospitals/profile/check/detail/{id}', 'PageController@checkHospitalsDetail')->name('check.hospitals.detail');
+		Route::post('hospitals/profile/verify', 'PageController@hospitalsProfileVerify')->name('hospitals.profile.verify');
 
 		Route::get('pharmacies', 'PageController@getPharmacy')->name('getPharmacy');
 		Route::get('pharmacies/profile/verification/requests', 'PageController@pharmaciesProfileVerification')->name('pharmacies.profile.verification');

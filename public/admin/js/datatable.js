@@ -65,6 +65,41 @@ $document.ready(function() {
         });
     }
 
+    //get user verification list
+    if (typeof getHospitalsVerificationList !== "undefined") {
+        hospitalsVerificationTable = $("#hospitalsVerificationTable").DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: getHospitalsVerificationList,
+            columns: [{
+                    data: "id",
+                    sortable: false,
+                    searchable: false,
+                    visible: false
+                },
+                { data: "name", name: "name" },
+                { data: "profile", name: "profile" },
+                {
+                    data: "phone",
+                    name: "phone",
+                    orderable: false,
+                    searchable: false
+                },
+                { data: "location", name: "	location" },
+                {
+                    data: "action",
+                    name: "action",
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            drawCallback: function() {
+                //init_switch_reload();
+            }
+        });
+    }
+
     //get clinic list
     if (typeof getClinicList !== "undefined") {
         clinicTable = $("#clinicTable").DataTable({
@@ -122,12 +157,7 @@ $document.ready(function() {
                 },
                 { data: "name", name: "name" },
                 { data: "phone", name: "phone" },
-                { data: "email", name: "email" },
-                { data: "doctors", name: "doctors" },
-                { data: "locality", name: "locality" },
-                { data: "specialty", name: "specialty" },
-                { data: "services", name: "services" },
-                { data: "gallery", name: "gallery" }
+                { data: "email", name: "email" }
             ],
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
@@ -775,6 +805,76 @@ function verifyClinicsDetail($id, $action) {
                     success: function(data) {
                         dataTableModal.modal("toggle");
                         clinicsVerificationTable.draw();
+                    }
+                });
+            }
+        );
+    }
+}
+
+//view user
+function checkHospitalDetail(id) {
+    if (typeof getHospitalsDetailUrl !== "undefined") {
+        var url = getHospitalsDetailUrl.replace(":slug", id);
+        $.ajax({
+            url: url,
+            type: "get",
+            dataType: "json",
+            success: function(response) {
+                if (response.status == 200) {
+                    dataTableModal.html(response.html);
+                    dataTableModal.modal("toggle");
+                } else {
+                    //
+                }
+            },
+            error: function() {
+                //
+            }
+        });
+    }
+}
+
+//verified user
+function verifyHospitalsDetail($id, $action) {
+    var id = $id;
+    var action = $action;
+    var rejectMessage = document.getElementById("reject-message");
+    var message = rejectMessage.value;
+    if (action == "reject") {
+        var valid = rejectMessage.checkValidity();
+        if (valid) {
+            $document.find("#error-message").html("");
+        } else {
+            rejectMessage.focus();
+            $document
+                .find("#error-message")
+                .html("please enter a reason for disapproval");
+            return false;
+        }
+    }
+    if (typeof verifyHospitalsDetailUrl !== "undefined") {
+        swal({
+                html: true,
+                title: "Request",
+                text: "Are you sure ?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes!",
+                closeOnConfirm: true,
+                showLoaderOnConfirm: true
+            },
+            function() {
+                $.ajax({
+                    headers: header,
+                    type: "POST",
+                    dataType: "json",
+                    url: verifyHospitalsDetailUrl,
+                    data: { id: id, action: action, message: message },
+                    success: function(data) {
+                        dataTableModal.modal("toggle");
+                        hospitalsVerificationTable.draw();
                     }
                 });
             }
