@@ -237,6 +237,11 @@ Route::prefix('account')->name('account.')->group(function () {
 		Route::get('pharmacy/profile/show', 'PharmacyController@showProfile')->name('pharmacy.profile.show');
 		Route::post('pharmacy/profile/store', 'PharmacyController@storeProfile')->name('pharmacy.profile.store');
 
+		// hospital Services
+		Route::get('hospital/profile', 'HospitalController@apply')->name('hospital.profile');
+		Route::get('hospital/profile/show', 'HospitalController@showProfile')->name('hospital.profile.show');
+		Route::post('hospital/profile/store', 'HospitalController@storeProfile')->name('hospital.profile.store');
+
 		/* User Account*/
 		Route::get('user/bank/account', 'ProfileController@userBankAccount')->name('user.bank.account');
 		Route::get('user/bank/account/details/show', 'ProfileController@showBankAccountDetailsForm')->name('user.bank.account.details.show');

@@ -313,6 +313,14 @@
             </li>
             @endif
 
+            @if(checkPermission(['hospital']))
+            <li class="{{Route::is('account.hospital.profile') ? 'active' : ''}}">
+                <a class="nav-link" href="{{route('account.hospital.profile')}}">
+                    <i class="far fa-user"></i> <span>Being a Hospital</span>
+                </a>
+            </li>
+            @endif
+
             @if(checkPermission(['doctor','agent','clinic','hospital','diagnostics', 'pharmacy']))
             <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.user.bank.account')}}">

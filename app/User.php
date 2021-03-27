@@ -295,4 +295,9 @@ class User extends Authenticatable
         
         return $this->hasMany(Upload::class)->where('type', 'clinic');
     }
+
+    public function hospitalDocuments()    {
+        
+        return $this->hasMany(Upload::class)->where('type', 'hospital');
+    }
 }
