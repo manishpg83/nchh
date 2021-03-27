@@ -59,10 +59,14 @@
                 </li>
             </ul>
         </li>
-        <li class="{{Route::is('admin.getClinic') ? 'active' : ''}}">
-            <a class="nav-link" href="{{route('admin.getClinic')}}">
-                <i class="fas fa-clinic-medical"></i> <span>Clinic</span>
-            </a>
+        <li class="nav-item dropdown @if(Route::is('admin.getClinic') || Route::is('admin.clinics.profile.verification')) active @endif">
+            <a href="javascript:void(0);" class="nav-link has-dropdown" data-toggle="dropdown"> <i class="fas fa-clinic-medical"></i>
+                <span>Clinic</span></a>
+            <ul class="dropdown-menu">
+                <li class="{{Route::is('admin.getClinic') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.getClinic')}}">Clinic</a></li>
+                <li class="{{Route::is('admin.clinics.profile.verification') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.clinics.profile.verification')}}">Verification Request</a>
+                </li>
+            </ul>
         </li>
         <li class="{{Route::is('admin.getHospital') ? 'active' : ''}}">
             <a class="nav-link" href="{{route('admin.getHospital')}}">

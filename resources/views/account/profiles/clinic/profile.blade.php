@@ -12,8 +12,8 @@
     <div class="section-body">
         @if(count($user->clinicDocuments) > 0)
         <h2 class="section-title">
-            {!! getUserProfileStatus($user->as_clinic_verified) !!}
-            @if($user->as_clinic_verified == 3)
+            {!! getUserProfileStatus($user->is_clinic_verified) !!}
+            @if($user->is_clinic_verified == 3)
                 <a href="javascript:void(0)" onclick="openRejectionReason(`{{ $user->clinic_rejection_reason }}`)">Click here for reason</a>
             @endif
         </h2>
@@ -38,7 +38,7 @@
                                         <div class="media-title mb-1">Profile Document Verifications</div>
                                         <div class="media-description text-muted">Document Registration</div>
                                         <div class="media-links">
-                                            @if($user->as_clinic_verified == 2)
+                                            @if($user->is_clinic_verified == 2)
                                                 <a href="javascript:void(0);" class="text-warning" data-toggle="tooltip" data-original-title="View Details" onclick="viewClinicverifieddocument()"><i class="far fa-check-circle"></i> Verified</a>
                                             @else
                                                 @if(count($user->clinicDocuments) > 0)

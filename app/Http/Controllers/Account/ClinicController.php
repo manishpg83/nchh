@@ -93,7 +93,7 @@ class ClinicController extends BaseController
                 $deleteDocId = array_diff_key($request->document_id, $request->document_name);
                 $deleteDoc = Upload::whereIn('id', $deleteDocId)->delete();
 
-                $user->update(['as_clinic_verified' => '1']);
+                $user->update(['is_clinic_verified' => '1']);
 
                 //get super admin id
                 $is_admin =  User::select('id', 'email')->whereHas('role', function ($q) {
