@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\MedicalRecord;
 use App\MedicalRecordFile;
+use App\SharedMedicalRecord;
+use App\User;
+use App\Jobs\SharedMedicalRecordJob;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
 use Image;
+use Validator;
 
 class MedicalRecordController extends BaseController
 {
@@ -215,5 +219,62 @@ class MedicalRecordController extends BaseController
             $result = ['status' => $this->error, 'message' => $this->exception_message];
         }
         return Response::json($result, $this->status);
+    }
+
+    public function shareMedicalRecord()    {
+        
+        try {
+            $data = ['title' => 'Share Medical Record', 'doctors' => Auth::user()->wishlist, 'id' => request()->id  ];
+            $html = view('front.medical_records.share_medical_record', $data)->render();
+            $result = ["status" => $this->success, "message" => "data loded", 'html' => $html];
+        } catch (Exception $e) {
+            $result = ['status' => $this->error, 'message' => $this->exception_message];
+        }
+        return Response::json($result);
+    }
+
+    public function storeShareMedicalRecord(Request $request)   {
+        
+        $rules = [
+            'medical_record_id'  => 'required',
+            'doctor_id'  => 'required',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $result = ["status" => $this->error, "message" => $validator->errors()->first()];
+        } else {
+            try {
+                $input = $request->all();
+                $input['user_id'] = Auth::id();
+                $user = Auth::user();
+                $data = [];
+                $user_account = SharedMedicalRecord::Create($input);
+
+                //get doctor id
+                $doctor =  User::select('id', 'email')->where('id', $request->doctor_id)->first();
+
+                if ($doctor->email) {
+                    $mailInfo = ([
+                        'receiver_email' => $doctor->email,
+                        'receiver_name' => 'NC Health HUB',
+                        'title' => '',
+                        'subject' => 'Shared Medical Record',
+                        'content' => 'Shared Medical Record<br>
+                         Please, let me know if any concerns about the same.<br>
+                         <br>
+                         <br>
+                         Thanks.',
+
+                    ]);
+                    dispatch(new SharedMedicalRecordJob($mailInfo)); //add mail to queue
+                }
+
+                $result = ["status" => $this->success, "message" => "Medical Record shared successfully.", 'redirect' => 'medical_record'];
+            } catch (Exception $e) {
+                $result = ['status' => $this->error, 'message' => $this->exception_message];
+            }
+        }
+        return Response::json($result);
     }
 }

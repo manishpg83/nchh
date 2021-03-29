@@ -91,8 +91,10 @@ Route::namespace('Front')->group(function () {
 			Route::get('appointments/view/{id}', 'AppointmentController@viewAppointmentDetail')->name('appointment.view');
 
 			/* Medical Record Module */
-			Route::resource('medical_record', 'MedicalRecordController');
+			Route::resource('medical_record', 'MedicalRecordController', ['except' => ['show']]);
 			Route::delete('medical_record/file/destroy/{id}', 'MedicalRecordController@destroyRecordFile')->name('medical_record.file.delete');
+			Route::get('medical_record/share-medical-record', 'MedicalRecordController@shareMedicalRecord')->name('medical_record.share-medical-record');
+			Route::post('medical_record/store-share-medical-record', 'MedicalRecordController@storeShareMedicalRecord')->name('medical_record.store-share-medical-record');
 
 			/* Payments Module */
 			/* 1. Payment history for book appointment */
