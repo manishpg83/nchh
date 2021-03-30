@@ -78,9 +78,46 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-            <a href="{{$doctor_verification_pending['navigation']}}">
+            <a href="{{$diagnostics['navigation']}}">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-primary">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{$diagnostics['title']}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <span id="count">{{$diagnostics['count']}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <a href="{{$agent['navigation']}}">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-danger">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{$agent['title']}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <span id="count">{{$agent['count']}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        
+
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <a href="{{$doctor_verification_pending['navigation']}}">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-warning">
                         <i class="fas fa-recycle"></i>
                     </div>
                     <div class="card-wrap">
@@ -95,17 +132,51 @@
             </a>
         </div>
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-            <a href="{{$diagnostics['navigation']}}">
+            <a href="{{$clinic_verification_pending['navigation']}}">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-success">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{$clinic_verification_pending['title']}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <span id="count">{{$clinic_verification_pending['count']}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <a href="{{$hospital_verification_pending['navigation']}}">
+                <div class="card card-statistic-1">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <div class="card-wrap">
+                        <div class="card-header">
+                            <h4>{{$hospital_verification_pending['title']}}</h4>
+                        </div>
+                        <div class="card-body">
+                            <span id="count">{{$hospital_verification_pending['count']}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+            <a href="{{$pharmacy_verification_pending['navigation']}}">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-danger">
                         <i class="fas fa-recycle"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>{{$diagnostics['title']}}</h4>
+                            <h4>{{$pharmacy_verification_pending['title']}}</h4>
                         </div>
                         <div class="card-body">
-                            <span id="count">{{$diagnostics['count']}}</span>
+                            <span id="count">{{$pharmacy_verification_pending['count']}}</span>
                         </div>
                     </div>
                 </div>
@@ -128,27 +199,11 @@
                 </div>
             </a>
         </div>
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-            <a href="{{$agent['navigation']}}">
-                <div class="card card-statistic-1">
-                    <div class="card-icon bg-success">
-                        <i class="fas fa-recycle"></i>
-                    </div>
-                    <div class="card-wrap">
-                        <div class="card-header">
-                            <h4>{{$agent['title']}}</h4>
-                        </div>
-                        <div class="card-body">
-                            <span id="count">{{$agent['count']}}</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+        
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
             <a href="{{$agent_verification_pending['navigation']}}">
                 <div class="card card-statistic-1">
-                    <div class="card-icon bg-primary">
+                    <div class="card-icon bg-success">
                         <i class="fas fa-recycle"></i>
                     </div>
                     <div class="card-wrap">
