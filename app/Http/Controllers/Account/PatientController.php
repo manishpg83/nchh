@@ -112,6 +112,7 @@ class PatientController extends BaseController
                         $btn = '<a href="' . route('account.patients.diagnostics.appointment', [$data->id, $data->name_slug]) . '" class=" " id="' . $data->id . '"><i class="fas fa-calendar-check" data-toggle="tooltip" title="View Patient`s Appointment"></i></a>';
                     } else {
                         $btn = '<a href="' . route('account.patients.appointment', [$data->id, $data->name_slug]) . '" class=" " id="' . $data->id . '"><i class="fas fa-calendar-check" data-toggle="tooltip" title="View Patient`s Appointment"></i></a>';
+                        $btn .= '<a href="' . route('account.show-shared-medical-record', [$data->id]) . '" class="ml-3" id="' . $data->id . '"><i class="fas fa-file" data-toggle="tooltip" title="View Shared Medical Records"></i></a>';
                     }
                     return $btn;
                 })->rawColumns(['patient_name', 'patient_contact', 'detail', 'action'])

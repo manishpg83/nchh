@@ -256,6 +256,8 @@ Route::prefix('account')->name('account.')->group(function () {
 		/* switch panel (as doctor, agent, patient) */
 		Route::get('user/switch-panel/{panel}', 'PanelController@switchPanel')->name('user.switch-panel');
 		Route::get('user/logout-switch-panel', 'PanelController@logoutSwitchPanel')->name('user.logout-switch-panel');
+
+		Route::get('medical_record/show-shared-medical-records/{id}', 'MedicalRecordController@showSharedMedicalRecord')->name('show-shared-medical-record');
 	});
 });
 
