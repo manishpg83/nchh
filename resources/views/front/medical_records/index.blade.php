@@ -29,7 +29,9 @@
                                         <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
                                         <div class="dropdown-menu">
                                             <div class="dropdown-title">Options</div>
-                                            <a href="{{route('medical_record.edit',$record->id)}}" class="dropdown-item has-icon"><i class="far fa-edit"></i> Edit</a>
+                                            <a href="{{route('medical_record.edit',$record->id)}}" class="dropdown-item has-icon"><i class="far fa-edit"></i>Edit</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="javascript:void(0)" class="dropdown-item has-icon" onclick="shareMedicalRecord({{ $record->id }})"><i class="fa fa-share"></i>Share</a>
                                             <div class="dropdown-divider"></div>
                                             <a href="javascript:;" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|Are you sure want to delete record?" data-confirm-text-yes="Yes, Delete" data-id="{{$record->id}}" onclick="deleteMedicalRecord(this,'{{$record->id}}')"><i class="fas fa-trash-alt"></i> Delete</a>
                                         </div>
@@ -66,13 +68,16 @@
 </section>
 
 <!-- Modal -->
-<!-- <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center"></div> -->
+
+<div class="modal fade" id="shareMedicalRecordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" mode="center"></div>
 @endsection
 @section('scripts')
 <script src="{{ asset('account/js/page/medical_record.js')}}"></script>
 <script type="text/javascript">
+    var shareMedicalRecordModal = $('#shareMedicalRecordModal');
     var MedicalRecordContainer = $('.medical_record_container');
     var medicalRecordCreateUrl = "{{Route('medical_record.create')}}";
     var deleteMedicalRecordUrl = "{{Route('medical_record.destroy',':slug')}}";
+    var shareRecordsUrl = "{{ route('medical_record.share-medical-record') }}";
 </script>
 @endsection

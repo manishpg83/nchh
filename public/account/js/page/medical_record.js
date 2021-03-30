@@ -215,3 +215,65 @@ function deleteMedicalRecord(anchor, id) {
 })
 return false;
 }
+
+function shareMedicalRecord(id) {
+
+    $.ajax({
+        url: shareRecordsUrl,
+        data: {id: id},
+        type: "GET",
+        success: function(res) {
+            shareMedicalRecordModal.html(res.html);
+            shareMedicalRecordModal.modal({
+                show: true,
+                backdrop: "static",
+                keyboard: false
+            });
+
+            var shareRecordform = $('#shareMedicalRecordForm').validate({
+                rules: {
+                    doctor_id: {
+                        required: true,
+                    },
+                    medical_record_id: {
+                        required: true,
+                    }
+                },
+                messages: {},
+                submitHandler: function(form, event) {
+                    event.preventDefault();
+                    
+                    var action = $(form).attr('action');
+                    var formData = new FormData($(form)[0]);
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: action,
+                        data: formData,
+                        processData: false,
+                        dataType: 'json',
+                        contentType: false,
+                        beforeSend: function() {
+                            $('.btn-submit').addClass('btn-progress disabled');
+                        },
+                        success: function(res) {
+                            toastrAlert('success', 'Medical Record', res.message)
+                            setTimeout(() => {
+                                if (res.redirect) {
+                                    window.location = res.redirect;
+                                }
+                            }, 500);
+                        },
+                        error: function(res) {
+                            toastrAlert('error', 'Medical Record', res.message, 'bottomCenter')
+                        },
+                        complete: function() {
+                            $('.btn-submit').removeClass('btn-progress disabled');
+                        }
+                    });
+                    return false;
+                }
+            });
+        }
+    });
+}
