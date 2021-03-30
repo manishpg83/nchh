@@ -58,14 +58,7 @@ class DashboardController extends BaseController
                 $d->where('keyword','doctor');
             })->where('as_doctor_verified', '2')->count(),
             'navigation' => route('admin.getDoctor'),
-        ];
-        $data['doctor_verification_pending'] = [
-            'title' => 'Doctor Profile Pending Request',
-            'count' => User::whereHas('role',function($d){
-                $d->whereIn('keyword',['patient','doctor']);
-            })->where('as_doctor_verified', '1')->count(),
-            'navigation' => route('admin.doctor.profile.verification'),
-        ];
+        ];  
         $data['clinic'] = [
             'title' => 'Total Clinic',
             'count' => User::whereHas('role',function($d){
@@ -86,16 +79,48 @@ class DashboardController extends BaseController
                 $d->where('keyword','pharmacy');
             })->count(),
             'navigation' => route('admin.getPharmacy'),
-        ];
-        
+        ];        
         $data['diagnostics'] = [
             'title' => 'Total Diagnostics',
             'count' => User::whereHas('role',function($d){
                 $d->where('keyword','diagnostics');
             })->where('as_diagnostics_verified', '2')->count(),
             'navigation' => route('admin.getDiagnostics'),
+        ];        
+        $data['agent'] = [
+            'title' => 'Total Agent',
+            'count' => User::where('as_agent_verified', '2')->count(), 
+            'navigation' => route('admin.getAgent'),
         ];
-        
+
+        $data['doctor_verification_pending'] = [
+            'title' => 'Doctor Profile Pending Request',
+            'count' => User::whereHas('role',function($d){
+                $d->whereIn('keyword',['patient','doctor']);
+            })->where('as_doctor_verified', '1')->count(),
+            'navigation' => route('admin.doctor.profile.verification'),
+        ];      
+        $data['clinic_verification_pending'] = [
+            'title' => 'Clinic Profile Pending Request',
+            'count' => User::whereHas('role',function($d){
+                $d->whereIn('keyword',['clinic']);
+            })->where('is_clinic_verified', '1')->count(),
+            'navigation' => route('admin.clinics.profile.verification'),
+        ];
+        $data['hospital_verification_pending'] = [
+            'title' => 'Hospital Profile Pending Request',
+            'count' => User::whereHas('role',function($d){
+                $d->whereIn('keyword',['hospital']);
+            })->where('is_hospital_verified', '1')->count(),
+            'navigation' => route('admin.hospitals.profile.verification'),
+        ];
+        $data['pharmacy_verification_pending'] = [
+            'title' => 'Pharmacy Profile Pending Request',
+            'count' => User::whereHas('role',function($d){
+                $d->whereIn('keyword',['pharmacy']);
+            })->where('as_pharmacy_verified', '1')->count(),
+            'navigation' => route('admin.pharmacies.profile.verification'),
+        ];
         $data['diagnostics_verification_pending'] = [
             'title' => 'Diagnostics Profile Pending Request',
             'count' => User::whereHas('role',function($d){
@@ -103,18 +128,14 @@ class DashboardController extends BaseController
             })->where('as_diagnostics_verified', '1')->count(),
             'navigation' => route('admin.diagnostics.profile.verification'),
         ];
-        
-        $data['agent'] = [
-            'title' => 'Total Agent',
-            'count' => User::where('as_agent_verified', '2')->count(), 
-            'navigation' => route('admin.getAgent'),
-        ];
-        
         $data['agent_verification_pending'] = [
             'title' => 'Agent Profile Pending Request',
             'count' => User::where('as_agent_verified', '1')->count(),
             'navigation' => route('admin.agent.profile.verification'),
         ];
+        
+        
+        
 
         $data['recent_doctors'] = User::whereHas('role',function($d){
             $d->where('keyword','doctor');
