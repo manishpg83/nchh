@@ -27,7 +27,9 @@
                                 @if(isset($profile->detail->experience))
                                 <div class="font-13px text-dark w-100">{{$profile->detail->experience}} {{$profile->detail->experience > 1 ? 'Years of experience overall' : 'Year of experience overall' }}</div>
                                 @endif
-                                <div id="avg_rating_box_{{$profile->id}}" class="rating_box_{{$profile->id}} mt-1" data-rating="{{$profile->average_rating}}"></div>
+                                <div id="avg_rating_box_{{$profile->id}}" class="rating_box_{{$profile->id}} mt-1 font-13px text-dark" data-rating="{{$profile->average_rating}}">
+                                   <span style="float:right;">@if($language) Language: {{ $language }}@endif 
+                                </div>
 
                                 @if(isRateable($profile->id))
                                 @if(isFirstTimeRating($profile->id))

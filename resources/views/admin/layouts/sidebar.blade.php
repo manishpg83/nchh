@@ -106,6 +106,11 @@
                 <li class="{{Route::is('admin.drug-units.index') ? 'active' : ''}}"><a class="nav-link" href="{{route('admin.drug-units.index')}}">Units</a></li>
             </ul>
         </li>
+        <li class="{{Route::is('admin.languages.index') ? 'active' : ''}}">
+            <a class="nav-link" href="{{route('admin.languages.index')}}">
+                <i class="fas fa-language"></i> <span>Language</span>
+            </a>
+        </li>
         <li class="{{Route::is('admin.permission.index') ? 'active' : ''}}">
             <a class="nav-link" href="{{route('admin.permission.index')}}">
                 <i class="fas fa-user-lock"></i> <span>Role & Permission</span>

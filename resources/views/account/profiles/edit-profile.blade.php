@@ -276,7 +276,21 @@ data-field="phone" onclick="viewTextbox(this)">Edit</a> -->
                                     </div>
                                 </div>
                                 @endif
-
+                                @if(checkPermission(['doctor']))
+                                <div class="form-group col-md-12 col-12">
+                                    <label>Languages</label>
+                                    <select class="form-control select2" name="language_id[]" id="language_id" multiple>
+                                        <option hidden></option>
+                                        @foreach ($languages as $key => $value)
+                                        <option value="{{$key}}" @if(!empty($userLanguage))
+                                            @if(in_array($key, $userLanguage)){{'selected'}}@endif
+                                            @endif>
+                                            {{$value}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
                                 <div class="form-group col-md-12 col-12">
                                     <label>About</label>
                                     <textarea class="form-control" type="text" name="detail[about]" placeholder="Write About Your Self" style="height: 75px;">{{$user->detail->about}}</textarea>

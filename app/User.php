@@ -300,4 +300,9 @@ class User extends Authenticatable
         
         return $this->hasMany(Upload::class)->where('type', 'hospital');
     }
+
+    public function userlanguage()
+    {
+        return $this->hasMany('App\UserLanguage', 'user_id');
+    }
 }

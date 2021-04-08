@@ -9,6 +9,7 @@ use App\Jobs\AgentProfileVerificationJob;
 use App\Jobs\BankAccountVerificationJob;
 use App\Jobs\DiagnosticsProfileVerificationJob;
 use App\Specialty;
+use App\Language;
 use App\Notification;
 use App\Repositories\UploadRepository;
 use App\TimingManager;
@@ -71,8 +72,23 @@ class ProfileController extends BaseController
             'specialist' => Specialty::pluck('title', 'id')->toArray()
         ];
         try {
-            if($request->type && $request->type == 'approved-doctor') 
+            if($request->type && $request->type == 'approved-doctor') {
+                $userLanguage = array();
+                $data['language'] = '';
+                if(!empty(Auth::user()->UserLanguage))
+                {
+                    foreach (Auth::user()->UserLanguage as $value) {
+                        $userLanguage[] = $value->language_id;
+                    }
+                    $getlanguage = Language::select('name')->whereIn('id', $userLanguage)->get();
+                    $lan = array();
+                    foreach ($getlanguage as $value) {
+                        $lan[] = $value->name;
+                    }
+                    $data['language'] = implode(', ', $lan);
+                }
                 $html = view('account.profiles.approved-doctor-detail-modal', $data)->render();
+            }
             else
                 $html = view('account.profiles.profile-modal', $data)->render();
             

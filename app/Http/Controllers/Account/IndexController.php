@@ -22,6 +22,8 @@ use App\PracticeManager;
 use App\User;
 use App\Service;
 use App\UserGallery;
+use App\Language;
+use App\UserLanguage;
 use Exception;
 use Timezone;
 use Image;
@@ -58,13 +60,22 @@ class IndexController extends BaseController
         $selected = $user->timezone ? $user->timezone : 'Asia/Kolkata';
         $placeholder = 'Select a Timezone';
         $formAttributes = array('class' => 'form-control select2', 'name' => 'timezone');
+        $userLanguage = array();
+        if(!empty($user->UserLanguage))
+        {
+            foreach ($user->UserLanguage as $value) {
+                $userLanguage[] = $value->language_id;
+            }
+        }
         $data = [
             'title' => 'Accounts',
             'user' => $user,
+            'userLanguage' => $userLanguage,
             'country' => Country::pluck('name', 'id')->toArray(),
             'specialty' => Specialty::pluck('title', 'id')->toArray(),
             'services' => Service::pluck('name', 'id')->toArray(),
             'doctors' => User::pluck('name', 'id')->toArray(),
+            'languages' => Language::pluck('name', 'id')->toArray(),
             'timezonelist' => Timezone::selectForm($selected, $placeholder, $formAttributes),
         ];
         //dd($data);
@@ -77,7 +88,6 @@ class IndexController extends BaseController
         $rules = [
             'name' => 'required',
         ];
-
         if (checkPermission(['clinic', 'hospital'])) {
             $rules += [
                 'specialty_ids.*' => 'required',
@@ -174,6 +184,17 @@ class IndexController extends BaseController
             }
             //End change practice address
 
+            if ($request->get('language_id')) {
+                $delete = UserLanguage::where('user_id',$user->id)->delete();
+                $languages = [];              
+                foreach ($request->get('language_id') as $language_id) {                    
+                    $languages[] = [
+                        'user_id' => $user->id,
+                        'language_id' => $language_id
+                    ];
+                }
+                UserLanguage::insert($languages);
+            }
             // UserDetail::updateOrCreate(['user_id' => $user->id], $input);
             $result = ['status' => $this->success, 'message' => "Your profile update successfully.", "result" => $user];
             DB::commit();
