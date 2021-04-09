@@ -124,18 +124,20 @@ $document.ready(function() {
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
                 $(function() {
-                    $("#portfolio").magnificPopup({
-                        delegate: "a",
-                        type: "image",
-                        image: {
-                            cursor: null,
-                            titleSrc: "title"
-                        },
-                        gallery: {
-                            enabled: true,
-                            preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
-                            navigateByImgClick: true
-                        }
+                    $('.portfolio-gallery').each(function() { // the containers for all your galleries
+                        $(this).magnificPopup({
+                            delegate: 'a', // the selector for gallery item
+                            type: 'image',
+                            image: {
+                                cursor: null,
+                                titleSrc: "title"
+                            },
+                            gallery: {
+                                enabled:true,
+                                preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
+                                navigateByImgClick: true
+                            }
+                        });
                     });
                 });
             }
