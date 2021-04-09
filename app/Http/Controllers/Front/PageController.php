@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\Specialty;
 use App\HealthFeed;
+use App\Language;
 use App\Jobs\SendInquiryJob;
 use App\PracticeManager;
 use Illuminate\Http\Request;
@@ -47,6 +48,20 @@ class PageController extends BaseController
         $this->_setPageTitle($user->name . ' | NC Health Hub');
         $data['profile'] = $user;
         $data['user'] = Auth::user();
+        $data['language'] = '';
+        $userLanguage = array();
+        if(!empty($user->UserLanguage))
+        {
+            foreach ($user->UserLanguage as $value) {
+                $userLanguage[] = $value->language_id;
+            }
+            $getlanguage = Language::select('name')->whereIn('id', $userLanguage)->get();
+            $lan = array();
+            foreach ($getlanguage as $value) {
+                $lan[] = $value->name;
+            }
+            $data['language'] = implode(', ', $lan);
+        }
         return view("front.pages.doctor_profile")->with($data);
     }
 

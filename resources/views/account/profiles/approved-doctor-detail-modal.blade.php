@@ -71,6 +71,12 @@
                                     <label class="control-label">{{ $user->detail->experience }}</label>
                                 </div>
                             </div>
+                            <div class="form-group row align-items-center">
+                                <label class="col-sm-3">Languages</label>
+                                <div class="col-sm-9">
+                                    <label class="control-label">{{ $language }}</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
