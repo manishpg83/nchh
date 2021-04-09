@@ -124,18 +124,20 @@ $document.ready(function() {
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
                 $(function() {
-                    $(".portfolio").magnificPopup({
-                        delegate: "a",
-                        type: "image",
-                        image: {
-                            cursor: null,
-                            titleSrc: "title"
-                        },
-                        gallery: {
-                            enabled: true,
-                            preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
-                            navigateByImgClick: true
-                        }
+                    $('.portfolio-gallery').each(function() { // the containers for all your galleries
+                        $(this).magnificPopup({
+                            delegate: 'a', // the selector for gallery item
+                            type: 'image',
+                            image: {
+                                cursor: null,
+                                titleSrc: "title"
+                            },
+                            gallery: {
+                                enabled:true,
+                                preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
+                                navigateByImgClick: true
+                            }
+                        });
                     });
                 });
             }
@@ -157,29 +159,30 @@ $document.ready(function() {
                 },
                 { data: "name", name: "name" },
                 { data: "phone", name: "phone" },
-                { data: "email", name: "email" }
+                { data: "email", name: "email" },
+                { data: "doctors", name: "doctors" },
+                { data: "locality", name: "locality" },
+                { data: "specialty", name: "specialty" },
+                { data: "services", name: "services" },
+                { data: "gallery", name: "gallery" }
             ],
             drawCallback: function() {
                 $("[data-toggle='tooltip']").tooltip();
                 $(function() {
-                    /*$(".portfolio").on('click', function(event){
-        
-                        alert($(this).attr("#data-id"));
-                    });*/
-
-                     //alert($(this).attr("#data-id"));
-                    $(".portfolio").magnificPopup({
-                        delegate: "a",
-                        type: "image",
-                        image: {
-                            cursor: null,
-                            titleSrc: "title"
-                        },
-                        gallery: {
-                            enabled: true,
-                            preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
-                            navigateByImgClick: true
-                        }
+                    $('.portfolio-gallery').each(function() { // the containers for all your galleries
+                        $(this).magnificPopup({
+                            delegate: 'a', // the selector for gallery item
+                            type: 'image',
+                            image: {
+                                cursor: null,
+                                titleSrc: "title"
+                            },
+                            gallery: {
+                                enabled:true,
+                                preload: [0, 1], // Will preload 0 - before current, and 1 after the current image
+                                navigateByImgClick: true
+                            }
+                        });
                     });
                 });
             }

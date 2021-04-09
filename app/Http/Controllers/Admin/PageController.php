@@ -249,7 +249,7 @@ class PageController extends BaseController
                 })->addColumn('gallery', function ($data) {
                     $gallery  = '';
                     if ($data->gallery) {
-                        $gallery  .= '<ul id="portfolio" class="clearfix portfolio" data-id="'.$data->id.'">';
+                        $gallery  .= '<ul id="portfolio" class="clearfix portfolio-gallery">';
                         foreach ($data->gallery as $g) {
                             $gallery .= '<li><a href="' . $g->image . '"><img alt="image" src="' . $g->image . '" class=" mr-1" width="50" data-toggle="tooltip" title=""></a></li>';
                         }
@@ -426,7 +426,11 @@ class PageController extends BaseController
                 })->addColumn('gallery', function ($data) {
                     $gallery  = '';
                     if ($data->gallery) {
+<<<<<<< HEAD
                         $gallery  .= '<ul id="portfolio" class="clearfix portfolio" data-id="'.$data->id.'">';
+=======
+                        $gallery  .= '<ul id="portfolio" class="clearfix portfolio-gallery">';
+>>>>>>> dev
                         foreach ($data->gallery as $g) {
                             $gallery .= '<li><a href="' . $g->image . '"><img alt="image" src="' . $g->image . '" class=" mr-1" width="50" data-toggle="tooltip" title=""></a></li>';
                         }
