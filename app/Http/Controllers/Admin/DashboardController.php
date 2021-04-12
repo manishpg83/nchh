@@ -63,14 +63,14 @@ class DashboardController extends BaseController
             'title' => 'Total Clinic',
             'count' => User::whereHas('role',function($d){
                 $d->where('keyword','clinic');
-            })->count(),
+            })->where('is_clinic_verified', '2')->count(),
             'navigation' => route('admin.getClinic'),
         ];
         $data['hospital'] = [
             'title' => 'Total Hospital',
             'count' => User::whereHas('role',function($d){
                 $d->where('keyword','hospital');
-            })->count(),
+            })->where('is_hospital_verified', '2')->count(),
             'navigation' => route('admin.getHospital'),
         ];
         $data['pharmacy'] = [
