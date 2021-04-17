@@ -18,6 +18,7 @@ $document.ready(function() {
                 },
                 { data: "name", name: "name" },
                 { data: "type", name: "type" },
+                { data: "unit", name: "unit" },
                 { data: "strength", name: "strength" },
                 { data: "instructions", name: "instructions" },
                 {
@@ -72,6 +73,7 @@ function editDrug(id) {
                     drugModal.html(response.html);
                     drugModal.modal("toggle");
                     init_drug_form();
+                    $('#type').trigger('change');
                     $('#unit').trigger('change');
                 } else {
                     //
@@ -133,16 +135,16 @@ function init_drug_form() {
             type: "required",
             strength: "required",
             unit: "required",
-            other_unit: function() {
+            /*other_unit: function() {
                 return $('#unit').val() == 'other';
-            }
+            }*/
         },
         messages: {
             name: "Please enter name",
             type: "Please select drug type",
             strength: "Please enter strength",
             unit: "Please select drug unit",
-            other_unit: "Please enter other unit"
+            //other_unit: "Please enter other unit"
         },
         submitHandler: function(form) {
             var action = $(form).attr("action");
@@ -176,11 +178,27 @@ function init_drug_form() {
         }
     });
 
-    $('#unit').on('change', function() {
+    /*$('#unit').on('change', function() {
         if ($(this).val() == 'other') {
             $('.showOtherUnitInput').removeClass('d-none');
         } else {
             $('.showOtherUnitInput').addClass('d-none');
         }
-    });
+    });*/
+}
+
+function showOtherType() {
+    if($('select[name="type"] option:selected').text() == 'Other') {
+        $('.showOtherTypeDiv').removeClass('d-none');
+    } else {
+        $('.showOtherTypeDiv').addClass('d-none');
+    }
+}
+
+function showOtherUnit() {
+    if($('select[name="unit"] option:selected').text() == 'Other') {
+        $('.showOtherUnitDiv').removeClass('d-none');
+    } else {
+        $('.showOtherUnitDiv').addClass('d-none');
+    }
 }
