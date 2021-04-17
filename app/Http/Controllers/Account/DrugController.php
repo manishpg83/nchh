@@ -45,9 +45,12 @@ class DrugController extends BaseController
             $drugs = Drug::where('added_by', [Auth::id()])->orderBy('id', 'DESC')->get();
             return Datatables::of($drugs)
                 ->addColumn('type', function ($data) {
-                    return $data->drugType->name;
+                    //return $data->drugType->name;
+                    return ($data->drugType->name == 'Other') ? $data->other_type : $data->drugType->name;
+                })->addColumn('unit', function ($data) {
+                    return ($data->drugUnit->name == 'Other') ? $data->other_unit : $data->drugUnit->name;
                 })->addColumn('strength', function ($data) {
-                    return ($data->unit == 'other') ? $data->strength . $data->other_unit : $data->strength . $data->drugUnit->name;
+                    return $data->strength;
                 })->addColumn('instructions', function ($data) {
                     return '<span class="ws-break-spaces">'.$data->instructions.'</span>';
                 })->addColumn('action', function ($row) {
@@ -55,7 +58,7 @@ class DrugController extends BaseController
                 <a href="javascript:;" class="" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Delete Drug" onclick="deleteDrug(' . $row->id . ');"><i class="far fa-trash-alt"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['strength', 'action','instructions'])
+                ->rawColumns(['action','instructions'])
                 ->make(true);
         }
         return view('account.drug.index')->with($data);
@@ -90,7 +93,7 @@ class DrugController extends BaseController
             'type' => 'required',
             'strength' => 'required|integer',
             'unit' => 'required',
-            'other_unit' => 'required_if:unit,other'
+            //'other_unit' => 'required_if:unit,other'
         ];
 
         $validator = Validator::make($request->all(), $rules);

@@ -45,17 +45,20 @@ class DrugController extends BaseController
             $drugs = Drug::with('drugUnit')->where('added_by', [Auth::id()])->orderBy('id', 'DESC')->get();
             return Datatables::of($drugs)
                 ->addColumn('type', function ($data) {
-                    return $data->drugType->name;
+                    //return $data->drugType->name;
+                    return ($data->drugType->name == 'Other') ? $data->other_type : $data->drugType->name;
+                })->addColumn('unit', function ($data) {
+                    return ($data->drugUnit->name == 'Other') ? $data->other_unit : $data->drugUnit->name;
                 })->addColumn('strength', function ($data) {
-                    return ($data->unit == 'other') ? $data->strength . $data->other_unit : $data->strength . $data->drugUnit->name;
+                    return $data->strength;
                 })->addColumn('instructions', function ($data) {
-                    return '<span class="ws-break-spaces">' . $data->instructions . '</span>';
+                    return '<span class="ws-break-spaces">'.$data->instructions.'</span>';
                 })->addColumn('action', function ($row) {
                     $btn = '<a href="javascript:;" class="mr-3" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Edit Drug" onclick="editDrug(' . $row->id . ');"><i class="far fa-edit"></i></a>
                 <a href="javascript:;" class="" id="' . $row->id . '" data-toggle="tooltip" data-placement="top" title="Delete Drug" onclick="deleteDrug(' . $row->id . ');"><i class="far fa-trash-alt"></i></a>';
                     return $btn;
                 })
-                ->rawColumns(['strength', 'action', 'instructions'])
+                ->rawColumns(['action','instructions'])
                 ->make(true);
         }
         return view('admin.drug.index')->with($data);
@@ -69,8 +72,8 @@ class DrugController extends BaseController
     public function create()
     {
         $data = ['title' => 'Add Drug'];
-        $data['type'] = DrugType::orderBy('name', 'asc')->pluck('name', 'id');
-        $data['unit'] = DrugUnit::orderBy('name', 'asc')->pluck('name', 'id');
+        $data['type'] = DrugType::orderBy('id', 'asc')->pluck('name', 'id');
+        $data['unit'] = DrugUnit::orderBy('id', 'asc')->pluck('name', 'id');
         $html = view('admin.drug.create', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load drug data.', 'html' => $html];
 
@@ -130,8 +133,8 @@ class DrugController extends BaseController
     {
         $data['title'] = 'Edit drug';
         $data['drug'] = Drug::find($id);
-        $data['type'] = DrugType::orderBy('name', 'asc')->pluck('name', 'id');
-        $data['unit'] = DrugUnit::orderBy('name', 'asc')->pluck('name', 'id');
+        $data['type'] = DrugType::orderBy('id', 'asc')->pluck('name', 'id');
+        $data['unit'] = DrugUnit::orderBy('id', 'asc')->pluck('name', 'id');
         $html = view('admin.drug.update', $data)->render();
         $result = ['status' => $this->success, 'message' => 'load drug data.', 'html' => $html];
         return Response::json($result);
