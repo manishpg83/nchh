@@ -25,6 +25,7 @@
                                         <th>Id</th>
                                         <th>Name</th>
                                         <th>Type</th>
+                                        <th>Unit</th>
                                         <th>Strength</th>
                                         <th>Instructions</th>
                                         <th>Action</th>

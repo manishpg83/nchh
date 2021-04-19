@@ -12,7 +12,7 @@ class Drug extends Model
      *
      * @var array
      */
-    protected $fillable = ['added_by', 'name', 'type', 'strength', 'unit', 'other_unit', 'instructions', 'status'];
+    protected $fillable = ['added_by', 'name', 'type', 'other_type', 'strength', 'unit', 'other_unit', 'instructions', 'status'];
 
 
 
