@@ -240,10 +240,35 @@ function getAddress(latitude,longitude) {
 
     LocationUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ latitude +","+ longitude +"&key="+ googleMapApi +"";
                
-    axios.get(LocationUrl)
-    .then(function (response) {
-        userAddress = response.data.results[0];
-        $('#address').val(JSON.stringify(userAddress));
-    });
+    $.ajax({
+        url: LocationUrl, 
+        type: "GET",   
+        // dataType: 'jsonp',
+        beforeSend: function(jqXHR, settings) {
+            delete $.ajaxSettings.headers["X-CSRF-TOKEN"];
+            $.ajaxSettings.headers["Origin"] = 'https://www.nchealthhub.com/'; 
+        },
+        cache: false,
+        success: function(response){                          
+            alert(response);                   
+        }           
+    });  
+    // axios.get(LocationUrl)
+    // .then(function (response) {
+    //     userAddress = response.data.results[0];
+    //     $('#address').val(JSON.stringify(userAddress));
+    // });
 }
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+  }
+  
+
 /* End: Map Pin Location */
