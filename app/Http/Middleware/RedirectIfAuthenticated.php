@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class RedirectIfAuthenticated
 {
@@ -19,6 +20,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            if($request->path() == 'login' && (Session::get('panel') == 'diagnostics' ||
+                Session::get('panel') == 'hospital' || Session::get('panel') == 'clinic')) {
+                return redirect()->route('account.show-profile-form');
+            }
+
             return redirect(RouteServiceProvider::HOME);
         }
 
