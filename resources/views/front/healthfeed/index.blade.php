@@ -15,9 +15,9 @@
                     @else
                     <img class="card-img-top" src="{{$healthfeed->cover_photo}}" alt="{{$healthfeed->short_title}}">
                     @endif
-                    <div class="card-body">
-                        <div class="card-subtitle mb-2 text-muted">by <a href="javascript:;"
-                                title="{{$healthfeed->user->name}}">{{$healthfeed->user->short_name}}</a> on
+                    <div class="card-body">                      
+                        <div class="card-subtitle mb-2 text-muted">Written by <a href="javascript:;"
+                                title="{{$healthfeed->user->name}}">{{$healthfeed->user->name}}</a> on
                             {{$healthfeed->health_feed_date}}</div>
                         <h4 class="card-title">
                             <a href="{{Route('healthfeed.show',$healthfeed->id)}}">{{$healthfeed->short_title}}</a>

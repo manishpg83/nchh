@@ -39,7 +39,7 @@
                                         <div class="selectgroup w-100">
                                             @foreach($roles as $role)
                                             <label class="selectgroup-item">
-                                                <input type="radio" name="role_id" id="{{$role->keyword}}" value="{{$role->id}}" class="selectgroup-input">
+                                                <input type="radio" name="role_id" id="{{$role->keyword}}" value="{{$role->id}}" class="selectgroup-input" @if($role->keyword == 'manager') checked="checked" @endif>
                                                 <span class="selectgroup-button">{{$role->name}}</span>
                                             </label>
                                             @endforeach
