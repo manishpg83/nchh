@@ -61,15 +61,12 @@
                     <i class="far fa-newspaper"></i> <span>Health Feed</span>
                 </a>
             </li>
-
-
-
             <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
                     <i class="fas fa-money-bill-alt"></i> <span>Payments</span>
                 </a>
                 <ul class="dropdown-menu">
-                    @if(checkPermission(['doctor','patient','agent']))
+                    @if(checkPermission(['patient','agent']))
                     <li class="@if(Route::is('payment.pay')){{'active'}} @endif">
                         <a class="nav-link" href="{{route('payment.pay')}}">Paid</a>
                     </li>
