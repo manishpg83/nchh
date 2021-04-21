@@ -77,6 +77,7 @@ class AjaxController extends Controller
                                         $q->where('keyword', 'clinic');
                                     })
                                     ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->where('is_clinic_verified', 2)
                                     ->where('name', 'LIKE', '%' . $request->get('search') . '%')
                                     ->Where('city', 'LIKE', '%' . $location . '%')
                                     ->inRandomOrder()
@@ -87,6 +88,7 @@ class AjaxController extends Controller
                                         $q->where('keyword', 'hospital');
                                     })
                                     ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->where('is_hospital_verified', 2)
                                     ->where('name', 'LIKE', '%' . $request->get('search') . '%')
                                     ->Where('city', 'LIKE', '%' . $location . '%')
                                     ->inRandomOrder()
@@ -97,6 +99,7 @@ class AjaxController extends Controller
                                         $q->where('keyword', 'diagnostics');
                                     })
                                     ->where('id', '!=', Auth::id() ? Auth::id() : 0)
+                                    ->where('as_diagnostics_verified', 2)
                                     ->Where('city', 'LIKE', '%' . $location . '%')
                                     ->Where(function($query) use ($request, $location, $name){
                                         $query->where('name', 'LIKE', '%' . $request->get('search') . '%');
@@ -306,12 +309,12 @@ class AjaxController extends Controller
             } elseif ($type == 'hospital') {
                 $data['users'] = User::with('detail')->whereHas('role', function ($q) {
                     $q->where('keyword', 'hospital');
-                })->Where('name', 'LIKE', '%' . $search . '%')
+                })->Where('name', 'LIKE', '%' . $search . '%')->where('is_hospital_verified', 2)
                     ->get();
             } else {
                 $data['users'] = User::with('detail')->whereHas('role', function ($q) {
                     $q->where('keyword', 'clinic');
-                })->Where('name', 'LIKE', '%' . $search . '%')
+                })->Where('name', 'LIKE', '%' . $search . '%')->where('is_clinic_verified', 2)
                     ->get();
             }
             $data['search'] = $search;
