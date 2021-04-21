@@ -243,21 +243,17 @@ function getAddress(latitude,longitude) {
     $.ajax({
         url: LocationUrl, 
         type: "GET",   
-        // dataType: 'jsonp',
         beforeSend: function(jqXHR, settings) {
             delete $.ajaxSettings.headers["X-CSRF-TOKEN"];
-            $.ajaxSettings.headers["Origin"] = 'https://www.nchealthhub.com/'; 
         },
         cache: false,
         success: function(response){                          
-            alert(response);                   
+            console.log(response);
+            let data = response.results[0].address_components;
+            let userAddress = data[0].long_name +  ' ' + data[1].long_name + ' ' + data[2].long_name;
+            $('input[name="address"]').val(userAddress) 
         }           
-    });  
-    // axios.get(LocationUrl)
-    // .then(function (response) {
-    //     userAddress = response.data.results[0];
-    //     $('#address').val(JSON.stringify(userAddress));
-    // });
+    });
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
