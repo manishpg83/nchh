@@ -16,9 +16,9 @@ class RouteRestriction
      */
     public function handle($request, Closure $next)
     {
-        /*if Auth user are manager,pharmacy and accountant then call and can't show front*/
+        /*if Auth user are manager and accountant then call and can't show front*/
         if (Auth::user()) {
-            if (Auth::user()->role->keyword === 'manager' || Auth::user()->role->keyword === 'accountant' || Auth::user()->role->keyword === 'pharmacy') {
+            if (Auth::user()->role->keyword === 'manager' || Auth::user()->role->keyword === 'accountant') {
                 return redirect()->route('account.show-profile-form');
             }
             if(empty(Auth::user()->locality) || empty(Auth::user()->email)){
