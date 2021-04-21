@@ -387,6 +387,7 @@ class PatientController extends BaseController
         /*  try { */
         $data['appointment'] = Appointment::find($appointment_id);
         $data['drugs'] = Drug::all();
+       // print_r($data['drugs']); exit;
         $html = view('account.patients.appointment_prescription_edit')->with($data)->render();
         $result = ["status" => $this->success, "message" => "Prescription edit form", 'html' => $html];
         /*  } catch (Exception $e) {

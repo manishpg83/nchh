@@ -61,15 +61,12 @@
                     <i class="far fa-newspaper"></i> <span>Health Feed</span>
                 </a>
             </li>
-
-
-
-            <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
+            <!-- <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
                     <i class="fas fa-money-bill-alt"></i> <span>Payments</span>
                 </a>
                 <ul class="dropdown-menu">
-                    @if(checkPermission(['doctor','patient','agent']))
+                    @if(checkPermission(['patient','agent']))
                     <li class="@if(Route::is('payment.pay')){{'active'}} @endif">
                         <a class="nav-link" href="{{route('payment.pay')}}">Paid</a>
                     </li>
@@ -80,7 +77,25 @@
                     </li>
                     @endif
                 </ul>
+            </li> -->
+            @if(checkPermission(['patient','agent']))
+            <li class="nav-item dropdown @if(Route::is('payment.pay')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('payment.pay')}}">
+                    <i class="fas fa-money-bill-alt"></i> <span>Payment History</span>
+                </a>
             </li>
+            @endif
+             @if(checkPermission(['doctor','clinic','hospital','manager','accountant','diagnostics']))
+            <li class="nav-item dropdown @if(Route::is('payment.received')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('payment.received')}}">
+                    <i class="fas fa-money-bill-alt"></i> <span>Payment History</span>
+                </a>
+            </li>
+            @endif
+
+             
+
+
             @if(checkPermission(['doctor']))
             <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.profiles')}}">
@@ -297,7 +312,7 @@
             @if(checkPermission(['pharmacy']))
             <li class="{{Route::is('account.pharmacy.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.pharmacy.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Pharmacy</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
@@ -305,7 +320,7 @@
             @if(checkPermission(['diagnostics']))
             <li class="{{Route::is('account.diagnostics.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.diagnostics.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Diagnostics</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
@@ -313,7 +328,7 @@
             @if(checkPermission(['clinic']))
             <li class="{{Route::is('account.clinic.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.clinic.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Clinic</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
@@ -321,7 +336,7 @@
             @if(checkPermission(['hospital']))
             <li class="{{Route::is('account.hospital.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.hospital.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Hospital</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif

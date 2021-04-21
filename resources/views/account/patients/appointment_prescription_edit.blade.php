@@ -64,7 +64,8 @@
             <select id="drugs" class="form-control select2">
                 <option hidden value="">Select Drug</option>
                 @foreach ($drugs as $key => $value)
-                <option value="{{$value->drug_name}}">{{$value->name}} ({{$value->strength}}{{$value->unit}})
+                <option value="@if($value->drugType->name == 'Other') {{$value->other_type}} @else {{$value->drugType->name}}@endif {{$value->name}} ({{$value->strength}} @if($value->drugUnit->name == 'Other') {{$value->other_unit}} @else {{$value->drugUnit->name}})@endif">@if($value->drugType->name == 'Other') {{$value->other_type}} @else {{$value->drugType->name}}@endif {{$value->name}} ({{$value->strength}} @if($value->drugUnit->name == 'Other') {{$value->other_unit}} @else {{$value->drugUnit->name}})
+                @endif
                 </option>
                 @endforeach
             </select>
