@@ -312,7 +312,7 @@
             @if(checkPermission(['pharmacy']))
             <li class="{{Route::is('account.pharmacy.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.pharmacy.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Pharmacy</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
@@ -320,7 +320,7 @@
             @if(checkPermission(['diagnostics']))
             <li class="{{Route::is('account.diagnostics.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.diagnostics.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Diagnostics</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
@@ -328,7 +328,7 @@
             @if(checkPermission(['clinic']))
             <li class="{{Route::is('account.clinic.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.clinic.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Clinic</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
@@ -336,7 +336,7 @@
             @if(checkPermission(['hospital']))
             <li class="{{Route::is('account.hospital.profile') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.hospital.profile')}}">
-                    <i class="far fa-user"></i> <span>Being a Hospital</span>
+                    <i class="far fa-user"></i> <span>Verify Document</span>
                 </a>
             </li>
             @endif
