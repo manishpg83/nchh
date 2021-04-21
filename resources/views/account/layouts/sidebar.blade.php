@@ -61,7 +61,7 @@
                     <i class="far fa-newspaper"></i> <span>Health Feed</span>
                 </a>
             </li>
-            <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
+            <!-- <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
                 <a class="nav-link has-dropdown" href="javascript:;">
                     <i class="fas fa-money-bill-alt"></i> <span>Payments</span>
                 </a>
@@ -77,7 +77,25 @@
                     </li>
                     @endif
                 </ul>
+            </li> -->
+            @if(checkPermission(['patient','agent']))
+            <li class="nav-item dropdown @if(Route::is('payment.pay')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('payment.pay')}}">
+                    <i class="fas fa-money-bill-alt"></i> <span>Payment History</span>
+                </a>
             </li>
+            @endif
+             @if(checkPermission(['doctor','clinic','hospital','manager','accountant','diagnostics']))
+            <li class="nav-item dropdown @if(Route::is('payment.received')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('payment.received')}}">
+                    <i class="fas fa-money-bill-alt"></i> <span>Payment History</span>
+                </a>
+            </li>
+            @endif
+
+             
+
+
             @if(checkPermission(['doctor']))
             <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
                 <a class="nav-link" href="{{route('account.profiles')}}">
