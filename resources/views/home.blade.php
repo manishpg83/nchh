@@ -98,6 +98,8 @@
 
 @endsection
 @section('page_script')
+<script type="text/javascript">
+    var googleMapApi = "{{ config('custom.google_map_api_key') }}";
+</script>
 <script src="{{ asset('js/home.js')}}"></script>
-<script type="text/javascript"></script>
 @endsection
