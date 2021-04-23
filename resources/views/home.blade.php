@@ -20,7 +20,7 @@
         <form class="subscribe" action="{{route('home.search')}}" method="GET">
             <div class="row align-items-center mt-5">
                 <div class="col-12 col-md-4">
-                    <h2>Don’t delay your health concerns.</h2>
+                    <h2>Don't delay your health concerns.</h2>
                     <p class="text-muted">Just enter your doctor, speciality, clinic and hospital name then share your
                         health concern with doctor.</p>
                 </div>
