@@ -74,6 +74,15 @@ $document.ready(function() {
 
     initMap()
 });
+let time = 0;
+$('input[name="address"]').on('keydown', function() {
+    clearTimeout(time);
+
+    var val = $(this).val();
+    time = setTimeout(function() {
+        changeMapMarker(val);
+    }, 500);
+});
 
 function init_practice_form() {
     PracticeForm.validate({
@@ -125,7 +134,6 @@ function init_practice_form() {
         submitHandler: function(form) {
             var lati = $(form).find('#latitude').val();
             var get_timing = $('#timing_chart').jqs('export');
-            //console.log(get_timing);
             if (lati == 0.0) {
                 toastrAlert("error", 'Practice', 'Please choose location on google map.');
                 return false;
@@ -175,7 +183,6 @@ function init_practice_form() {
         onAddPeriod: function(period, jqs) {},
         onRemovePeriod: function() {
             var get_timing = $('#timing_chart').jqs('export');
-            console.log(get_timing);
         },
         onDuplicatePeriod: function() {},
         onClickPeriod: function() {}
@@ -189,6 +196,7 @@ function init_practice_form() {
 
 
 /* Start: Map Pin Location */
+var infoMap;
 function initMap() {
     var myLatlng = { lat: lati, lng: long };
     var map = new google.maps.Map(document.getElementById('map_canvas'), { zoom: 12, center: myLatlng });
@@ -248,12 +256,29 @@ function getAddress(latitude,longitude) {
         },
         cache: false,
         success: function(response){                          
-            console.log(response);
             let data = response.results[0].address_components;
-            let userAddress = data[0].long_name +  ' ' + data[1].long_name + ' ' + data[2].long_name;
+            let userAddress = data[0].long_name +  ', ' + data[1].long_name + ', ' + data[2].long_name;
             $('input[name="address"]').val(userAddress) 
         }           
     });
+}
+
+function changeMapMarker(val) {
+
+    var myLatlng = { lat: lati, lng: long };
+    var map = new google.maps.Map(document.getElementById('map_canvas'), { zoom: 12, center: myLatlng });
+    const geocoder = new google.maps.Geocoder();
+    if(val != '') {
+        geocoder.geocode({ address: val }, (results, status) => {
+            if (status === "OK") {
+                map.setCenter(results[0].geometry.location);
+                addMarker(results[0].geometry.location, val, map);
+            } else {
+                alert('Address not found');
+            }
+          });
+        
+    }
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {

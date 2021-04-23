@@ -139,5 +139,6 @@
     var parseValue = JSON.parse($('#field_timing').val());
     var lati = parseFloat("{{$practice->latitude}}");
     var long = parseFloat("{{$practice->longitude}}");
+    var googleMapApi = "{{ config('custom.google_map_api_key') }}";
 </script>
 @endsection
