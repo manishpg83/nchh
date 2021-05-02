@@ -345,5 +345,6 @@ data-field="phone" onclick="viewTextbox(this)">Edit</a> -->
     var deleteUserGalleryFileUrl = "{{Route('account.user.gallery.file.delete',':slug')}}";
     var lati = parseFloat("{{$user->latitude}}");
     var long = parseFloat("{{$user->longitude}}");
+    var googleMapApi = "{{ config('custom.google_map_api_key') }}";
 </script>
 @endsection

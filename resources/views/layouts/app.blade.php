@@ -278,6 +278,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.22.1/firebase-database.min.js" integrity="sha512-9pcV+9tJDsn39SvC/t4Jd8N3k8bt58aYbkL6izei0DKZdR3RPp5HSHC0Up7tSpTIftBQb32zhFCYI4gb3WLvmQ==" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/7.22.1/firebase-analytics.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="{{ asset('js/global.js') }}"></script>
     <script src="{{ asset('js/theme.js') }}"></script>
 
