@@ -8,7 +8,11 @@ $document.ready(function() {
     });
 
     init_authpage();
-    detectLocation();
+    if(typeof Cookies.get('userCityName') != undefined) {
+        detectLocation(Cookies.get('userCityName'));
+    } else {
+        detectLocation();
+    }
     init_inquiry_form();
     init_tooltip();
     loadAudioTune();

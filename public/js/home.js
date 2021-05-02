@@ -4,8 +4,10 @@ $document.ready(function () {
         headers: header
     });
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error, options);
+    if(typeof Cookies.get('userCityName') != undefined) {
+        $('input[name="location"]').val(Cookies.get('userCityName'));
+    } else if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error, options);
     }
 });
 
@@ -28,7 +30,7 @@ function success(pos) {
         success: function(response){                          
             console.log(response);
             let data = response.results[0].address_components[3].long_name;
-            console.log(data);
+            Cookies.set('userCityName', data);  
             $('input[name="location"]').val(data);
         }           
     });
