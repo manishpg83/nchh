@@ -184,6 +184,16 @@ $document.ready(function() {
     }
 });
 
+let time = 0;
+$('input[name="address"]').on('keydown', function() {
+    clearTimeout(time);
+
+    var val = $(this).val();
+    time = setTimeout(function() {
+        changeMapMarker(val);
+    }, 500);
+});
+
 function browsePicture() {
     fileupload.click();
     fileupload.change(function() {
@@ -452,6 +462,7 @@ function changeFieldValue(btn_id) {
 
 
 /* Start: Map Pin Location */
+var infoMap;
 function initMap() {
     var myLatlng = { lat: lati, lng: long };
     var map = new google.maps.Map(document.getElementById('map_canvas'), { zoom: 12, center: myLatlng });
@@ -480,6 +491,11 @@ function initMap() {
 function handleEvent(event) {
     document.getElementById('latitude').value = event.latLng.lat();
     document.getElementById('longitude').value = event.latLng.lng();
+
+    $latitude = event.latLng.lat();
+    $longitude = event.latLng.lng();
+    
+    getAddress($latitude,$longitude);
 }
 
 function addMarker(latlng, title, map) {
@@ -492,6 +508,53 @@ function addMarker(latlng, title, map) {
 
     marker.addListener('drag', handleEvent);
     marker.addListener('dragend', handleEvent);
+}
+
+function getAddress(latitude,longitude) {
+
+    LocationUrl = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ latitude +","+ longitude +"&key="+ googleMapApi +"";
+               
+    $.ajax({
+        url: LocationUrl, 
+        type: "GET",   
+        beforeSend: function(jqXHR, settings) {
+            delete $.ajaxSettings.headers["X-CSRF-TOKEN"];
+        },
+        cache: false,
+        success: function(response){                          
+            let data = response.results[0].address_components;
+            let userAddress = data[0].long_name +  ', ' + data[1].long_name + ', ' + data[2].long_name;
+            $('input[name="address"]').val(userAddress) 
+        }           
+    });
+}
+
+function changeMapMarker(val) {
+
+    var myLatlng = { lat: lati, lng: long };
+    var map = new google.maps.Map(document.getElementById('map_canvas'), { zoom: 12, center: myLatlng });
+    const geocoder = new google.maps.Geocoder();
+    if(val != '') {
+        geocoder.geocode({ address: val }, (results, status) => {
+            if (status === "OK") {
+                map.setCenter(results[0].geometry.location);
+                addMarker(results[0].geometry.location, val, map);
+            } else {
+                alert('Address not found');
+            }
+          });
+        
+    }
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+      browserHasGeolocation
+        ? "Error: The Geolocation service failed."
+        : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
 }
 
 /* End: Map Pin Location */

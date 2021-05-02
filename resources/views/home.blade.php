@@ -98,7 +98,6 @@
 
 @endsection
 @section('page_script')
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 <script type="text/javascript">
     var googleMapApi = "{{ config('custom.google_map_api_key') }}";
 </script>
