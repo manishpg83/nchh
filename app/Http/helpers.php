@@ -154,6 +154,32 @@ function getUserProfileStatus($value)
 	}
 }
 
+function userProfileStatusMessage() {
+
+	$verified_column = '';
+	if(Session::get('panel') == 'doctor'){
+		$verified_column = 'as_doctor_verified';
+	} elseif(Session::get('panel') == 'agent') {
+		$verified_column = 'as_agent_verified';
+	} elseif(Auth::user()->role->name == 'Pharmacy') {
+		$verified_column = 'as_pharmacy_verified';
+	} elseif(Auth::user()->role->name == 'Clinic') {
+		$verified_column = 'is_clinic_verified';
+	} elseif(Auth::user()->role->name == 'Diagnostics') {
+		$verified_column = 'as_diagnostics_verified';
+	} elseif(Auth::user()->role->name == 'Hospital') {
+		$verified_column = 'as_hospital_verified';
+	}
+
+	if(Auth::user()->locality == null) {
+		return 'Please fill up your profile first.';
+	} elseif(Auth::user()->$verified_column != 2 && Session::get('panel') != 'patient') {
+		return 'Please verify document first.';
+	}
+
+	return false;
+}
+
 function getRoles($value)
 {
 	switch ($value) {

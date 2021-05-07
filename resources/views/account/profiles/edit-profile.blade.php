@@ -14,8 +14,12 @@
         <h2 class="section-title">Hi, {{$user->name}}</h2>
         <p class="section-lead">
             Change information about yourself.
-
         </p>
+        @if(userProfileStatusMessage())
+            <div class="alert alert-warning alert-block">
+                <strong>{!! userProfileStatusMessage() !!}</strong>
+            </div>
+        @endif
         <div class="row mt-sm-4">
             <div class="col-12 col-md-12 col-lg-12">
 
