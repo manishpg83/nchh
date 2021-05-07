@@ -14,8 +14,12 @@
         <h2 class="section-title">Hi, {{$user->name}}</h2>
         <p class="section-lead">
             Change information about yourself.
-
         </p>
+        @if(userProfileStatusMessage())
+            <div class="alert alert-warning alert-block">
+                <strong>{!! userProfileStatusMessage() !!}</strong>
+            </div>
+        @endif
         <div class="row mt-sm-4">
             <div class="col-12 col-md-12 col-lg-12">
 
@@ -34,7 +38,8 @@
                                 <div class="col-md-5 col-12">
                                     <div class="card profile-widget">
                                         <div class="profile-widget-header">
-                                            <img alt="image" src="{{$user->profile_picture}}" class="rounded-circle profile-widget-picture" id="previewPicture">
+                                            <img alt="image" src="{{$user->profile_picture}}" class="rounded-circle profile-widget-picture" id="previewPicture"
+                                                data-src="@if($user->image_name == 'default.png')true @else false @endif">
                                             <input type="file" name="profile_picture" class="mt-2" id="profile_picture" style="display: none">
                                             <div class="profile-widget-items">
                                                 <div class="profile-widget-item">

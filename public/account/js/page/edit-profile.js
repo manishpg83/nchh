@@ -12,6 +12,11 @@ $document.ready(function() {
     });
 
     rules = {
+        profile_picture: {
+            required: function(element) {
+                return $('#previewPicture').data('src') == "true ";
+            }
+        },
         phone: {
             required: true,
             number: true,
@@ -64,6 +69,9 @@ $document.ready(function() {
     };
 
     validation_msg = {
+        profile_picture: {
+            required: "Please upload a profile picture."
+        },
         phone: {
             required: "Please enter your phone number",
             number: "Please enter valid phone number.",
@@ -257,6 +265,7 @@ function submitProfileForm(btn_id) {
     userProfile = $document.find("#userProfile");
     userProfile.validate({
         rules: rules,
+        ignore: [],
         messages: validation_msg,
         submitHandler: function(form) {
             var lati = $(form).find('#latitude').val();
@@ -309,6 +318,13 @@ function submitProfileForm(btn_id) {
                     );
                 }
             });
+        },
+        errorPlacement: function(error, element) {
+            if ($(element).attr('id') == 'profile_picture') {
+                $('.profile-widget-header').append(error);
+            } else {
+                error.insertAfter(element);
+            }
         }
     });
 }
