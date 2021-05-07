@@ -13,7 +13,9 @@ $document.ready(function() {
 
     rules = {
         profile_picture: {
-            required: true
+            required: function(element) {
+                return $('#previewPicture').data('src') == "true ";
+            }
         },
         phone: {
             required: true,

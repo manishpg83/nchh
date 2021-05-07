@@ -51,99 +51,99 @@
     @elseif(Session::get('panel') == 'doctor')
         <ul class="sidebar-menu">
 
-            <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.user.bank.account')}}">
-                    <i class="fas fa-university"></i> <span>Bank Account</span>
-                </a>
-            </li>
+            @if(!userProfileStatusMessage())
 
-            <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.healthfeed.index')}}">
-                    <i class="far fa-newspaper"></i> <span>Health Feed</span>
-                </a>
-            </li>
+                <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.user.bank.account')}}">
+                        <i class="fas fa-university"></i> <span>Bank Account</span>
+                    </a>
+                </li>
 
+                <li class="{{Route::is('account.healthfeed.index') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.healthfeed.index')}}">
+                        <i class="far fa-newspaper"></i> <span>Health Feed</span>
+                    </a>
+                </li>
 
+                <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
+                    <a class="nav-link has-dropdown" href="javascript:;">
+                        <i class="fas fa-money-bill-alt"></i> <span>Payments</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @if(checkPermission(['doctor','patient','agent']))
+                        <li class="@if(Route::is('payment.pay')){{'active'}} @endif">
+                            <a class="nav-link" href="{{route('payment.pay')}}">Paid</a>
+                        </li>
+                        @endif
+                        @if(checkPermission(['doctor','clinic','hospital','manager','accountant','diagnostics']))
+                        <li class="@if(Route::is('payment.received')){{'active'}} @endif">
+                            <a class="nav-link" href="{{route('payment.received')}}">Received</a>
+                        </li>
+                        @endif
+                    </ul>
+                </li>
 
-            <li class="nav-item dropdown @if(Route::is('payment.pay') || Route::is('payment.received')){{'active'}} @endif">
-                <a class="nav-link has-dropdown" href="javascript:;">
-                    <i class="fas fa-money-bill-alt"></i> <span>Payments</span>
-                </a>
-                <ul class="dropdown-menu">
-                    @if(checkPermission(['doctor','patient','agent']))
-                    <li class="@if(Route::is('payment.pay')){{'active'}} @endif">
-                        <a class="nav-link" href="{{route('payment.pay')}}">Paid</a>
-                    </li>
-                    @endif
-                    @if(checkPermission(['doctor','clinic','hospital','manager','accountant','diagnostics']))
-                    <li class="@if(Route::is('payment.received')){{'active'}} @endif">
-                        <a class="nav-link" href="{{route('payment.received')}}">Received</a>
-                    </li>
-                    @endif
-                </ul>
-            </li>
+                <li class="nav-item dropdown @if(Route::is('account.staff.index') || Route::is('account.staff.create') || Route::is('account.staff.edit')){{'active'}} @endif">
+                    <a class="nav-link has-dropdown" href="javascript:;">
+                        <i class="fas fa-users"></i> <span>Staff Manager</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="@if(Route::is('account.staff.index') || Route::is('account.staff.edit')){{'active'}}@endif">
+                            <a class="nav-link" href="{{route('account.staff.index')}}">Staffs</a>
+                        </li>
+                        <li class="{{Route::is('account.staff.create') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.staff.create')}}">Add Staff</a></li>
+                    </ul>
+                </li>
 
-            <li class="nav-item dropdown @if(Route::is('account.staff.index') || Route::is('account.staff.create') || Route::is('account.staff.edit')){{'active'}} @endif">
-                <a class="nav-link has-dropdown" href="javascript:;">
-                    <i class="fas fa-users"></i> <span>Staff Manager</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="@if(Route::is('account.staff.index') || Route::is('account.staff.edit')){{'active'}}@endif">
-                        <a class="nav-link" href="{{route('account.staff.index')}}">Staffs</a>
-                    </li>
-                    <li class="{{Route::is('account.staff.create') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.staff.create')}}">Add Staff</a></li>
-                </ul>
-            </li>
+                <li class="nav-item dropdown @if(Route::is('account.practice.index') || Route::is('account.practice.create') || Route::is('account.practice.edit')){{'active'}} @endif">
+                    <a class="nav-link has-dropdown" href="javascript:;">
+                        <i class="fas fa-clinic-medical"></i> <span>Practice Manager</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="@if(Route::is('account.practice.index') || Route::is('account.practice.edit')){{'active'}}@endif">
+                            <a class="nav-link" href="{{route('account.practice.index')}}">Practices</a>
+                        </li>
+                        <li class="{{Route::is('account.practice.create') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.practice.create')}}">Practice Create</a></li>
+                    </ul>
+                </li>
 
-            <li class="nav-item dropdown @if(Route::is('account.practice.index') || Route::is('account.practice.create') || Route::is('account.practice.edit')){{'active'}} @endif">
-                <a class="nav-link has-dropdown" href="javascript:;">
-                    <i class="fas fa-clinic-medical"></i> <span>Practice Manager</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="@if(Route::is('account.practice.index') || Route::is('account.practice.edit')){{'active'}}@endif">
-                        <a class="nav-link" href="{{route('account.practice.index')}}">Practices</a>
-                    </li>
-                    <li class="{{Route::is('account.practice.create') ? 'active' : ''}}"><a class="nav-link" href="{{route('account.practice.create')}}">Practice Create</a></li>
-                </ul>
-            </li>
+                <li class="{{Route::is('account.drug.index') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.drug.index')}}">
+                        <i class="fas fa-capsules"></i> <span>Drugs</span>
+                    </a>
+                </li>
+
+                <li class="@if(Route::is('account.patients.index') || Route::is('account.patients.appointment') || Route::is('account.patients.appointment.detail') || Route::is('account.patients.diagnostics.appointment')){{'active'}} @endif">
+                    <a class="nav-link" href="{{route('account.patients.index')}}">
+                        <i class="far fa-user"></i> <span>My Patients</span>
+                    </a>
+                </li>
+
+                <li class="{{Route::is('account.calendar') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.calendar')}}">
+                        <i class="fas fa-calendar-check"></i> <span>Calendar</span>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown @if(Route::is('account.user.wallet') || Route::is('account.user.wallet.withdraw.history')){{'active'}} @endif">
+                    <a class="nav-link has-dropdown" href="javascript:;">
+                        <i class="fas fa-wallet"></i> <span>Wallet</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="@if(Route::is('account.user.wallet')){{'active'}}@endif">
+                            <a class="nav-link" href="{{route('account.user.wallet')}}">Wallet Balance</a>
+                        </li>
+                        <li class="{{Route::is('account.user.wallet.withdraw.history') ? 'active' : ''}}">
+                            <a class="nav-link" href="{{route('account.user.wallet.withdraw.history')}}">Withdraw History</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
             <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.setting.index')}}">
                     <i class="fas fa-cog"></i> <span>Setting</span>
                 </a>
-            </li>
-            
-            
-            <li class="{{Route::is('account.drug.index') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.drug.index')}}">
-                    <i class="fas fa-capsules"></i> <span>Drugs</span>
-                </a>
-            </li>
-
-            <li class="@if(Route::is('account.patients.index') || Route::is('account.patients.appointment') || Route::is('account.patients.appointment.detail') || Route::is('account.patients.diagnostics.appointment')){{'active'}} @endif">
-                <a class="nav-link" href="{{route('account.patients.index')}}">
-                    <i class="far fa-user"></i> <span>My Patients</span>
-                </a>
-            </li>
-
-            <li class="{{Route::is('account.calendar') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.calendar')}}">
-                    <i class="fas fa-calendar-check"></i> <span>Calendar</span>
-                </a>
-            </li>
-
-            <li class="nav-item dropdown @if(Route::is('account.user.wallet') || Route::is('account.user.wallet.withdraw.history')){{'active'}} @endif">
-                <a class="nav-link has-dropdown" href="javascript:;">
-                    <i class="fas fa-wallet"></i> <span>Wallet</span>
-                </a>
-                <ul class="dropdown-menu">
-                    <li class="@if(Route::is('account.user.wallet')){{'active'}}@endif">
-                        <a class="nav-link" href="{{route('account.user.wallet')}}">Wallet Balance</a>
-                    </li>
-                    <li class="{{Route::is('account.user.wallet.withdraw.history') ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('account.user.wallet.withdraw.history')}}">Withdraw History</a>
-                    </li>
-                </ul>
             </li>
 
             @if(Session::get('previous-panel'))
@@ -253,7 +253,7 @@
         </ul>
     @else
         <ul class="sidebar-menu">
-            @if(Auth::user()->locality != null)
+            @if(!userProfileStatusMessage())
                 @if(checkPermission(['doctor','patient']))
                 <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('account.profiles')}}">
@@ -269,14 +269,19 @@
                     </a>
                 </li>
                 @endif
+            @endif
 
+            @if(Auth::user()->locality != null)
                 @if(checkPermission(['pharmacy']))
-                <li class="{{Route::is('account.pharmacy.profile') ? 'active' : ''}}">
-                    <a class="nav-link" href="{{route('account.pharmacy.profile')}}">
-                        <i class="far fa-user"></i> <span>Being a Pharmacy</span>
-                    </a>
-                </li>
+                    <li class="{{Route::is('account.pharmacy.profile') ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('account.pharmacy.profile')}}">
+                            <i class="far fa-user"></i> <span>Being a Pharmacy</span>
+                        </a>
+                    </li>
                 @endif
+            @endif
+
+            @if(!userProfileStatusMessage())
 
                 @if(checkPermission(['diagnostics']))
                 <li class="{{Route::is('account.diagnostics.profile') ? 'active' : ''}}">
