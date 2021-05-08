@@ -12,33 +12,41 @@
     @if(Session::get('panel') == 'agent') 
         <ul class="sidebar-menu">
 
-            @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
-            <li class="{{Route::is('account.agent.invite.user') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.agent.invite.user')}}">
-                    <i class="fas fa-copy"></i> <span>Send Invitation</span>
-                </a>
-            </li>
+            @if(!userProfileStatusMessage())
+                @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
+                <li class="{{Route::is('account.agent.invite.user') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.agent.invite.user')}}">
+                        <i class="fas fa-copy"></i> <span>Send Invitation</span>
+                    </a>
+                </li>
+                @endif
+
+                <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.user.bank.account')}}">
+                        <i class="fas fa-university"></i> <span>Bank Account</span>
+                    </a>
+                </li>
+
+                <li class="@if(Route::is('payment.received')){{'active'}} @endif">
+                    <a class="nav-link" href="{{route('payment.received')}}">
+                        <i class="fas fa-money-bill-alt"></i> <span>Commission History</span>
+                    </a>
+                </li>
+
+                @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
+                <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">
+                    <a class="nav-link" href="{{route('account.agent.refferal.users')}}">
+                        <i class="fas fa-users"></i> <span>My Referral</span>
+                    </a>
+                </li>
+                @endif
             @endif
 
-            <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.user.bank.account')}}">
-                    <i class="fas fa-university"></i> <span>Bank Account</span>
+            <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
+                <a class="nav-link" href="{{route('account.setting.index')}}">
+                    <i class="fas fa-cog"></i> <span>Setting</span>
                 </a>
             </li>
-
-            <li class="@if(Route::is('payment.received')){{'active'}} @endif">
-                <a class="nav-link" href="{{route('payment.received')}}">
-                    <i class="fas fa-money-bill-alt"></i> <span>Commission History</span>
-                </a>
-            </li>
-
-            @if(Auth::user()->as_agent_verified == 2 && Auth::user()->is_bank_verified == 2)
-            <li class="{{Route::is('account.agent.refferal.users') ? 'active' : ''}}">
-                <a class="nav-link" href="{{route('account.agent.refferal.users')}}">
-                    <i class="fas fa-users"></i> <span>My Referral</span>
-                </a>
-            </li>
-            @endif
 
             @if(Session::get('previous-panel'))
                 <li>
