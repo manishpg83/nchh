@@ -290,7 +290,9 @@
                     </a>
                 </li>
                 @endif
+            @endif
 
+            @if(Auth::user()->locality != null)
                 @if(checkPermission(['clinic']))
                 <li class="{{Route::is('account.clinic.profile') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('account.clinic.profile')}}">
