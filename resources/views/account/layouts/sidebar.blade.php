@@ -289,8 +289,7 @@
                 @endif
             @endif
 
-            @if(!userProfileStatusMessage())
-
+            @if(Auth::user()->locality != null)
                 @if(checkPermission(['diagnostics']))
                 <li class="{{Route::is('account.diagnostics.profile') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('account.diagnostics.profile')}}">
