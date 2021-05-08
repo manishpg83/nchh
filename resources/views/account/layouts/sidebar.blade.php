@@ -298,7 +298,9 @@
                     </a>
                 </li>
                 @endif
+            @endif
 
+            @if(Auth::user()->locality != null)
                 @if(checkPermission(['hospital']))
                 <li class="{{Route::is('account.hospital.profile') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('account.hospital.profile')}}">
@@ -306,7 +308,9 @@
                     </a>
                 </li>
                 @endif
+            @endif
 
+            @if(!userProfileStatusMessage())
                 @if(checkPermission(['doctor','agent','clinic','hospital','diagnostics', 'pharmacy']))
                 <li class="{{Route::is('account.user.bank.account') ? 'active' : ''}}">
                     <a class="nav-link" href="{{route('account.user.bank.account')}}">

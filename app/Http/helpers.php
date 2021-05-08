@@ -168,7 +168,7 @@ function userProfileStatusMessage() {
 	} elseif(Auth::user()->role->name == 'Diagnostics') {
 		$verified_column = 'as_diagnostics_verified';
 	} elseif(Auth::user()->role->name == 'Hospital') {
-		$verified_column = 'as_hospital_verified';
+		$verified_column = 'is_hospital_verified';
 	}
 
 	if(Auth::user()->locality == null) {
