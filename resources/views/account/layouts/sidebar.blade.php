@@ -148,6 +148,16 @@
                 </li>
             @endif
 
+            @if(Auth::user()->locality != null)
+                @if(checkPermission(['doctor','patient']))
+                    <li class="{{Route::is('account.profiles') ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('account.profiles')}}">
+                            <i class="far fa-user"></i> <span>Doctor Profiles</span>
+                        </a>
+                    </li>
+                @endif
+            @endif
+
             <li class="@if(Route::is('account.setting.index') || Route::is('account.setting.general') || Route::is('account.setting.consultant')){{'active'}} @endif">
                 <a class="nav-link" href="{{route('account.setting.index')}}">
                     <i class="fas fa-cog"></i> <span>Setting</span>
